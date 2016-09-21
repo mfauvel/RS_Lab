@@ -136,23 +136,21 @@ applications:
 It has a large  number of available packages that can  be used in many
 applications. For instance, it is possible to call /OTB-Applications/ or
 /GDAL/ from Python.
-** Sequences                                                      :noexport:
+** Sequences                           
 #+ATTR_LATEX: :booktabs t
 #+CAPTION: Sequences
-|       Slots | Mondays          | Tuesday          | Wednesday        | Thursday         | Friday           |
-|-------------+------------------+------------------+------------------+------------------+------------------|
-| 08:00-09:40 |                  |                  |                  |                  |                  |
-| 10:20-12:00 |                  | [2016-03-29 Tue] |                  | [2016-03-31 Thu] | _[2016-04-01 Fri]_ |
-| 13:30-17:30 |                  | [2016-03-29 Tue] |                  | [2016-03-31 Thu] | [2016-04-01 Fri] |
-|-------------+------------------+------------------+------------------+------------------+------------------|
-| 08:00-09:40 |                  |                  |                  |                  |                  |
-| 10:20-12:00 |                  | _[2016-04-05 Tue]_ | _[2016-04-06 Wed]_ |                  |                  |
-| 13:30-17:30 |                  | [2016-04-05 Tue] |                  |                  |                  |
-|-------------+------------------+------------------+------------------+------------------+------------------|
-| 08:00-09:40 |                  | [2016-04-12 Tue] |                  |                  |                  |
-| 10:20-12:00 | [2016-04-11 Mon] | [2016-04-12 Tue] |                  |                  |                  |
-| 13:30-17:30 |                  |                  |                  |                  |                  |
-|-------------+------------------+------------------+------------------+------------------+------------------|
+| Days             | TimeSlot (h) |   Room |
+|------------------+--------------+--------|
+| [2016-09-21 Wed] |            4 | Info 1 |
+| [2016-09-23 Fri] |            3 |   1003 |
+| [2016-09-26 Mon] |            4 |   1003 |
+| [2016-09-28 Wed] |            4 |   1003 |
+| [2016-09-30 Fri] |            3 |   1003 |
+| [2016-10-05 Wed] |            3 |   1003 |
+|------------------+--------------+--------|
+| Total            |           21 |        |
+#+TBLFM: @8$2=vsum(@I..@II)
+
 ** During the labworks
 For the /presential/ sequences, you won't have to do any report. But you
 will have to  write your personal material on remote  sensing. You are
@@ -502,29 +500,40 @@ This should be done for one image and one classifier only.
 It  is possible  to run  directly  the /OTB-Applications/  from the  the
 command line  (on linux-based  OS). This  way, it  is possible  to run
 several  operations  on   one  data  set  or  on   several  data  sets
-automatically. 
+automatically.  A brief introduction to command line tools is given in
+Appendix [[#sec:shell]].
 
-The three previous  /OTB-Applications/ are available from the command line interface (CLI):
-#+BEGIN_SRC emacs-lisp :results code
-(setq shell-file-name "bash")
-(setq shell-command-switch "-ic")
-#+END_SRC
+The  three previous  /OTB-Applications/ are  available from  the command
+line interface (CLI), same name with the prefix =otbcli_= :
 
-#+RESULTS:
-: bash
+- =otbcli_TrainImagesClassifier=,
+- =otbcli_ImageClassifier=,
+- =otbcli_ComputeConfusionMatrix=.
+
+The same  inputs than in  QGIS should  be provided (/raster  and vector
+file/,  /algorithm parameters  .../). For  instance,  if you  are in  the
+repertory where the data are, learning the KNN classifier with default
+parameters do the following, classifying the whole image and computing
+the confusion matrix reduce to
 
 #+BEGIN_SRC sh :exports both :results code
-otbcli_TrainImagesClassifier
+otbcli_TrainImagesClassifier \
+    -io.il fabas_12_10_2013.tif \
+    -io.vd train_fabas.shp \
+    -classifier knn \
+    -io.out model.mod
+otbcli_ImageClassifier \
+    -in fabas_12_10_2013.tif \
+    -model model.mod \
+    -out fabas_classif.tif
+otbcli_ComputeConfusionMatrix \
+    -in fabas_classif.tif \
+    -out matconf.csv \
+    -ref vector \
+    -ref.vector.in valid_fabas.shp
 #+END_SRC
 
-#+RESULTS:
-#+BEGIN_SRC sh
-#+END_SRC
-
-
-
-
-_Works_:
+#+BEGIN_work
 1) Write  the script  to learn  the model  for all  the classification
    methods and with each date.  Each time extract the confusion matrix
    and compute the global accuracy and the class average accuracy.
@@ -533,6 +542,7 @@ _Works_:
    about the errors obtained with the confusion matrix.
 4)  Classify the  whole image  and  compare by  visual inspection  the
    errors with what you have inferred from the confusion matrix.
+#+END_work
 ** Multi dates
 From the  same area, two dates  are available.  It is  possible to use
 them conjointly in  many ways.  Two possible  solutions are considered
@@ -816,7 +826,10 @@ _Works_:
    terms of habitat.
 3. Do a visual validation of your results on the thematic map.
 * Appendix                                                            :sigma:
-** Introduction to shell <<sec:shell>>
+** Introduction to shell
+:PROPERTIES:
+:CUSTOM_ID: sec:shell
+:END:
 This section provides  an introduction to /shell/  programming and /shell
 scripts/.   A script  is a  set of  commands, which  allows to  write a
 processing chain  for a given image,  or to apply one  processing to a
@@ -907,7 +920,7 @@ called. Let define the =script.sh= file.
 #+BEGIN_SRC sh :exports code :tangle script.sh
 # ./script.sh Name FamilyName Age
 echo $1 $2
-echo "J ai $3 ans !"
+echo "J ai (eu) $3 ans !"
 #+END_SRC
 
 When we do this, we have the following output:
@@ -920,7 +933,7 @@ chmod +x script.sh
 #+RESULTS:
 #+BEGIN_SRC sh
 Mathieu Fauvel
-J ai 33 ans !
+J ai (eu) 33 ans !
 #+END_SRC
 
 *** Loop
@@ -971,6 +984,9 @@ done
 #+END_SRC
 
 * Python and Shell Codes for the labworks                          :noexport:
+:PROPERTIES:
+:exports:  both
+:END:
 ** Visualization
 *** Get pixels mean values on collaborative spreadsheet
 #+BEGIN_SRC python :exports none
@@ -1373,27 +1389,27 @@ done
 
 ** Column view
 #+BEGIN: columnview :hlines 2 :id global :skip-empty-rows t
-| ITEM                                                             | FORMATION      | DURATION | SEQUENCE | DAYS                         |
-|------------------------------------------------------------------+----------------+----------+----------+------------------------------|
-| * Introduction                                                   | Presential     |     0:30 |        1 |                              |
-|------------------------------------------------------------------+----------------+----------+----------+------------------------------|
-| * Data sets                                                      | Presential     |        0 |          |                              |
-|------------------------------------------------------------------+----------------+----------+----------+------------------------------|
-| * Visualization of remote sensing data                           | Presential     |     1:10 |        1 |                              |
-|------------------------------------------------------------------+----------------+----------+----------+------------------------------|
-| * Spectral indices: /Normalized Difference Vegetation Index/     | Presential     |    01:00 |        2 |                              |
-|------------------------------------------------------------------+----------------+----------+----------+------------------------------|
-| * Segmentation of remote sensing images                          | Presential     |     2:00 |        2 |                              |
-|------------------------------------------------------------------+----------------+----------+----------+------------------------------|
-| * Change detection: /Detection of floods/                        | Presential     |    01:00 |        2 | [2016-03-31 Thu 10:20-12:00] |
-|------------------------------------------------------------------+----------------+----------+----------+------------------------------|
-| * Classification of remote sensing images                        | Presential     |    04:00 |        3 | [2016-03-31 Thu 13:30-17:30] |
-|------------------------------------------------------------------+----------------+----------+----------+------------------------------|
-| ** Influence of the spatial distribution of the learning samples | Non Presential |    01:40 |        4 | [2016-04-01 Fri 10:20-12:00] |
-|------------------------------------------------------------------+----------------+----------+----------+------------------------------|
-| * Satellite Image Time Series                                    | Presential     |    04:00 |        5 | [2016-04-01 Fri 13:30-17:30] |
-|------------------------------------------------------------------+----------------+----------+----------+------------------------------|
-| ** Extraction of the best couple of dates                        | Non Presential |    01:40 |        6 | [2016-04-06 Wed 10:20-12:00] |
-|------------------------------------------------------------------+----------------+----------+----------+------------------------------|
-| * Dynamic Habitat Index                                          | Presential     |    04:00 |        7 | [2016-04-05 Tue 13:30-17:30] |
+| ITEM                                                             | FORMATION      | DURATION | SEQUENCE |
+|------------------------------------------------------------------+----------------+----------+----------|
+| * Introduction                                                   | Presential     |     0:30 |        1 |
+|------------------------------------------------------------------+----------------+----------+----------|
+| * Data sets                                                      | Presential     |        0 |        1 |
+|------------------------------------------------------------------+----------------+----------+----------|
+| * Visualization of remote sensing data                           | Presential     |     1:10 |        1 |
+|------------------------------------------------------------------+----------------+----------+----------|
+| * Spectral indices: /Normalized Difference Vegetation Index/       | Presential     |    01:00 |        2 |
+|------------------------------------------------------------------+----------------+----------+----------|
+| * Segmentation of remote sensing images                          | Presential     |     2:00 |        2 |
+|------------------------------------------------------------------+----------------+----------+----------|
+| * Change detection: /Detection of floods/                          | Presential     |    01:00 |        2 |
+|------------------------------------------------------------------+----------------+----------+----------|
+| * Classification of remote sensing images                        | Presential     |    04:00 |        3 |
+|------------------------------------------------------------------+----------------+----------+----------|
+| ** Influence of the spatial distribution of the learning samples | Non Presential |    01:40 |        4 |
+|------------------------------------------------------------------+----------------+----------+----------|
+| * Satellite Image Time Series                                    | Presential     |    04:00 |        5 |
+|------------------------------------------------------------------+----------------+----------+----------|
+| ** Extraction of the best couple of dates                        | Non Presential |    01:40 |        6 |
+|------------------------------------------------------------------+----------------+----------+----------|
+| * Dynamic Habitat Index                                          | Presential     |    04:00 |        7 |
 #+END:
