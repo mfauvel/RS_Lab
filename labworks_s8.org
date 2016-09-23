@@ -533,6 +533,42 @@ otbcli_ComputeConfusionMatrix \
     -ref.vector.in valid_fabas.shp
 #+END_SRC
 
+This is nothing else than what you provide in QGIS ! In the following,
+we are  going to combine  Python scripts  and the OTB  Applications to
+define our  processing chain. Two python  modules will be use:  [[https://docs.python.org/2/library/os.html][os]] and
+[[https://docs.python.org/2/library/glob.html][glob]].  These modules  are very convenient to manage  files, folder and
+to launch applications. Also, we are going to benefit Python abilities
+to process strings.
+
+Let's start with an example, to run the first application
+
+#+BEGIN_SRC python :exports both :session
+# Load the module
+import os
+
+# Launch the application
+os.system('otbcli_TrainImagesClassifier -io.il fabas_12_10_2013.tif -io.vd train_fabas.shp -classifier knn -io.out model.mod')
+os.system('otbcli_ImageClassifier -in fabas_12_10_2013.tif -model model.mod -out fabas_classif.tif')
+os.system('otbcli_ComputeConfusionMatrix -in fabas_classif.tif -out matconf.csv -ref vector -ref.vector.in valid_fabas.shp')
+#+END_SRC
+
+or equivalently:
+
+#+BEGIN_SRC python :exports both :session
+# Load the module
+import os
+
+# Define processing
+train = 'otbcli_TrainImagesClassifier -io.il fabas_12_10_2013.tif -io.vd train_fabas.shp -classifier knn -io.out model.mod' 
+classify = 'otbcli_ImageClassifier -in fabas_12_10_2013.tif -model model.mod -out fabas_classif.tif'
+validate = 'otbcli_ComputeConfusionMatrix -in fabas_classif.tif -out matconf.csv -ref vector -ref.vector.in valid_fabas.shp'
+
+# Launch the application
+os.system(train)
+os.system(classify)
+os.system(validate)
+#+END_SRC
+
 #+BEGIN_work
 1) Write  the script  to learn  the model  for all  the classification
    methods and with each date.  Each time extract the confusion matrix
@@ -826,7 +862,7 @@ _Works_:
    terms of habitat.
 3. Do a visual validation of your results on the thematic map.
 * Appendix                                                            :sigma:
-** Introduction to shell
+** Short introduction to shell
 :PROPERTIES:
 :CUSTOM_ID: sec:shell
 :END:
@@ -982,6 +1018,72 @@ done
 4
 5
 #+END_SRC
+** Short introduction to Python
+:PROPERTIES:
+:exports:  both
+:results:  output code
+:END:
+A     good    starting     point     is     the    following     link:
+http://kitchingroup.cheme.cmu.edu/pycse/pycse.html.   Here,   I   just
+review few things that are usefull  for the labwork. But python is far
+more than this short introduction.
+*** String
+Handling  strings with  python is  very easy.  It is  possible to  add
+strings together, as with number! Pay attention to spaces...
+
+#+BEGIN_SRC python 
+name="Mathieu"
+surname="Fauvel"
+print name + surname
+#+END_SRC
+
+#+RESULTS:
+#+BEGIN_SRC python
+MathieuFauvel
+#+END_SRC
+
+To use numbers in strings, it is necessary to convert them, using the function =str=
+
+#+BEGIN_SRC python
+print "Bonjour j'ai eu " + str(33) + " ans"
+#+END_SRC
+
+#+RESULTS:
+#+BEGIN_SRC python
+Bonjour j'ai eu 33 ans
+#+END_SRC
+
+
+*** Loop
+It is very  easy to iterate over  a list with python. The  list can be
+made of numbers, strings etc ...  Since a list is [[https://docs.python.org/2/glossary.html][iterable]], defining a
+=for= loop is just:
+
+#+BEGIN_SRC python 
+listeNumber = [1,2,3,4]
+print listeNumber
+for item in listeNumber:
+    print(item)
+
+listeString = ['knn','bayes','libsvm','rf']
+print listeString
+for item in listeString:
+    print(item)
+#+END_SRC
+
+#+RESULTS:
+#+BEGIN_SRC python
+[1, 2, 3, 4]
+1
+2
+3
+4
+['knn', 'bayes', 'libsvm', 'rf']
+knn
+bayes
+libsvm
+rf
+#+END_SRC
 
 * Python and Shell Codes for the labworks                          :noexport:
 :PROPERTIES:
@@ -1127,8 +1229,11 @@ plt.show()
 
 #+END_SRC
 
+#+BEGIN_SRC python :exports
+import os
+
+#+END_SRC
 #+RESULTS:
-: None
 #+BEGIN_SRC sh :exports none
 for name in fabas*.tif
 do
@@ -1182,13 +1287,13 @@ plt.show()
 import scipy as sp
 import glob
 
-NAME_TRAIN,NAME_VALID = glob.glob('confu_train_*.csv'),glob.glob('confu_valid_*.csv')
-NAME_TRAIN.sort()
-NAME_VALID.sort()
+NAMES_TRAIN,NAMES_VALID = glob.glob('confu_train_*.csv'),glob.glob('confu_valid_*.csv')
+NAMES_TRAIN.sort()
+NAMES_VALID.sort()
 
 oa_train,oa_valid = [],[]
 
-for name_train,name_valid in zip(NAME_TRAIN,NAME_VALID):
+for name_train,name_valid in zip(NAMES_TRAIN,NAMES_VALID):
     temp = sp.genfromtxt(name_train,delimiter=',',skip_header=2)
     oa = 100*sp.diag(temp).sum()/temp.sum()
     oa_train.append(oa)
@@ -1413,3 +1518,11 @@ done
 |------------------------------------------------------------------+----------------+----------+----------|
 | * Dynamic Habitat Index                                          | Presential     |    04:00 |        7 |
 #+END:
+
+#+BEGIN_SRC emacs-lisp
+(setq debug-on-error t)
+#+END_SRC
+
+#+RESULTS:
+: t
+
