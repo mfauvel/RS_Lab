@@ -259,21 +259,21 @@ Before  opening a  remote sensing  data, it  is possible  to get  some
 information about its  properties. For instance, using  =gdalinfo= it is
 possible to extract several information.  It can be used as
 
-#+BEGIN_SRC sh :exports code
+#+BEGIN_SRC sh
 gdalinfo fabas_10_12_2013.tif
 #+END_SRC
 
 Help  on the function  can be obtained using  the command alone or by
 doing :
 
-#+BEGIN_SRC sh :exports code
+#+BEGIN_SRC sh
 man gdalinfo
 #+END_SRC
 
 Equivalently, it is possible to get the same information using the
 function =otbcli_ReadImageInfo= from the /OTB-Applications/:
 
-#+BEGIN_SRC sh :exports code
+#+BEGIN_SRC sh
 otbcli_ReadImageInfo -in fabas_10_12_2013.tif
 #+END_SRC
 
@@ -379,44 +379,6 @@ http://docs.qgis.org/2.14/en/docs/user_manual/processing/modeler.html.
 Define your model  to perform the segmentation of  intro three classes
 of the NDVI.
 #+END_work
-* Change detection: /Detection of floods/                               :sigma:
-:PROPERTIES:
-:FORMATION: Presential
-:DURATION: 01:00
-:SEQUENCE: 2
-:END:
-Change detection  in remote sensing consists  in detecting differences
-between two  images, or  a set of  images.  It can  be used  to detect
-changes in vegetation properties or in land cover.  It is also used in
-disaster management, to detect impacted areas. In this labwork, we are
-dealing with floods.  In Figure  [[fig:cd]] is shown two quickbird images,
-before  and  after a  flooding.   The  objective  is to  identify  the
-impacted area to provide a map of these zones
-
-#+CAPTION: False colours images of Lhonga Leupung area (a) before and (b) after flooding.
-#+NAME: fig:cd
-#+BEGIN_figure :options [h]
-#+BEGIN_LaTeX 
-  \centering
-  \begin{tabular}{cc}
-    \includegraphics[width=0.45\linewidth]{figures/tsunami_before.jpg}&\includegraphics[width=0.45\linewidth]{figures/tsunami_after.jpg}\\
-    (a)&(b)
-  \end{tabular}
-#+END_LaTeX
-#+END_figure
-
-#+BEGIN_work
-1) Characterize the  impacted zones in terms  of radiometric behavior,
-   /i.e./, what is the variation in terms of spectral values. And why ?
-2) Define the processing chain to extract these areas.
-3) Implement the processing chain with the graphical modeler.
-#+END_work
-
-#+CAPTION: Google view of the impacted area. The red square represents the area of Figure [[fig:cd]].
-#+NAME: fig:larger
-#+ATTR_LATEX: :width 0.75\textwidth
-[[file:./../figures/google_bridge.jpg]]
-
 * Classification of remote sensing images                             :sigma:
 :PROPERTIES:
 :FORMATION: Presential
@@ -516,7 +478,7 @@ repertory where the data are, learning the KNN classifier with default
 parameters do the following, classifying the whole image and computing
 the confusion matrix reduce to
 
-#+BEGIN_SRC sh :exports both :results code
+#+BEGIN_SRC sh
 otbcli_TrainImagesClassifier \
     -io.il fabas_12_10_2013.tif \
     -io.vd train_fabas.shp \
@@ -542,7 +504,7 @@ to process strings.
 
 Let's start with an example, to run the first application
 
-#+BEGIN_SRC python :exports both :session
+#+BEGIN_SRC python
 # Load the module
 import os
 
@@ -554,7 +516,7 @@ os.system('otbcli_ComputeConfusionMatrix -in fabas_classif.tif -out matconf.csv 
 
 or equivalently:
 
-#+BEGIN_SRC python :exports both :session
+#+BEGIN_SRC python
 # Load the module
 import os
 
@@ -756,7 +718,7 @@ classification accuracy.
 
 How to do it ? Just test  all the possible combinations! Be aware that
 using =t1=  and =t2= is  the same than  using =t2= and  =t1=. Here we  have 13
-dates, so the  total number of couples is  src_calc{13*12/2}. I really
+dates, so the  total number of couples is  . I really
 hope you can use bash script now ...
 
 The code given  figure [[code:best:dates]] might help you.  It extracts all
@@ -766,7 +728,7 @@ repertory, the files ended with =*m.tif=.
 #+CAPTION: Bash script to get all the possible couples of files.
 #+NAME: code:best:dates
 #+BEGIN_figure
-#+BEGIN_SRC sh :exports code
+#+BEGIN_SRC sh
 FILE=`ls *m.tif` # Get all the files that end with 'm.tif'
 EFILE=''
 for file in $FILE
@@ -878,26 +840,26 @@ distributions. It  can be used  directly from the  prompt (interactive
 mode), or  by writing a file  with a set  of commands to be  run. This
 file should start with the line
 
-#+BEGIN_SRC sh :exports code
+#+BEGIN_SRC sh
 #!/bin/bash
 #+END_SRC
 In  the following,  it is  assumed  that we  are working  on the  file
 =script.sh=. To insert comment inside the script, the symbol ~#~ has to be
 used.
 
-#+BEGIN_SRC sh :exports code
+#+BEGIN_SRC sh
 # This is a comment
 #+END_SRC
 With Linux, a file can be  /writable/, /readable/ and/or /executable/. To be
 run as a script, it should be at least /executable/ by the OS. It can be
 by done by running the following command:
 
-#+BEGIN_SRC sh :exports code
+#+BEGIN_SRC sh
 chmod +x script.sh
 #+END_SRC
 To run it, just do
 
-#+BEGIN_SRC sh :exports code
+#+BEGIN_SRC sh
 ./script.sh
 #+END_SRC
 
@@ -911,7 +873,7 @@ To run it, just do
 
 For instance, to get all the =tif= files in the current folder:
 
-#+BEGIN_SRC sh :exports both
+#+BEGIN_SRC sh
 ls *tif
 fabas_10_12_2013.tif  fabas_12_10_2013.tif
 #+END_SRC
@@ -919,7 +881,7 @@ fabas_10_12_2013.tif  fabas_12_10_2013.tif
 *** Variables
 In shell, a variable is a string (not a number). It can be defined as:
 
-#+BEGIN_SRC sh :exports both :session s8
+#+BEGIN_SRC sh
 var1='Mathieu' # Store "Mathieu" in variables "var1"
 var2='Fauvel'
 var3='34'
@@ -931,7 +893,7 @@ Be  careful to  spaces: there  are no  spaces, otherwise  an error  is
 returned!  A  variable is  displayed using the  =echo= function  and the
 variable is accessed with the command =$=.
 
-#+BEGIN_SRC sh :exports both :session s8 :results code
+#+BEGIN_SRC sh
 echo $var1 $var2      # print "Mathieu Fauvel"
 echo "$var3 ans"      # print "33 ans"
 echo '$var3 ans'      # print "$var3 ans"
@@ -953,7 +915,7 @@ when the  script is called.  They are  accessible using the  command =$=
 following by the order number of appearance when the script is
 called. Let define the =script.sh= file.
 
-#+BEGIN_SRC sh :exports code :tangle script.sh
+#+BEGIN_SRC sh
 # ./script.sh Name FamilyName Age
 echo $1 $2
 echo "J ai (eu) $3 ans !"
@@ -961,7 +923,7 @@ echo "J ai (eu) $3 ans !"
 
 When we do this, we have the following output:
 
-#+BEGIN_SRC sh :results code :exports both
+#+BEGIN_SRC sh
 chmod +x script.sh
 ./script.sh Mathieu Fauvel 33
 #+END_SRC
@@ -977,7 +939,7 @@ As in any programming language, loop are very useful to apply a series
 of processing  to several  elements of a  sequence. The  example below
 applies a processing on all /tif/ files of the current directory:
 
-#+BEGIN_SRC sh :export code
+#+BEGIN_SRC sh
 for i in *.tif # For all tif file
 do
     cp $i ndvi_$i # create a new file and add ndvi_ at the beginning of the filename
@@ -986,7 +948,7 @@ done
 *** Sequence
 It is possible to define sequences of string like this:
 
-#+BEGIN_SRC sh :exports both :results code
+#+BEGIN_SRC sh
 for name in bayes libsvm knn rf
 do
     echo $name
@@ -1003,7 +965,7 @@ rf
 
 Sequences of numbers can be defined like this:
 
-#+BEGIN_SRC sh :exports both :results code
+#+BEGIN_SRC sh
 for i in `seq 1 5`
 do
 echo $i
@@ -1031,7 +993,7 @@ more than this short introduction.
 Handling  strings with  python is  very easy.  It is  possible to  add
 strings together, as with number! Pay attention to spaces...
 
-#+BEGIN_SRC python 
+#+BEGIN_SRC python
 name="Mathieu"
 surname="Fauvel"
 print name + surname
@@ -1045,7 +1007,7 @@ MathieuFauvel
 To use numbers in strings, it is necessary to convert them, using the function =str=
 
 #+BEGIN_SRC python
-print "Bonjour j'ai eu " + str(33) + " ans"
+print "Bonjour j\'ai eu " + str(33) + " ans"
 #+END_SRC
 
 #+RESULTS:
@@ -1059,7 +1021,7 @@ It is very  easy to iterate over  a list with python. The  list can be
 made of numbers, strings etc ...  Since a list is [[https://docs.python.org/2/glossary.html][iterable]], defining a
 =for= loop is just:
 
-#+BEGIN_SRC python 
+#+BEGIN_SRC python
 listeNumber = [1,2,3,4]
 print listeNumber
 for item in listeNumber:
@@ -1091,197 +1053,15 @@ rf
 :END:
 ** Visualization
 *** Get pixels mean values on collaborative spreadsheet
-#+BEGIN_SRC python :exports none
-import scipy as sp
-import urllib2
-import time
-import os
-import matplotlib.pyplot as plt
-import matplotlib
-matplotlib.style.use('ggplot')
-
-URL = ['https://framacalc.org/fauvel_rs_water','https://framacalc.org/fauvel_rs_grassland','https://framacalc.org/fauvel_rs_forest','https://framacalc.org/fauvel_rs_baresoil']
-LABEL = ['Water','Grassland','Forest','Bare soil']
-COLOR = ['b','g','r','m']
-fig=plt.figure()
-
-
-for i,url in enumerate(URL):
-    try:
-        with open('temp.csv','wb') as file:
-            file.write(urllib2.urlopen(url+'.csv').read())
-        data = sp.genfromtxt('temp.csv',delimiter=',',skip_header=1)
-        os.remove("temp.csv")
-
-        m,s=data.mean(axis=0),data.std(axis=0)
-
-        ax = fig.add_subplot(4,1,i+1)
-        ax.clear()
-        ax.plot(range(1,5),m,'k',lw=2)
-        ax.set_title(LABEL[i])
-        ax.set_ylim([0,1000])
-        plt.draw()
-        time.sleep(1)
-    except KeyboardInterrupt:
-        exit()
-    except:
-        print("Error in reading class {0}".format(LABEL[i]))
-
-plt.show()
-#+END_SRC
-
-#+RESULTS:
-: None
 *** Boxplots
-#+BEGIN_SRC python :exports none
-import scipy as sp
-import urllib2
-import time
-import os
-import matplotlib.pyplot as plt
-import matplotlib
-matplotlib.style.use('ggplot')
-
-URL = ['https://framacalc.org/fauvel_rs_water','https://framacalc.org/fauvel_rs_grassland','https://framacalc.org/fauvel_rs_forest','https://framacalc.org/fauvel_rs_baresoil']
-LABEL = ['Water','Grassland','Forest','Bare soil']
-
-fig=plt.figure()
-for i,url in enumerate(URL):
-    try:
-        with open('temp.csv','wb') as file:
-            file.write(urllib2.urlopen(url+'.csv').read())
-        data = sp.genfromtxt('temp.csv',delimiter=',',skip_header=1)
-        os.remove("temp.csv")
-        
-        ax = fig.add_subplot(4,1,i+1)
-        plt.boxplot(data)
-        ax.set_title(LABEL[i])
-        ax.set_ylim([0,1000])
-    except KeyboardInterrupt:
-        exit()
-    except:
-            print("Error in reading class {0}".format(LABEL[i]))
-plt.show()
-#+END_SRC
-
-#+RESULTS:
-: None
-
 ** Change detection
-#+BEGIN_SRC sh :exports none
-#!/bin/bash
-
-# NDVI BEFORE
-otbcli_BandMath -il tsunami_before.dat -out ndvi_before.tif -exp "(im1b4-im1b3)/(im1b4+im1b3)"
-
-# NDVI AFTER
-otbcli_BandMath -il tsunami_after.dat -out ndvi_after.tif -exp "(im1b4-im1b3)/(im1b4+im1b3)"
-
-# Diff NDVI
-otbcli_BandMath -il ndvi_after.tif ndvi_before.tif -out temp.tif -exp "im1b1-im2b1"
-otbcli_BandMath -il temp.tif -out diff.tif -exp "(im1b1>1?1:im1b1)" # if(im1b1>1,1,im1b1)
-
-# Seuil
-otbcli_BandMath -il diff.tif -out floods.tif -exp "(im1b1<-0.4?1:0)" # if(im1b1<-0.4,1,im1b1)
-#+END_SRC
 ** Classification
-#+BEGIN_SRC sh :exports none
-# TrainClassifier
-otbcli_TrainImagesClassifier -io.il fabas_12_10_2013.tif -io.vd train_fabas.shp -io.out model_knn -classifier knn
-
-# Predict
-otbcli_ImageClassifier -in fabas_12_10_2013.tif -model model_knn -out classif_knn.tif
-
-# Confusion
-otbcli_ComputeConfusionMatrix -in classif_knn.tif -out confu_knn.csv -ref vector -ref.vector.in valid_fabas.shp
-#+END_SRC
 ** Comparison of several classifier and several  data set
-#+BEGIN_SRC python :exports none
-import scipy as sp
-import urllib2
-import time
-import os
-import matplotlib.pyplot as plt
-
-url = 'https://ethercalc.org/fauvel_rs_classification_2'
-classifier =['SVM','RF','GMM','KNN']
-
-# Read the file
-with open('temp.csv','wb') as file:
-    file.write(urllib2.urlopen(url+'.csv').read())
-data = sp.genfromtxt('temp.csv',delimiter=',',skip_header=2)
-os.remove("temp.csv")
-
-index = sp.arange(4)
-bar_width = 0.35
-opacity = 0.4
-error_config = {'ecolor': '0.3','lw':2,'capsize':5, 'capthick':2}
-
-# Compute the statistics
-for i in range(4):
-    m,s=sp.nanmean(data,axis=0),sp.nanstd(data,axis=0)
-    plt.figure()
-    plt.bar(index,m[i*4+1:i*4+5],bar_width,alpha=opacity,color='b',yerr=s[i*4+1:i*4+5],error_kw=error_config)
-    plt.xticks(index+bar_width/2,classifier)
-    plt.axis([-0.5, 3.5, 0, 1])
-    plt.grid()
-plt.show()
-
-#+END_SRC
-
-#+BEGIN_SRC python :exports
+#+BEGIN_SRC python
 import os
 
-#+END_SRC
-#+RESULTS:
-#+BEGIN_SRC sh :exports none
-for name in fabas*.tif
-do
-    for classifier in bayes svm rf knn
-    do
-	# Train
-	otbcli_TrainImagesClassifier -io.il ${name} io.vd train_fabas.shp -io.out model.txt -classifier ${classifier}
-
-	# Predict
-	otbcli_ImageClassifier -in ${name} -model model.txt -out classif.tif
-	
-	# Compute confusion
-	otbcli_ComputeConfusionMatrix -in classif.tif -ref vector -ref.vector.in valid_fabas.shp -out confu_${classifier}_${name%%.tif}.csv
-    done
-done
-rm model.txt classif.tif
 #+END_SRC
 ** Classification Multidates from tabular [[tab]]
-#+NAME: Addition
-#+BEGIN_SRC python :var tab=tab :results output :exports none
-import matplotlib.pyplot as plt
-
-plt.figure()
-for i,t in enumerate(tab):
-    plt.plot(range(1,5),t[3:],label='p'+str(i+1))
-
-plt.legend()
-plt.show()
-#+END_SRC
-
-#+RESULTS: Addition
-
-#+NAME: Concatenation
-#+BEGIN_SRC python :var tab=tab :results output :exports none
-import matplotlib.pyplot as plt
-import scipy as sp
-plt.figure()
-x =sp.zeros((3,8))
-for i in range(3):
-    x[i,:4]=tab[2*i][3:]
-    x[i,4:]=tab[2*i+1][3:]
-    plt.plot(range(1,9),x[i,:],label='p'+str(i+1))
-
-plt.legend()
-plt.show()
-#+END_SRC
-
-#+RESULTS: Concatenation
 ** Simulation for section "influence of the spatial distribution of the learning samples"
 #+BEGIN_SRC python
 import scipy as sp
@@ -1306,161 +1086,8 @@ res = [[sp.mean(oa_train),sp.std(oa_train)],[sp.mean(oa_valid),sp.std(oa_valid)]
 sp.savetxt('acc.csv',res,delimiter=',',fmt='%1.3f')
 #+END_SRC
 
-#+BEGIN_SRC sh :exports none
-# Iteration on the max number of training samples
-for classifier in bayes rf knn
-do
-    # do repetition
-    for rep in `seq 1 20`
-    do
-	# trainclassifier
-	otbcli_TrainImagesClassifier -io.il fabas_12_10_2013.tif -io.vd train_fabas.shp -io.out model -classifier ${classifier} -sample.mt 500
-	
-	# Predict
-	otbcli_ImageClassifier -in fabas_12_10_2013.tif -model model -out classif.tif
-	
-	# Confusion on the training set
-	otbcli_ComputeConfusionMatrix -in classif.tif -out confu_train_${rep}.csv -ref vector -ref.vector.in train_fabas.shp
-	
-	# Confusion on the validation set
-	otbcli_ComputeConfusionMatrix -in classif.tif -out confu_valid_${rep}.csv -ref vector -ref.vector.in valid_fabas.shp
-    done
-    python compute_accuracy.py # Compute the accuracy
-    mv acc.csv acc_${classifier}.csv
-    rm confu_*.csv model classif.tif # Cleaning
-done
-
-#+END_SRC
 ** Sélection du meilleurs couple de dates
-#+BEGIN_SRC sh :exports none
-# Compute the NDVI
-for name in Sud*.tif
-do
-    otbcli_BandMath -il ${name} -out ndvi_${name} -exp "(im1b4-im1b3)/(im1b4+im1b3)" -progress 0
-done
-
-# Compute the classification accuracy for each couple of dates
-FILE=`ls ndvi_*m.tif` # Get all the files that end with 'm.tif'
-EFILE=''
-for file in $FILE
-do
-    # Add  variables to  be excluded  from the  second loop:  EFILE ->
-    # Exclude file
-    EFILE=`echo $EFILE $file`
-
-    # Exclude these variables from the next loop
-    FILES=$FILE # Copy the variable
-    for efile in $EFILE
-    do
-	FILES=`echo  $FILES |  sed "s/\b$efile\b//g"`  # Exclude  from
-						    # FILES   all  the
-						    # file  from EFILE
-						    # (substitute with
-						    # nothing)
-    done
-
-    # Do the process, given the couple of images
-    for files in $FILES
-    do
-	# Concatenation
-	otbcli_ConcatenateImages -il $file $files -out ndvi_concat.tif -progress 0
-	
-	# Train
-	otbcli_TrainImagesClassifier -io.il ndvi_concat.tif -io.vd rpg_pur_train.shp  -io.out model -classifier rf -progress 0 
-
-	# Classify the image
-	otbcli_ImageClassifier -in ndvi_concat.tif -model model -out classif.tif -progress 0
-
-	# Confusion
-	otbcli_ComputeConfusionMatrix -in classif.tif -out confu_${file:22:8}_${files:22:8}.csv -ref vector -ref.vector.in rpg_purs_validation.shp -progress 0
-		
-    done
-done
-
-#+END_SRC
-
-#+BEGIN_SRC python :exports none
-import scipy as sp
-import glob
-import matplotlib.pyplot as plt
-
-CONFU = glob.glob('confu_20*_*.csv')
-CONFU.sort()
-
-OA=[]
-
-for confu in CONFU:
-    temp = sp.genfromtxt(confu,delimiter=',',skip_header=2)
-    OA.append(100.0*sp.diag(temp).sum()/temp.sum())
-ind = sp.argmax(OA)
-
-# plot the result
-plt.plot(OA)
-plt.plot(ind,OA[ind],'sk')
-plt.title('Best couples of dates: ' + CONFU[ind])
-plt.show()
-#+END_SRC
-
-#+BEGIN_SRC r :exports none
-LISTE=list.files(pattern='confu_')
-n=length(LISTE)
-OA=array(dim=n)
-for(i in 1:n){
-  nom=LISTE[i]
-  mat <- as.matrix(read.csv(nom, header=FALSE, comment.char="#"))
-  OA[i]=sum(diag(mat))/sum(mat)
-}
-OA
-index=which(OA==max(OA))
-LISTE[index]
-plot(1:n,OA,type='l',col='red',lwd=2)
-points(index,OA[index],pch=19,col='green')
-
-#+END_SRC
 ** Dynamic Habitat
-#+BEGIN_SRC sh :exports none
-WDIR=/home/mfauvel/Dropbox/temp_S4/SITS/
-c=1
-# Compute the NDVI
-for i in ${WDIR}*m.tif
-do
-    # Compute the NDVI
-    otbcli_BandMath -il $i -out temp.tif  -exp "(im1b4-im1b3)/(im1b4+im1b3)"
-
-    # Check for outliers
-    #otbcli_BandMath -il temp.tif -out ndvi_${c}.tif -exp "((im1b1<-1?-0.99:(im1b1>1?1:im1b1))+1)/2"
-    otbcli_BandMath -il temp.tif -out ndvi_${c}.tif -exp "(im1b1+1)/2"
-    rm temp.tif
-    c=$((c+1))    
-done
-
-# Compute the SITS
-otbcli_ConcatenateImages -il ndvi_{1..13}.tif -out sits.tif
-rm ndvi_*.tif
-
-# Compute the cummulative greenness
-lotbcli_BandMath -il sits.tif -out cumgreen.tif -exp "im1b1+im1b2+im1b3+im1b4+im1b5+im1b6+im1b7+im1b8+im1b9+im1b10+im1b11+im1b12+im1b13"
-
-# Compute the minimal annual cover
-otbcli_BandMath -il sits.tif -out mincover.tif -exp "min(im1b1,im1b2,im1b3,im1b4,im1b5,im1b6,im1b7,im1b8,im1b9,im1b10,im1b11,im1b12,im1b13)"
-
-# Compute the seasonnal variation
-otbcli_BandMath -il sits.tif cumgreen.tif -out seasonvar.tif -exp "sqrt(((im2b1/13-im1b1)^2+(im2b1/13-im1b2)^2+(im2b1/13-im1b3)^2+(im2b1/13-im1b4)^2+(im2b1/13-im1b5)^2+(im2b1/13-im1b6)^2+(im2b1/13-im1b7)^2+(im2b1/13-im1b8)^2+(im2b1/13-im1b9)^2+(im2b1/13-im1b10)^2+(im2b1/13-im1b11)^2+(im2b1/13-im1b12)^2+(im2b1/13-im1b13)^2)/13)/im2b1*13"
-
-# Create a multiband images stacking all the three indices
-otbcli_ConcatenateImages -il cumgreen.tif mincover.tif seasonvar.tif -out temp.tif
-
-# Rescale value between -1 and 1 for each spectral bands
-otbcli_Rescale -in temp.tif -out stack.tif -outmin -1 -outmax 1
-rm temp.tif
-
-# Apply KMEANS classification for different number of classes
-for iter in {1..10}
-do
-    otbcli_KMeansClassification -in stack.tif -ts 1000000 -out kmean_${iter}.tif -nc 4 -ram 2048 -outmeans centroids_${iter} -rand ${iter}
-done
-#+END_SRC
-
 * TO DO                                                            :noexport:
 ** A compléter
 - [X] Ecrire le fonctionnement des TD
@@ -1522,7 +1149,4 @@ done
 #+BEGIN_SRC emacs-lisp
 (setq debug-on-error t)
 #+END_SRC
-
-#+RESULTS:
-: t
 
