@@ -1,6 +1,6 @@
 #+TITLE: Labwork Remote Sensing
 #+SUBTITLE: How to use and to extract information from remote sensing images for land management ?
-#+DATE: 2015-2016
+#+DATE: \today
 #+AUTHOR: Mathieu Fauvel
 #+EMAIL: mathieu.fauvel@ensat.fr
 #+LANGUAGE: en
@@ -183,6 +183,41 @@ Images are stored using the [[https://trac.osgeo.org/geotiff/][GeoTIFF]] format.
 of  the TIFF  format,  which allows  to  embed geospatial  information
 within the file. GeoTIFF can be read by most of the remote sensing and
 GIS software.
+** Formosat-2 SITS
+#+BEGIN_LaTeX
+\begin{figure}[tb]
+  \centering
+  \begin{tikzpicture}
+    \begin{axis}[hide y axis,axis lines=middle,
+      date coordinates in=x,
+      xticklabel={\texttt{\month}},
+      x tick label style={},
+      date ZERO=2011-12-12,
+      xmin=2011-12-15, 
+      xmax=2013-01-15,
+      ymin=-0.25,ymax=0.25,
+      xtick={{2012-01-01},{2012-02-01},{2012-03-01},{2012-04-01},{2012-05-01},{2012-06-01},{2012-07-01},{2012-08-01},{2012-09-01},{2012-10-01},{2012-11-01},{2012-12-01}},clip=false]
+      \addplot [blue,thick,mark=*,only marks]coordinates{
+        (2012-01-12,0)
+        (2012-02-18,0)
+        (2012-03-07,0)
+        (2012-03-27,0)
+        (2012-05-03,0)
+        (2012-06-20,0)
+        (2012-07-07,0)
+        (2012-07-17,0)
+        (2012-08-10,0)
+        (2012-08-22,0)
+        (2012-11-01,0)
+        (2012-12-15,0)
+        (2012-12-31,0)
+        };      
+      \end{axis}
+  \end{tikzpicture}
+  \caption{Acquisition dates for the SITS 2012.}
+  \label{fig:SITS}
+\end{figure}
+#+END_LaTeX
 * Visualization of remote sensing data                                :sigma:
 :PROPERTIES:
 :FORMATION: Presential
@@ -379,11 +414,51 @@ http://docs.qgis.org/2.14/en/docs/user_manual/processing/modeler.html.
 Define your model  to perform the segmentation of  intro three classes
 of the NDVI.
 #+END_work
+* Change detection: /Detection of floods/                               :sigma:
+:PROPERTIES:
+:FORMATION: Presential
+:DURATION: 01:30
+:SEQUENCE: 3
+:END:
+Change detection  in remote sensing consists  in detecting differences
+between two  images, or  a set of  images.  It can  be used  to detect
+changes in vegetation properties or in land cover.  It is also used in
+disaster management, to detect impacted areas. In this labwork, we are
+dealing with floods.  In Figure  [[fig:cd]] is shown two quickbird images,
+before  and  after a  flooding.   The  objective  is to  identify  the
+impacted area to provide a map of these zones
+
+#+CAPTION: False colours images of Lhonga Leupung area (a) before and (b) after flooding.
+#+NAME: fig:cd
+#+BEGIN_figure :options [h]
+#+BEGIN_LaTeX 
+  \centering
+  \begin{tabular}{cc}
+    \includegraphics[width=0.45\linewidth]{figures/tsunami_before.jpg}&\includegraphics[width=0.45\linewidth]{figures/tsunami_after.jpg}\\
+    (a)&(b)
+  \end{tabular}
+#+END_LaTeX
+#+END_figure
+
+#+BEGIN_work
+1) Characterize the  impacted zones in terms  of radiometric behavior,
+   /i.e./, what is the variation in terms of spectral values. And why ?
+2) Define the processing chain to extract these areas.
+3) Implement the processing chain with the graphical modeler.
+4) _Optional_: Implement  the same processing chain  with shell scripts,
+   see [[#sec:shell]].
+#+END_work
+
+#+CAPTION: Google view of the impacted area. The red square represents the area of Figure [[fig:cd]].
+#+NAME: fig:larger
+#+ATTR_LATEX: :width 0.75\textwidth
+[[file:./../figures/google_bridge.jpg]]
+
 * Classification of remote sensing images                             :sigma:
 :PROPERTIES:
 :FORMATION: Presential
 :DURATION: 04:00
-:SEQUENCE: 3
+:SEQUENCE: 3-4
 :END:
 
 ** Introduction
@@ -531,17 +606,23 @@ os.system(classify)
 os.system(validate)
 #+END_SRC
 
+Additional usefull references are  given section [[#sec:python]], take the
+time to read them.
+
 #+BEGIN_work
 1) Write  the script  to learn  the model  for all  the classification
    methods and with each date.  Each time extract the confusion matrix
    and compute the global accuracy and the class average accuracy.
 2) Report the results on the /collaborative spreadsheet/.
+#+BEGIN_CENTER
+[[https://framacalc.org/fauvel_res_classification]]
+#+END_CENTER
 3) For  the best method  in terms of classification  accuracy, discuss
    about the errors obtained with the confusion matrix.
 4)  Classify the  whole image  and  compare by  visual inspection  the
    errors with what you have inferred from the confusion matrix.
 #+END_work
-** Multi dates
+** Multi dates                                                    :noexport:
 From the  same area, two dates  are available.  It is  possible to use
 them conjointly in  many ways.  Two possible  solutions are considered
 here. The first one consider the second date as additional data, /i.e./,
@@ -580,31 +661,58 @@ _Works_:
 3) Report the results on the /collaborative spreadsheet/.   
 ** Influence of the spatial distribution of the learning samples
 :PROPERTIES:
-:FORMATION: Non Presential
-:DURATION: 01:40
+:FORMATION: Presential
+:DURATION: 01:00
 :SEQUENCE: 4
-:DAYS:     [2016-04-01 Fri 10:20-12:00]
 :END:
-_Work_:
-
 In order to evaluate the influence of the validation samples, you will
 investigate  several   reference  layers  to  compute   the  confusion
 matrix. Since OTB only select a few samples from all the available one
 (can be  controlled with  the options  =samples.mt= and  =samples.mv=), we
 need to repeat the experiment several times, to avoid bias.
 
-Select one classifier for all the experiments. You are encouraged to
-define a shell script ...
-Repeat 20 times the following test
+/Select one classifier  for all the experiments. You  are encouraged to
+define a python script./
+
+#+BEGIN_work
+ Repeat *20* times the following test:
 1. Learn with /train_fabas/ and compute the confusion matrix with
    /train_fabas/. Save the confusion matrix for each repetition.
-2.   Learn  with  /train_fabas/  and compute  the  confusion  matrix  with
-   /valid_fabas/. Save the confusion matrix for each repetition.
+2. Learn  with  /train_fabas/  and compute  the  confusion  matrix  with
+ /valid_fabas/. Save the confusion matrix for each repetition.
+3. Compute the average global accuracy and the mean class accuracy and
+   their standard deviation. /You can check the figure [[fig:code:csv:classif]] to do it automatically/.
 
-Compute the  average global accuracy  and the mean class  accuracy and
-their standard deviation.
 
-Discuss about the results.
+Discuss about the results. 
+#+END_work
+
+#+CAPTION: Sample code to process a set of ~csv~ files.
+#+NAME: fig:code:csv:classif
+#+BEGIN_figure
+#+BEGIN_SRC python
+import scipy as sp
+import glob
+
+NAMES_TRAIN,NAMES_VALID = glob.glob('confu_train_*.csv'),glob.glob('confu_valid_*.csv')
+NAMES_TRAIN.sort()
+NAMES_VALID.sort()
+
+oa_train,oa_valid = [],[]
+
+for name_train,name_valid in zip(NAMES_TRAIN,NAMES_VALID):
+    temp = sp.genfromtxt(name_train,delimiter=',',skip_header=2)
+    oa = 100*sp.diag(temp).sum()/temp.sum()
+    oa_train.append(oa)
+    temp = sp.genfromtxt(name_valid,delimiter=',',skip_header=2)
+    oa = 100*sp.diag(temp).sum()/temp.sum()
+    oa_valid.append(oa)
+    
+# Print mean accuracy
+res = [[sp.mean(oa_train),sp.std(oa_train)],[sp.mean(oa_valid),sp.std(oa_valid)]]
+sp.savetxt('acc.csv',res,delimiter=',',fmt='%1.3f')
+#+END_SRC
+#+END_figure
 * Satellite Image Time Series                                        :export:
 :PROPERTIES:
 :FORMATION: Presential
@@ -766,12 +874,11 @@ Analyze the three best results in terms of accuracy. Interpret the
 results given the classes to be classified, the geographical area and
 its practical consideration (should we buy the complete SITS, or just
 some periods of the years? ...)
-* Dynamic Habitat Index                                              :export:
+* Dynamic Habitat Index                                               :sigma:
 :PROPERTIES:
 :FORMATION: Presential
 :DURATION: 04:00
-:SEQUENCE: 7
-:DAYS:     [2016-04-05 Tue 13:30-17:30]
+:SEQUENCE: 5
 :END:
 ** Introduction
 In this labworks, we are going to compute several indices of habitat
@@ -790,26 +897,57 @@ http://dx.doi.org/10.1016/j.ecolind.2008.01.007.
 
 These indicators underly vegetation dynamic, they are usually computed
 in the /fraction of photosynthetically active radiation (fPAR)/ absorbed
-by  the vegetation.   However these  data  are not  available for  the
-labwork.  So  in this lab,  the NDVI will  be used.  The  first (easy)
-part is to convert  NDVI values to fPAR like values.   Since fPAR is a
-fraction, its values  are between 0 and 1. Using  band math operators,
-you have  to convert the  interval range  of NDVI to  0 and 1  using a
-simple linear function: $f(x)=ax+b$. You have to find $a$ and $b$ !
+by the vegetation.  However these data  are not available.  So in this
+lab, the NDVI will be used.  
+
+
+#+BEGIN_work
+The first (easy)  part is to convert NDVI values  to fPAR like values.
+Since fPAR is a fraction, its values  are between 0 and 1. You have to
+convert the interval  range of NDVI to  0 and 1 using  a simple linear
+function: $f(x)=ax+b$. You have to find $a$ and $b$ !
+#+BEGIN_LaTeX
+\begin{eqnarray*}
+  f:[-1,1] &\to& [0,1]\\
+  x&\mapsto&f(x)=ax+b
+\end{eqnarray*}
+#+END_LaTeX
+#+END_work
+
+** Construction of the SITS
+Before analyzing the  SITS, you need to built it.   In these labworks,
+two SITS  will be considered. One  build will all the  spectral bands,
+and the other one using the NDVI only.
+
+#+BEGIN_work
+1. Compute the NDVI for each date,
+2. Convert to fPAR-like values,
+3. Concatenate all the dates,
+4. Using QGIS, plot the temporal profile for several objects.
+#+END_work
 
 ** Computation of the dynamic indices
 The second part of the labwork  concern the computation of the dynamic
-indices. Three indices have been defined:
+indices.   Let  us   not  the  vector  of  fPAR  values   of  pixel  i
+$\mathbf{x}_i=[\mathbf{x}_i(t_1),\ldots,\mathbf{x}_i(t_d)]$.     Three
+indices have been defined:
 1. The cumulative annual greenness,
+#+BEGIN_LaTeX
+$$CG = \sum_{j=1}^d\mathbf{x}_i(t_j)$$
+#+END_LaTeX
 2. The annual minimum cover,
+#+BEGIN_LaTeX
+$$MC = \min_{j}\left[\mathbf{x}_i(t_1),\ldots,\mathbf{x}_i(t_j),\ldots,\mathbf{x}_i(t_d)\rigth]$$
+#+END_LaTeX
 3. The greenness coefficient of variation.
+#+BEGIN_LaTeX
+$$GCV = \frac{\sigma_{\mathbf{x}_i}}{\bar{\mathbf{x}}_i}$$
+#+END_LaTeX
 
-All can be computed using band math operators. Just do it !
-
-_Works_:
-1. Write the shell script to compute all indices.
+#+BEGIN_work
+1. Write the python scripts to compute all indices.
 2. Concatenate all the indices into one multiband image.
-
+#+END_work
 ** Characterization of ecozones
 
 Perform a  segmentation of the SITS  using the three indices  as input
@@ -817,12 +955,13 @@ values. A  primarily study suggests  the number  of ecozones is  =4= for
 this area. Look at the function =otbcli_KMeansClassification= to perform
 the automatic segmentation of you data.
 
-_Works_:
+#+BEGIN_work
 1. Performs the segmentation with 4 classes and save the values of the
    estimated centroid.
 2. Extract the values of the centroid and interpret their values in
    terms of habitat.
 3. Do a visual validation of your results on the thematic map.
+#+END_work
 * Appendix                                                            :sigma:
 ** Short introduction to shell
 :PROPERTIES:
@@ -984,6 +1123,7 @@ done
 :PROPERTIES:
 :exports:  both
 :results:  output code
+:CUSTOM_ID: sec:python
 :END:
 A     good    starting     point     is     the    following     link:
 http://kitchingroup.cheme.cmu.edu/pycse/pycse.html.   Here,   I   just
@@ -1047,21 +1187,199 @@ libsvm
 rf
 #+END_SRC
 
+*** TODO Glob
 * Python and Shell Codes for the labworks                          :noexport:
 :PROPERTIES:
 :exports:  both
 :END:
 ** Visualization
 *** Get pixels mean values on collaborative spreadsheet
+#+BEGIN_SRC python
+import scipy as sp
+import urllib2
+import time
+import os
+import matplotlib.pyplot as plt
+import matplotlib
+matplotlib.style.use('ggplot')
+
+URL = ['https://framacalc.org/fauvel_rs_water','https://framacalc.org/fauvel_rs_grassland','https://framacalc.org/fauvel_rs_forest','https://framacalc.org/fauvel_rs_baresoil']
+LABEL = ['Water','Grassland','Forest','Bare soil']
+COLOR = ['b','g','r','m']
+fig=plt.figure()
+
+
+for i,url in enumerate(URL):
+    try:
+        with open('temp.csv','wb') as file:
+            file.write(urllib2.urlopen(url+'.csv').read())
+        data = sp.genfromtxt('temp.csv',delimiter=',',skip_header=1)
+        os.remove("temp.csv")
+
+        m,s=data.mean(axis=0),data.std(axis=0)
+
+        ax = fig.add_subplot(4,1,i+1)
+        ax.clear()
+        ax.plot(range(1,5),m,'k',lw=2)
+        ax.set_title(LABEL[i])
+        ax.set_ylim([0,1000])
+        plt.draw()
+    except KeyboardInterrupt:
+        exit()
+    except:
+        print("Error in reading class {0}".format(LABEL[i]))
+
+plt.show()
+#+END_SRC
+
+#+RESULTS:
+: None
+
 *** Boxplots
+#+BEGIN_SRC python
+import scipy as sp
+import urllib2
+import time
+import os
+import matplotlib.pyplot as plt
+import matplotlib
+matplotlib.style.use('ggplot')
+
+URL = ['https://framacalc.org/fauvel_rs_water','https://framacalc.org/fauvel_rs_grassland','https://framacalc.org/fauvel_rs_forest','https://framacalc.org/fauvel_rs_baresoil']
+LABEL = ['Water','Grassland','Forest','Bare soil']
+
+fig=plt.figure()
+for i,url in enumerate(URL):
+    try:
+        with open('temp.csv','wb') as file:
+            file.write(urllib2.urlopen(url+'.csv').read())
+        data = sp.genfromtxt('temp.csv',delimiter=',',skip_header=1)
+        os.remove("temp.csv")
+        
+        ax = fig.add_subplot(4,1,i+1)
+        plt.boxplot(data)
+        ax.set_title(LABEL[i])
+        ax.set_ylim([0,1000])
+    except KeyboardInterrupt:
+        exit()
+    except:
+            print("Error in reading class {0}".format(LABEL[i]))
+plt.show()
+#+END_SRC
+
+#+RESULTS:
+: None
+
 ** Change detection
-** Classification
+#+BEGIN_SRC sh
+#!/bin/bash
+
+# NDVI BEFORE
+otbcli_BandMath -il tsunami_before.dat -out ndvi_before.tif -exp "(im1b4-im1b3)/(im1b4+im1b3)"
+
+# NDVI AFTER
+otbcli_BandMath -il tsunami_after.dat -out ndvi_after.tif -exp "(im1b4-im1b3)/(im1b4+im1b3)"
+
+# Diff NDVI
+otbcli_BandMath -il ndvi_after.tif ndvi_before.tif -out temp.tif -exp "im1b1-im2b1"
+otbcli_BandMath -il temp.tif -out diff.tif -exp "(im1b1>1?1:im1b1)" # if(im1b1>1,1,im1b1)
+
+# Seuil
+otbcli_BandMath -il diff.tif -out floods.tif -exp "(im1b1<-0.4?1:0)" # if(im1b1<-0.4,1,im1b1)
+
+
+#+END_SRC
 ** Comparison of several classifier and several  data set
 #+BEGIN_SRC python
 import os
 
 #+END_SRC
-** Classification Multidates from tabular [[tab]]
+
+#+BEGIN_SRC python
+import scipy as sp
+import urllib2
+import time
+import os
+import matplotlib.pyplot as plt
+import matplotlib
+matplotlib.style.use('ggplot')
+
+url = 'https://framacalc.org/fauvel_res_classification'
+classifier =['SVM','RF','GMM','KNN']
+
+# Read the file
+with open('temp.csv','wb') as file:
+    file.write(urllib2.urlopen(url+'.csv').read())
+data = sp.genfromtxt('temp.csv',delimiter=',',skip_header=2)
+os.remove("temp.csv")
+
+index = sp.arange(4)
+bar_width = 0.35
+opacity = 0.4
+error_config = {'ecolor': '0.3','lw':2,'capsize':5, 'capthick':2}
+
+# Compute the statistics
+m,s=sp.nanmean(data,axis=0),sp.nanstd(data,axis=0)
+for i in xrange(2):
+    plt.figure()
+    plt.bar(index,m[i*4:i*4+4],width=bar_width,alpha=opacity,color='b',yerr=s[i*4:i*4+4],error_kw=error_config)
+    plt.xticks(index+bar_width/2,classifier)
+    plt.axis([-0.5, 3.5, 0.5, 1])
+    plt.grid('on')
+plt.show()
+#+END_SRC
+
+#+RESULTS:
+: None
+
+#+BEGIN_SRC sh
+for name in fabas*.tif
+do
+    for classifier in bayes svm rf knn
+    do
+	# Train
+	otbcli_TrainImagesClassifier -io.il ${name} io.vd train_fabas.shp -io.out model.txt -classifier ${classifier}
+
+	# Predict
+	otbcli_ImageClassifier -in ${name} -model model.txt -out classif.tif
+	
+	# Compute confusion
+	otbcli_ComputeConfusionMatrix -in classif.tif -ref vector -ref.vector.in valid_fabas.shp -out confu_${classifier}_${name%%.tif}.csv
+    done
+done
+rm model.txt classif.tif
+#+END_SRC
+** Classification Multidates from tabular [[tab]]                     :noexport:
+#+NAME: Addition
+#+BEGIN_SRC python :var tab=tab :results output
+import matplotlib.pyplot as plt
+
+plt.figure()
+for i,t in enumerate(tab):
+    plt.plot(range(1,5),t[3:],label='p'+str(i+1))
+
+plt.legend()
+plt.show()
+#+END_SRC
+
+#+RESULTS: Addition
+
+#+NAME: Concatenation
+#+BEGIN_SRC python :var tab=tab :results output
+import matplotlib.pyplot as plt
+import scipy as sp
+plt.figure()
+x =sp.zeros((3,8))
+for i in range(3):
+    x[i,:4]=tab[2*i][3:]
+    x[i,4:]=tab[2*i+1][3:]
+    plt.plot(range(1,9),x[i,:],label='p'+str(i+1))
+
+plt.legend()
+plt.show()
+#+END_SRC
+
+#+RESULTS: Concatenation
 ** Simulation for section "influence of the spatial distribution of the learning samples"
 #+BEGIN_SRC python
 import scipy as sp
@@ -1087,7 +1405,135 @@ sp.savetxt('acc.csv',res,delimiter=',',fmt='%1.3f')
 #+END_SRC
 
 ** Sélection du meilleurs couple de dates
-** Dynamic Habitat
+#+BEGIN_SRC sh
+# Compute the NDVI
+for name in Sud*.tif
+do
+    otbcli_BandMath -il ${name} -out ndvi_${name} -exp "(im1b4-im1b3)/(im1b4+im1b3)" -progress 0
+done
+
+# Compute the classification accuracy for each couple of dates
+FILE=`ls ndvi_*m.tif` # Get all the files that end with 'm.tif'
+EFILE=''
+for file in $FILE
+do
+    # Add  variables to  be excluded  from the  second loop:  EFILE ->
+    # Exclude file
+    EFILE=`echo $EFILE $file`
+
+    # Exclude these variables from the next loop
+    FILES=$FILE # Copy the variable
+    for efile in $EFILE
+    do
+	FILES=`echo  $FILES |  sed "s/\b$efile\b//g"`  # Exclude  from
+						    # FILES   all  the
+						    # file  from EFILE
+						    # (substitute with
+						    # nothing)
+    done
+
+    # Do the process, given the couple of images
+    for files in $FILES
+    do
+	# Concatenation
+	otbcli_ConcatenateImages -il $file $files -out ndvi_concat.tif -progress 0
+	
+	# Train
+	otbcli_TrainImagesClassifier -io.il ndvi_concat.tif -io.vd rpg_pur_train.shp  -io.out model -classifier rf -progress 0 
+
+	# Classify the image
+	otbcli_ImageClassifier -in ndvi_concat.tif -model model -out classif.tif -progress 0
+
+	# Confusion
+	otbcli_ComputeConfusionMatrix -in classif.tif -out confu_${file:22:8}_${files:22:8}.csv -ref vector -ref.vector.in rpg_purs_validation.shp -progress 0
+		
+    done
+done
+
+#+END_SRC
+
+#+BEGIN_SRC python
+import scipy as sp
+import glob
+import matplotlib.pyplot as plt
+
+CONFU = glob.glob('confu_20*_*.csv')
+CONFU.sort()
+
+OA=[]
+
+for confu in CONFU:
+    temp = sp.genfromtxt(confu,delimiter=',',skip_header=2)
+    OA.append(100.0*sp.diag(temp).sum()/temp.sum())
+ind = sp.argmax(OA)
+
+# plot the result
+plt.plot(OA)
+plt.plot(ind,OA[ind],'sk')
+plt.title('Best couples of dates: ' + CONFU[ind])
+plt.show()
+#+END_SRC
+
+#+BEGIN_SRC r
+LISTE=list.files(pattern='confu_')
+n=length(LISTE)
+OA=array(dim=n)
+for(i in 1:n){
+  nom=LISTE[i]
+  mat <- as.matrix(read.csv(nom, header=FALSE, comment.char="#"))
+  OA[i]=sum(diag(mat))/sum(mat)
+}
+OA
+index=which(OA==max(OA))
+LISTE[index]
+plot(1:n,OA,type='l',col='red',lwd=2)
+points(index,OA[index],pch=19,col='green')
+
+#+END_SRC
+** TODO Dynamic Habitat
+#+BEGIN_SRC sh
+WDIR=/home/mfauvel/Dropbox/temp_S4/SITS/
+c=1
+# Compute the NDVI
+for i in ${WDIR}*m.tif
+do
+    # Compute the NDVI
+    otbcli_BandMath -il $i -out temp.tif  -exp "(im1b4-im1b3)/(im1b4+im1b3)"
+
+    # Check for outliers
+    #otbcli_BandMath -il temp.tif -out ndvi_${c}.tif -exp "((im1b1<-1?-0.99:(im1b1>1?1:im1b1))+1)/2"
+    otbcli_BandMath -il temp.tif -out ndvi_${c}.tif -exp "(im1b1+1)/2"
+    rm temp.tif
+    c=$((c+1))    
+done
+
+# Compute the SITS
+otbcli_ConcatenateImages -il ndvi_{1..13}.tif -out sits.tif
+rm ndvi_*.tif
+
+# Compute the cummulative greenness
+lotbcli_BandMath -il sits.tif -out cumgreen.tif -exp "im1b1+im1b2+im1b3+im1b4+im1b5+im1b6+im1b7+im1b8+im1b9+im1b10+im1b11+im1b12+im1b13"
+
+# Compute the minimal annual cover
+otbcli_BandMath -il sits.tif -out mincover.tif -exp "min(im1b1,im1b2,im1b3,im1b4,im1b5,im1b6,im1b7,im1b8,im1b9,im1b10,im1b11,im1b12,im1b13)"
+
+# Compute the seasonnal variation
+otbcli_BandMath -il sits.tif cumgreen.tif -out seasonvar.tif -exp "sqrt(((im2b1/13-im1b1)^2+(im2b1/13-im1b2)^2+(im2b1/13-im1b3)^2+(im2b1/13-im1b4)^2+(im2b1/13-im1b5)^2+(im2b1/13-im1b6)^2+(im2b1/13-im1b7)^2+(im2b1/13-im1b8)^2+(im2b1/13-im1b9)^2+(im2b1/13-im1b10)^2+(im2b1/13-im1b11)^2+(im2b1/13-im1b12)^2+(im2b1/13-im1b13)^2)/13)/im2b1*13"
+
+# Create a multiband images stacking all the three indices
+otbcli_ConcatenateImages -il cumgreen.tif mincover.tif seasonvar.tif -out temp.tif
+
+# Rescale value between -1 and 1 for each spectral bands
+otbcli_Rescale -in temp.tif -out stack.tif -outmin -1 -outmax 1
+rm temp.tif
+
+# Apply KMEANS classification for different number of classes
+for iter in {1..10}
+do
+    otbcli_KMeansClassification -in stack.tif -ts 1000000 -out kmean_${iter}.tif -nc 4 -ram 2048 -outmeans centroids_${iter} -rand ${iter}
+done
+#+END_SRC
+
 * TO DO                                                            :noexport:
 ** A compléter
 - [X] Ecrire le fonctionnement des TD
@@ -1125,15 +1571,15 @@ sp.savetxt('acc.csv',res,delimiter=',',fmt='%1.3f')
 |------------------------------------------------------------------+----------------+----------+----------|
 | * Introduction                                                   | Presential     |     0:30 |        1 |
 |------------------------------------------------------------------+----------------+----------+----------|
-| * Data sets                                                      | Presential     |        0 |        1 |
+| * Data sets                                                      | Presential     |        0 |          |
 |------------------------------------------------------------------+----------------+----------+----------|
 | * Visualization of remote sensing data                           | Presential     |     1:10 |        1 |
 |------------------------------------------------------------------+----------------+----------+----------|
-| * Spectral indices: /Normalized Difference Vegetation Index/       | Presential     |    01:00 |        2 |
+| * Spectral indices: /Normalized Difference Vegetation Index/     | Presential     |    01:00 |        2 |
 |------------------------------------------------------------------+----------------+----------+----------|
 | * Segmentation of remote sensing images                          | Presential     |     2:00 |        2 |
 |------------------------------------------------------------------+----------------+----------+----------|
-| * Change detection: /Detection of floods/                          | Presential     |    01:00 |        2 |
+| * Change detection: /Detection of floods/                        | Presential     |    01:00 |        2 |
 |------------------------------------------------------------------+----------------+----------+----------|
 | * Classification of remote sensing images                        | Presential     |    04:00 |        3 |
 |------------------------------------------------------------------+----------------+----------+----------|
@@ -1145,8 +1591,3 @@ sp.savetxt('acc.csv',res,delimiter=',',fmt='%1.3f')
 |------------------------------------------------------------------+----------------+----------+----------|
 | * Dynamic Habitat Index                                          | Presential     |    04:00 |        7 |
 #+END:
-
-#+BEGIN_SRC emacs-lisp
-(setq debug-on-error t)
-#+END_SRC
-
