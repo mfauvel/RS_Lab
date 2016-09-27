@@ -6,15 +6,15 @@
 #+LANGUAGE: en
 #+SELECT_TAGS: sigma
 #+EXCLUDE_TAGS: noexport export
-
-#+OPTIONS:   H:3 num:t toc:2 \n:nil ::t |:t ^:nil -:t f:t *:t <:t prop:t
+#+TODO: TODO INPROGRESS DONE | CANCEL 
+#+OPTIONS:   H:3 num:t toc:2 \n:nil ::t |:t ^:nil -:t f:t *:t <:t prop:nil
 
 #+LATEX_CLASS: koma-article
 #+LATEX_CLASS_OPTIONS: [a4paper,11pt,DIV=18]
 #+LATEX_HEADER:\usepackage[english]{babel}\usepackage{minted}\usemintedstyle{emacs}
 #+LATEX_HEADER_EXTRA:\usepackage{tikz}\usepackage{pgfplots}\usepgfplotslibrary{dateplot}\usetikzlibrary{shapes,arrows}\usepackage[]{tcolorbox}
 #+LATEX_HEADER_EXTRA: \newtcolorbox[auto counter,number within=section]{work}[1][]{colback=black!5!white,colframe=black!50!white,fonttitle=\sffamily\bfseries,title=Work~\thetcbcounter: #1}
-#+COLUMNS: %25ITEM %FORMATION %DURATION %SEQUENCE
+#+COLUMNS: %25ITEM %FORMATION %DURATION %SEQUENCE %TAG
 
 * Introduction                                                        :sigma:
 :PROPERTIES:
@@ -176,48 +176,77 @@ respectively. A true color composition is given in Figure [[fabas_1]].
 
 #+CAPTION: Fabas image acquired the <2013-10-12 Sat>.
 #+NAME: fabas_1
-#+ATTR_LATEX: :width 0.5\textwidth
+#+ATTR_LATEX: :width 0.5\textwidth 
 [[file:./figures/quicklook_fabas_12_10_2013.jpg]]
 
 Images are stored using the [[https://trac.osgeo.org/geotiff/][GeoTIFF]] format.  It is an extended version
 of  the TIFF  format,  which allows  to  embed geospatial  information
 within the file. GeoTIFF can be read by most of the remote sensing and
 GIS software.
-** Formosat-2 SITS
+** SPOT5 Take-5 Satellite Image Time series
+:PROPERTIES:
+:CUSTOM_ID: sec:sits
+:END:
+These times  series were acquired  over the  Fabas forest in  2015. 15
+dates were acquired between [2015-05-15 Fri] and [2015-09-07 Mon]. See
+\ref{fig:SITS} for  detail.  The figure  [[sits_1]] shows the NDVI  of one
+date during the summer.
+ 
 #+BEGIN_LaTeX
-\begin{figure}[tb]
+\begin{figure}[h]
   \centering
   \begin{tikzpicture}
     \begin{axis}[hide y axis,axis lines=middle,
       date coordinates in=x,
       xticklabel={\texttt{\month}},
       x tick label style={},
-      date ZERO=2011-12-12,
-      xmin=2011-12-15, 
-      xmax=2013-01-15,
+      date ZERO=2014-12-12,
+      xmin=2015-04-15, 
+      xmax=2015-10-15,
       ymin=-0.25,ymax=0.25,
-      xtick={{2012-01-01},{2012-02-01},{2012-03-01},{2012-04-01},{2012-05-01},{2012-06-01},{2012-07-01},{2012-08-01},{2012-09-01},{2012-10-01},{2012-11-01},{2012-12-01}},clip=false]
+      xtick={{2015-05-01},{2015-06-01},{2015-07-01},{2015-08-01},{2015-09-01},{2015-10-01}}
+      ,clip=false]
       \addplot [blue,thick,mark=*,only marks]coordinates{
-        (2012-01-12,0)
-        (2012-02-18,0)
-        (2012-03-07,0)
-        (2012-03-27,0)
-        (2012-05-03,0)
-        (2012-06-20,0)
-        (2012-07-07,0)
-        (2012-07-17,0)
-        (2012-08-10,0)
-        (2012-08-22,0)
-        (2012-11-01,0)
-        (2012-12-15,0)
-        (2012-12-31,0)
-        };      
+      (2015-05-15,0)
+      (2015-05-20,0)
+      (2015-06-04,0)
+      (2015-06-24,0)
+      (2015-06-29,0)
+      (2015-07-04,0)
+      (2015-07-09,0)
+      (2015-07-14,0)
+      (2015-07-19,0)
+      (2015-07-24,0)
+      (2015-08-13,0)
+      (2015-08-18,0)
+      (2015-08-28,0)
+      (2015-09-02,0)
+      (2015-09-07,0)};      
       \end{axis}
   \end{tikzpicture}
-  \caption{Acquisition dates for the SITS 2012.}
+  \caption{Acquisition dates for the SITS 2015.}
   \label{fig:SITS}
 \end{figure}
 #+END_LaTeX
+
+#+CAPTION: NDVI of one date in Jully for the SITS data.
+#+NAME: sits_1
+#+ATTR_LATEX: :width 0.85\textwidth
+[[file:./figures/take5spot5.png]]
+
+In the labwork, we have access  to four images, each one corresponding
+to  all   the  temporal  acquisition   for  one  spectral   band,  see
+[[tab:sits:file]].
+#+ATTR_LATEX: :booktabs t
+#+CAPTION: Filenames of each image.
+#+NAME: tab:sits:file
+| File names                        |
+|-----------------------------------|
+| cut_serie_spot5_coteaux_green.tif |
+| cut_serie_spot5_coteaux_mir.tif   |
+| cut_serie_spot5_coteaux_nir.tif   |
+| cut_serie_spot5_coteaux_red.tif   |
+
 * Visualization of remote sensing data                                :sigma:
 :PROPERTIES:
 :FORMATION: Presential
@@ -549,7 +578,7 @@ line interface (CLI), same name with the prefix =otbcli_= :
 
 The same  inputs than in  QGIS should  be provided (/raster  and vector
 file/,  /algorithm parameters  .../). For  instance,  if you  are in  the
-repertory where the data are, learning the KNN classifier with default
+directory where the data are, learning the KNN classifier with default
 parameters do the following, classifying the whole image and computing
 the confusion matrix reduce to
 
@@ -613,10 +642,7 @@ time to read them.
 1) Write  the script  to learn  the model  for all  the classification
    methods and with each date.  Each time extract the confusion matrix
    and compute the global accuracy and the class average accuracy.
-2) Report the results on the /collaborative spreadsheet/.
-#+BEGIN_CENTER
-[[https://framacalc.org/fauvel_res_classification]]
-#+END_CENTER
+2) Report the results on the /collaborative spreadsheet/: [[https://framacalc.org/fauvel_res_classification]]
 3) For  the best method  in terms of classification  accuracy, discuss
    about the errors obtained with the confusion matrix.
 4)  Classify the  whole image  and  compare by  visual inspection  the
@@ -675,7 +701,7 @@ need to repeat the experiment several times, to avoid bias.
 define a python script./
 
 #+BEGIN_work
- Repeat *20* times the following test:
+ Repeat _20_ times the following test:
 1. Learn with /train_fabas/ and compute the confusion matrix with
    /train_fabas/. Save the confusion matrix for each repetition.
 2. Learn  with  /train_fabas/  and compute  the  confusion  matrix  with
@@ -693,7 +719,7 @@ Discuss about the results.
 #+BEGIN_SRC python
 import scipy as sp
 import glob
-
+# get all the csv files that match the pattern and order the list in increasing order
 NAMES_TRAIN,NAMES_VALID = glob.glob('confu_train_*.csv'),glob.glob('confu_valid_*.csv')
 NAMES_TRAIN.sort()
 NAMES_VALID.sort()
@@ -701,14 +727,14 @@ NAMES_VALID.sort()
 oa_train,oa_valid = [],[]
 
 for name_train,name_valid in zip(NAMES_TRAIN,NAMES_VALID):
-    temp = sp.genfromtxt(name_train,delimiter=',',skip_header=2)
-    oa = 100*sp.diag(temp).sum()/temp.sum()
-    oa_train.append(oa)
+    temp = sp.genfromtxt(name_train,delimiter=',',skip_header=2) # read the file, skeap the two first lines (of comments)
+    oa = 100*sp.diag(temp).sum()/temp.sum() # Compute the overall accuracy
+    oa_train.append(oa) # add the values to the list
     temp = sp.genfromtxt(name_valid,delimiter=',',skip_header=2)
     oa = 100*sp.diag(temp).sum()/temp.sum()
     oa_valid.append(oa)
     
-# Print mean accuracy
+# Compute mean accuracy and standard deviation and save the results
 res = [[sp.mean(oa_train),sp.std(oa_train)],[sp.mean(oa_valid),sp.std(oa_valid)]]
 sp.savetxt('acc.csv',res,delimiter=',',fmt='%1.3f')
 #+END_SRC
@@ -717,7 +743,7 @@ sp.savetxt('acc.csv',res,delimiter=',',fmt='%1.3f')
 :PROPERTIES:
 :FORMATION: Presential
 :DURATION: 04:00
-:SEQUENCE: 5
+:SEQUENCE: 4-5
 :DAYS:     [2016-04-01 Fri 13:30-17:30]
 :END:
 ** Objectives
@@ -831,7 +857,7 @@ hope you can use bash script now ...
 
 The code given  figure [[code:best:dates]] might help you.  It extracts all
 the  possible  couples  of files  from  a  set  of  files in  a  given
-repertory, the files ended with =*m.tif=.
+directory, the files ended with =*m.tif=.
 
 #+CAPTION: Bash script to get all the possible couples of files.
 #+NAME: code:best:dates
@@ -898,7 +924,7 @@ http://dx.doi.org/10.1016/j.ecolind.2008.01.007.
 These indicators underly vegetation dynamic, they are usually computed
 in the /fraction of photosynthetically active radiation (fPAR)/ absorbed
 by the vegetation.  However these data  are not available.  So in this
-lab, the NDVI will be used.  
+lab, the NDVI will be used. The data is described in [[#sec:sits]].
 
 
 #+BEGIN_work
@@ -915,10 +941,7 @@ function: $f(x)=ax+b$. You have to find $a$ and $b$ !
 #+END_work
 
 ** Construction of the SITS
-Before analyzing the  SITS, you need to built it.   In these labworks,
-two SITS  will be considered. One  build will all the  spectral bands,
-and the other one using the NDVI only.
-
+Before analyzing the  SITS, you need to built it.   
 #+BEGIN_work
 1. Compute the NDVI for each date,
 2. Convert to fPAR-like values,
@@ -928,7 +951,7 @@ and the other one using the NDVI only.
 
 ** Computation of the dynamic indices
 The second part of the labwork  concern the computation of the dynamic
-indices.   Let  us   not  the  vector  of  fPAR  values   of  pixel  i
+indices.   Let  us  note  the  vector   of  fPAR  values  of  pixel  i
 $\mathbf{x}_i=[\mathbf{x}_i(t_1),\ldots,\mathbf{x}_i(t_d)]$.     Three
 indices have been defined:
 1. The cumulative annual greenness,
@@ -941,14 +964,14 @@ $$MC = \min_{j}\left[\mathbf{x}_i(t_1),\ldots,\mathbf{x}_i(t_j),\ldots,\mathbf{x
 #+END_LaTeX
 3. The greenness coefficient of variation.
 #+BEGIN_LaTeX
-$$GCV = \frac{\sigma_{\mathbf{x}_i}}{\bar{\mathbf{x}}_i}$$
+$$GCV = \frac{\sigma_{\mathbf{x}_i}}{\mu_{\mathbf{x}}_i}$$
 #+END_LaTeX
 
 #+BEGIN_work
 1. Write the python scripts to compute all indices.
 2. Concatenate all the indices into one multiband image.
 #+END_work
-** Characterization of ecozones
+** INPROGRESS Characterization of ecozones
 
 Perform a  segmentation of the SITS  using the three indices  as input
 values. A  primarily study suggests  the number  of ecozones is  =4= for
@@ -1003,12 +1026,12 @@ To run it, just do
 #+END_SRC
 
 *** Basic commands
-- *cd*: Change repertory. To enter a repertory, do =cd Name_Of_Repertory=.
-- *ls*: List all the file in the current repertory.
-- *pwd*: Return the name of the current repertory.
-- *cp*: Copy a file/repertory, for instance =cp A B=.
+- *cd*: Change directory. To enter a directory, do =cd Name_Of_Directory=.
+- *ls*: List all the file in the current directory.
+- *pwd*: Return the name of the current directory.
+- *cp*: Copy a file/directory, for instance =cp A B=.
 - *mv*: Move a file to another, for instance =mv A B=.
-- *mkdir*: Create a repertory, =mkdir Name_Of_Repertory=.
+- *mkdir*: Create a directory, =mkdir Name_Of_Directory=.
 
 For instance, to get all the =tif= files in the current folder:
 
@@ -1155,7 +1178,6 @@ print "Bonjour j\'ai eu " + str(33) + " ans"
 Bonjour j'ai eu 33 ans
 #+END_SRC
 
-
 *** Loop
 It is very  easy to iterate over  a list with python. The  list can be
 made of numbers, strings etc ...  Since a list is [[https://docs.python.org/2/glossary.html][iterable]], defining a
@@ -1187,7 +1209,89 @@ libsvm
 rf
 #+END_SRC
 
-*** TODO Glob
+*** Glob
+The [[https://docs.python.org/2/library/glob.html][glob]] module finds all the  path-names matching a given pattern. It
+uses standard Unix (shell) path  expansion rules. However, results are
+returned in arbitrary order and therefore sometimes ordering operation
+is necessary. It returns a list  of pathnames, or a iterator which can
+be useful  for large  processing. Below  some examples  to see  how it
+works. First, check what is in my /figures/ directory:
+
+#+BEGIN_SRC sh
+ls figures/
+#+END_SRC
+
+#+RESULTS:
+#+BEGIN_SRC sh
+google_bridge.jpg
+label_fabas.jpg
+label_fabas.jpgw
+old_map.jpg
+pixel.pdf
+quicklook_fabas_10_12_2013.jpg
+quicklook_fabas_12_10_2013.jpg
+quicklook_seg_eau.png
+take5spot5.png
+tsunami_after.jpg
+tsunami_before.jpg
+#+END_SRC
+
+If we want to get all the files, we just need to do
+
+#+BEGIN_SRC python
+import glob
+
+files = glob.glob("figures/*")
+for files_ in files:
+    print files_
+#+END_SRC
+
+#+RESULTS:
+#+BEGIN_SRC python
+figures/take5spot5.png
+figures/label_fabas.jpg
+figures/google_bridge.jpg
+figures/quicklook_fabas_10_12_2013.jpg
+figures/pixel.pdf
+figures/old_map.jpg
+figures/quicklook_fabas_12_10_2013.jpg
+figures/tsunami_before.jpg
+figures/label_fabas.jpgw
+figures/quicklook_seg_eau.png
+figures/tsunami_after.jpg
+#+END_SRC
+
+If we only want the /png/ files:
+
+#+BEGIN_SRC python
+import glob
+
+files = glob.glob("figures/*.png")
+for files_ in files:
+    print files_
+#+END_SRC
+
+#+RESULTS:
+#+BEGIN_SRC python
+figures/take5spot5.png
+figures/quicklook_seg_eau.png
+#+END_SRC
+
+The iterator is =iglob=, it does the same job than =glob=, but without storing all the results simultaneously.
+
+#+BEGIN_SRC python
+import glob
+
+for files_ in glob.iglob("figures/*.png"):
+    print files_
+#+END_SRC
+
+#+RESULTS:
+#+BEGIN_SRC python
+figures/take5spot5.png
+figures/quicklook_seg_eau.png
+#+END_SRC
+
 * Python and Shell Codes for the labworks                          :noexport:
 :PROPERTIES:
 :exports:  both
@@ -1490,35 +1594,42 @@ plot(1:n,OA,type='l',col='red',lwd=2)
 points(index,OA[index],pch=19,col='green')
 
 #+END_SRC
-** TODO Dynamic Habitat
+** Dynamic Habitat
 #+BEGIN_SRC sh
-WDIR=/home/mfauvel/Dropbox/temp_S4/SITS/
-c=1
+#!/bin/bash
+
+# Decoupe des rasters
+for name in *tif
+do
+    gdal_translate -a_nodata 0 -projwin 517844.362981 6257253.98798 545735.795673 6240635.7476 \
+		   -of GTiff ${name} cut_${name}
+done
+
+# Temporal Gap filling
+for name in cut_serie_spot5_coteaux_green.tif cut_serie_spot5_coteaux_mir.tif cut_serie_spot5_coteaux_nir.tif cut_serie_spot5_coteaux_red.tif
+do
+    otbcli_ImageTimeSeriesGapFilling -in ${name} -mask cut_serie_spot5_coteaux_NUA.tif -out filtered_${name} -comp 1 -it spline -id dates.txt
+done
+
 # Compute the NDVI
-for i in ${WDIR}*m.tif
+for i in `seq 1 15`
 do
     # Compute the NDVI
-    otbcli_BandMath -il $i -out temp.tif  -exp "(im1b4-im1b3)/(im1b4+im1b3)"
-
-    # Check for outliers
-    #otbcli_BandMath -il temp.tif -out ndvi_${c}.tif -exp "((im1b1<-1?-0.99:(im1b1>1?1:im1b1))+1)/2"
-    otbcli_BandMath -il temp.tif -out ndvi_${c}.tif -exp "(im1b1+1)/2"
-    rm temp.tif
-    c=$((c+1))    
+    otbcli_BandMath -il filtered_cut_serie_spot5_coteaux_nir.tif filtered_cut_serie_spot5_coteaux_red.tif -out ndvi_${i}.tif  -exp "(im1b${i}+im2b${i} ==0?0:((im1b${i}-im2b${i})/(im1b${i}+im2b${i})+1)/2)"
 done
 
 # Compute the SITS
-otbcli_ConcatenateImages -il ndvi_{1..13}.tif -out sits.tif
+otbcli_ConcatenateImages -il ndvi_{1..15}.tif -out sits.tif
 rm ndvi_*.tif
 
 # Compute the cummulative greenness
-lotbcli_BandMath -il sits.tif -out cumgreen.tif -exp "im1b1+im1b2+im1b3+im1b4+im1b5+im1b6+im1b7+im1b8+im1b9+im1b10+im1b11+im1b12+im1b13"
+otbcli_BandMath -il sits.tif -out cumgreen.tif -exp "im1b1+im1b2+im1b3+im1b4+im1b5+im1b6+im1b7+im1b8+im1b9+im1b10+im1b11+im1b12+im1b13+im1b14+im1b15"
 
 # Compute the minimal annual cover
-otbcli_BandMath -il sits.tif -out mincover.tif -exp "min(im1b1,im1b2,im1b3,im1b4,im1b5,im1b6,im1b7,im1b8,im1b9,im1b10,im1b11,im1b12,im1b13)"
+otbcli_BandMath -il sits.tif -out mincover.tif -exp "min(im1b1,im1b2,im1b3,im1b4,im1b5,im1b6,im1b7,im1b8,im1b9,im1b10,im1b11,im1b12,im1b13,im1b14,im1b15)"
 
 # Compute the seasonnal variation
-otbcli_BandMath -il sits.tif cumgreen.tif -out seasonvar.tif -exp "sqrt(((im2b1/13-im1b1)^2+(im2b1/13-im1b2)^2+(im2b1/13-im1b3)^2+(im2b1/13-im1b4)^2+(im2b1/13-im1b5)^2+(im2b1/13-im1b6)^2+(im2b1/13-im1b7)^2+(im2b1/13-im1b8)^2+(im2b1/13-im1b9)^2+(im2b1/13-im1b10)^2+(im2b1/13-im1b11)^2+(im2b1/13-im1b12)^2+(im2b1/13-im1b13)^2)/13)/im2b1*13"
+otbcli_BandMath -il sits.tif cumgreen.tif -out seasonvar.tif -exp "sqrt(((im2b1/15-im1b1)^2+(im2b1/15-im1b2)^2+(im2b1/15-im1b3)^2+(im2b1/15-im1b4)^2+(im2b1/15-im1b5)^2+(im2b1/15-im1b6)^2+(im2b1/15-im1b7)^2+(im2b1/15-im1b8)^2+(im2b1/15-im1b9)^2+(im2b1/15-im1b10)^2+(im2b1/15-im1b11)^2+(im2b1/15-im1b12)^2+(im2b1/15-im1b13)^2+(im2b1/15-im1b14)^2+(im2b1/15-im1b15)^2)/15)/im2b1*15"
 
 # Create a multiband images stacking all the three indices
 otbcli_ConcatenateImages -il cumgreen.tif mincover.tif seasonvar.tif -out temp.tif
@@ -1528,9 +1639,9 @@ otbcli_Rescale -in temp.tif -out stack.tif -outmin -1 -outmax 1
 rm temp.tif
 
 # Apply KMEANS classification for different number of classes
-for iter in {1..10}
+for classe in {1..10}
 do
-    otbcli_KMeansClassification -in stack.tif -ts 1000000 -out kmean_${iter}.tif -nc 4 -ram 2048 -outmeans centroids_${iter} -rand ${iter}
+    otbcli_KMeansClassification -in stack.tif -ts 1000000 -out kmean_${classe}.tif -nc ${classe} -ram 2048 -outmeans centroids_${classe}
 done
 #+END_SRC
 
@@ -1543,10 +1654,10 @@ done
   les activités
 - [X] Faire la carte "test" pour la spatilization
 - [ ] Leur faire faire une carte sur Fabas pour François.
-- [ ] Faire le script pour les résultats de classifications et multitemp
-- [ ] Rajouter le détails des bandes dans la section Data sets
-  - SITS
-  - Change detection
+- [X] Faire le script pour les résultats de classifications et multitemp
+- [50%] Rajouter le détails des bandes dans la section Data sets
+  - [X] SITS
+  - [ ] Change detection
 ** Séquences plus ou moins prêtes
 + [X] Ouvertures et Visualisation d'images
 + [X] Segmentation d'images
@@ -1562,34 +1673,34 @@ done
 - *Influence of the spatial correlation for training/testing set*
 - *Get the best dates or couple of date for the classification of SITS ?*
 ** TODO A modifier
-- script python, c'est de la merde :(
-- Collecter l'ensemble des solutions pour les scripts
-- Donner les bandes pour Fabas et les autres images
-- Modifier les images quickbird pour virer la bandes zeros à la fin...
+- [ ] script python, c'est de la merde :(
+- [ ] Collecter l'ensemble des solutions pour les scripts
+- [ ] Donner les bandes pour Fabas et les autres images
+- [ ] Modifier les images quickbird pour virer la bandes zeros à la fin...
 
 ** Column view
 #+BEGIN: columnview :hlines 2 :id global :skip-empty-rows t
-| ITEM                                                             | FORMATION      | DURATION | SEQUENCE |
-|------------------------------------------------------------------+----------------+----------+----------|
-| * Introduction                                                   | Presential     |     0:30 |        1 |
-|------------------------------------------------------------------+----------------+----------+----------|
-| * Data sets                                                      | Presential     |        0 |          |
-|------------------------------------------------------------------+----------------+----------+----------|
-| * Visualization of remote sensing data                           | Presential     |     1:10 |        1 |
-|------------------------------------------------------------------+----------------+----------+----------|
-| * Spectral indices: /Normalized Difference Vegetation Index/     | Presential     |    01:00 |        2 |
-|------------------------------------------------------------------+----------------+----------+----------|
-| * Segmentation of remote sensing images                          | Presential     |     2:00 |        2 |
-|------------------------------------------------------------------+----------------+----------+----------|
-| * Change detection: /Detection of floods/                        | Presential     |    01:30 |        3 |
-|------------------------------------------------------------------+----------------+----------+----------|
-| * Classification of remote sensing images                        | Presential     |    04:00 |      3-4 |
-|------------------------------------------------------------------+----------------+----------+----------|
-| ** Influence of the spatial distribution of the learning samples | Presential     |    01:00 |        4 |
-|------------------------------------------------------------------+----------------+----------+----------|
-| * Satellite Image Time Series                                    | Presential     |    04:00 |        5 |
-|------------------------------------------------------------------+----------------+----------+----------|
-| ** Extraction of the best couple of dates                        | Non Presential |    01:40 |        6 |
-|------------------------------------------------------------------+----------------+----------+----------|
-| * Dynamic Habitat Index                                          | Presential     |    04:00 |        5 |
+| ITEM                                                             | FORMATION      | DURATION | SEQUENCE | TAG |
+|------------------------------------------------------------------+----------------+----------+----------+-----|
+| * Introduction                                                   | Presential     |     0:30 |        1 |     |
+|------------------------------------------------------------------+----------------+----------+----------+-----|
+| * Data sets                                                      | Presential     |        0 |          |     |
+|------------------------------------------------------------------+----------------+----------+----------+-----|
+| * Visualization of remote sensing data                           | Presential     |     1:10 |        1 |     |
+|------------------------------------------------------------------+----------------+----------+----------+-----|
+| * Spectral indices: /Normalized Difference Vegetation Index/     | Presential     |    01:00 |        2 |     |
+|------------------------------------------------------------------+----------------+----------+----------+-----|
+| * Segmentation of remote sensing images                          | Presential     |     2:00 |        2 |     |
+|------------------------------------------------------------------+----------------+----------+----------+-----|
+| * Change detection: /Detection of floods/                        | Presential     |    01:30 |        3 |     |
+|------------------------------------------------------------------+----------------+----------+----------+-----|
+| * Classification of remote sensing images                        | Presential     |    04:00 |      3-4 |     |
+|------------------------------------------------------------------+----------------+----------+----------+-----|
+| ** Influence of the spatial distribution of the learning samples | Presential     |    01:00 |        4 |     |
+|------------------------------------------------------------------+----------------+----------+----------+-----|
+| * Satellite Image Time Series                                    | Presential     |    04:00 |      4-5 |     |
+|------------------------------------------------------------------+----------------+----------+----------+-----|
+| ** Extraction of the best couple of dates                        | Non Presential |    01:40 |        6 |     |
+|------------------------------------------------------------------+----------------+----------+----------+-----|
+| * Dynamic Habitat Index                                          | Presential     |    04:00 |        5 |     |
 #+END:
