@@ -1545,6 +1545,8 @@ done
 - [ ] Leur faire faire une carte sur Fabas pour François.
 - [ ] Faire le script pour les résultats de classifications et multitemp
 - [ ] Rajouter le détails des bandes dans la section Data sets
+  - SITS
+  - Change detection
 ** Séquences plus ou moins prêtes
 + [X] Ouvertures et Visualisation d'images
 + [X] Segmentation d'images
@@ -1559,7 +1561,7 @@ done
 - Classification of images for François.
 - *Influence of the spatial correlation for training/testing set*
 - *Get the best dates or couple of date for the classification of SITS ?*
-** A modifier
+** TODO A modifier
 - script python, c'est de la merde :(
 - Collecter l'ensemble des solutions pour les scripts
 - Donner les bandes pour Fabas et les autres images
@@ -1579,15 +1581,15 @@ done
 |------------------------------------------------------------------+----------------+----------+----------|
 | * Segmentation of remote sensing images                          | Presential     |     2:00 |        2 |
 |------------------------------------------------------------------+----------------+----------+----------|
-| * Change detection: /Detection of floods/                        | Presential     |    01:00 |        2 |
+| * Change detection: /Detection of floods/                        | Presential     |    01:30 |        3 |
 |------------------------------------------------------------------+----------------+----------+----------|
-| * Classification of remote sensing images                        | Presential     |    04:00 |        3 |
+| * Classification of remote sensing images                        | Presential     |    04:00 |      3-4 |
 |------------------------------------------------------------------+----------------+----------+----------|
-| ** Influence of the spatial distribution of the learning samples | Non Presential |    01:40 |        4 |
+| ** Influence of the spatial distribution of the learning samples | Presential     |    01:00 |        4 |
 |------------------------------------------------------------------+----------------+----------+----------|
 | * Satellite Image Time Series                                    | Presential     |    04:00 |        5 |
 |------------------------------------------------------------------+----------------+----------+----------|
 | ** Extraction of the best couple of dates                        | Non Presential |    01:40 |        6 |
 |------------------------------------------------------------------+----------------+----------+----------|
-| * Dynamic Habitat Index                                          | Presential     |    04:00 |        7 |
+| * Dynamic Habitat Index                                          | Presential     |    04:00 |        5 |
 #+END:
