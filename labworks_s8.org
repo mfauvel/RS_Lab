@@ -971,7 +971,7 @@ $$GCV = \frac{\sigma_{\mathbf{x}_i}}{\mu_{\mathbf{x}}_i}$$
 1. Write the python scripts to compute all indices.
 2. Concatenate all the indices into one multiband image.
 #+END_work
-** INPROGRESS Characterization of ecozones
+** Characterization of ecozones
 
 Perform a  segmentation of the SITS  using the three indices  as input
 values. A  primarily study suggests  the number  of ecozones is  =4= for
@@ -985,6 +985,100 @@ the automatic segmentation of you data.
    terms of habitat.
 3. Do a visual validation of your results on the thematic map.
 #+END_work
+* Python for Remote Sensing data analysis                             :sigma:
+** Introduction
+
+In this labwork,  images will be provided under the  =Scipy= format. How
+to open  remote sensing images with  =GDAL= will be addressed  later. To
+load an image using =Scipy= just do
+
+#+BEGIN_SRC python :exports code
+import scipy as sp
+image = sp.load('dataname.npy')
+#+END_SRC
+
+In the following, you will have to write python functions (mainly
+image filters). In figure [[code:skeleton]] is provided a skeleton of such function, using
+simple docstring convention. You are highly encouraged to put comment
+in your code !
+
+#+BEGIN_figure
+#+BEGIN_SRC python :exports code
+def TheFilter(imin,p1=p1,p2=p2, ...):
+    """This  function apply  the  filter  TheFilter  on image imin  with
+    parameters p1, p2, ...p2
+
+    Input:
+    -----
+    imin = image to be processed, Scipy 2D-Array
+    p1 = parameter 1 of the filter, default value p1
+    p2 = parameter 1 of the filter, default value p2
+
+    Output:
+    ------    
+    imout = filtered image, Scipy 2D-Array, not necessraly of the same
+    type as imin, depending of the filter
+    """
+
+    ## Some processing
+
+    ## Other processing
+
+    return imout
+#+END_SRC
+#+LATEX: \caption{Skeleton of the filter}
+<<code:skeleton>>
+#+END_figure
+
+#+BEGIN_work
+1) With  template filters,  there are a  list of  pre-processing that
+  needs to  be done  every time. Find  them out. (Here  we do  not care
+  about /edge  effect/: pixels at the  border of the image  will not be
+  processed)
+   - check of inputs,
+   - initialization of the output image,
+   - ...
+2) Complete  the skeleton to  have a ready-to-use function,  where you
+   will just have to implement  the operation in the neighborhood. Few
+   lines of codes to scan all the pixel of the images.
+#+END_work
+
+
+** Template filters
+Using the previously defined skeleton, implement the following filter:
+=max=, =min=,  =median=, =mean=.   You can  use methods  of scipy  array class
+describe below:
+
+[[https://docs.scipy.org/doc/numpy/reference/generated/numpy.amax.html]]
+
+[[https://docs.scipy.org/doc/numpy/reference/generated/numpy.amin.html]]
+
+[[https://docs.scipy.org/doc/numpy/reference/generated/numpy.mean.html]]
+
+[[https://docs.scipy.org/doc/numpy/reference/generated/numpy.median.html]]
+
+#+BEGIN_work
+1) Start with a simple template, a fixed size moving window of $3\times 3$
+   pixels. Write your function.
+2) Modify your function to include an input parameter that control the
+   size of the moving window (only consider odd size).
+3)  When  your function  is  working  correctly,  try to  improve  the
+   processing   time.    You   can   use   the    module   =time=,   see
+   [[https://pymotw.com/2/time/]].
+4) Apply  your function  on the  Ikonos images and  try to  remove the
+   noise.
+   #+END_work
+** To go further
+- Extend your function for multidimensional images.
+- Provide function with a rectangular template (with odd size).
+- For the mean filter, add a new parameter that define the number of
+  /cycle/, i.e., the number of times the filter is applied iteratively
+  on the image.
+- Implement the  following filters  and try to  explain what  are they
+  action.
+  + =max(im)-im=
+  + =im-min(im)=
+  + =max(im)-min(im)=
 * Appendix                                                            :sigma:
 ** Short introduction to shell
 :PROPERTIES:
@@ -1424,7 +1518,7 @@ error_config = {'ecolor': '0.3','lw':2,'capsize':5, 'capthick':2}
 
 # Compute the statistics
 m,s=sp.nanmean(data,axis=0),sp.nanstd(data,axis=0)
-for i in xrange(2):
+for i in xrange(3):
     plt.figure()
     plt.bar(index,m[i*4:i*4+4],width=bar_width,alpha=opacity,color='b',yerr=s[i*4:i*4+4],error_kw=error_config)
     plt.xticks(index+bar_width/2,classifier)

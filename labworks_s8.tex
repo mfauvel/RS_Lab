@@ -1,4 +1,4 @@
-% Created 2016-09-27 Tue 15:00
+% Created 2016-10-10 Mon 11:17
 \documentclass[a4paper,11pt,DIV=18]{scrartcl}
                 \usepackage{ucs} 
                 \usepackage{array}
@@ -859,7 +859,7 @@ $$GCV = \frac{\sigma_{\mathbf{x}_i}}{\mu_{\mathbf{x}}_i}$$
 \item Concatenate all the indices into one multiband image.
 \end{enumerate}
 \end{work}
-\subsection{{\bfseries\sffamily INPROGRESS} Characterization of ecozones}
+\subsection{Characterization of ecozones}
 \label{sec:orgheadline34}
 
 Perform a  segmentation of the SITS  using the three indices  as input
@@ -876,8 +876,100 @@ terms of habitat.
 \item Do a visual validation of your results on the thematic map.
 \end{enumerate}
 \end{work}
+\section{Python for Remote Sensing data analysis}
+\label{sec:orgheadline38}
+\subsection{Introduction}
+\label{sec:orgheadline36}
+
+In this labwork,  images will be provided under the  \texttt{Scipy} format. How
+to open  remote sensing images with  \texttt{GDAL} will be addressed  later. To
+load an image using \texttt{Scipy} just do
+
+\begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg,breaklines]{python}
+import scipy as sp
+image = sp.load('dataname.npy')
+\end{minted}
+
+In the following, you will have to write python functions (mainly
+image filters). In figure \ref{orgtarget1} is provided a skeleton of such function, using
+simple docstring convention. You are highly encouraged to put comment
+in your code !
+
+\begin{figure}
+\begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg,breaklines]{python}
+def TheFilter(imin,p1=p1,p2=p2, ...):
+    """This  function apply  the  filter  TheFilter  on image imin  with
+    parameters p1, p2, ...p2
+
+    Input:
+    -----
+    imin = image to be processed, Scipy 2D-Array
+    p1 = parameter 1 of the filter, default value p1
+    p2 = parameter 1 of the filter, default value p2
+
+    Output:
+    ------    
+    imout = filtered image, Scipy 2D-Array, not necessraly of the same
+    type as imin, depending of the filter
+    """
+
+    ## Some processing
+
+    ## Other processing
+
+    return imout
+\end{minted}
+\caption{Skeleton of the filter}
+\label{orgtarget1}
+\end{figure}
+
+\begin{work}
+\begin{enumerate}
+\item With  template filters,  there are a  list of  pre-processing that
+needs to  be done  every time. Find  them out. (Here  we do  not care
+about \emph{edge  effect}: pixels at the  border of the image  will not be
+processed)
+\begin{itemize}
+\item check of inputs,
+\item initialization of the output image,
+\item \ldots{}
+\end{itemize}
+\item Complete  the skeleton to  have a ready-to-use function,  where you
+will just have to implement  the operation in the neighborhood. Few
+lines of codes to scan all the pixel of the images.
+\end{enumerate}
+\end{work}
+
+
+\subsection{Template filters}
+\label{sec:orgheadline37}
+Using the previously defined skeleton, implement the following filter:
+\texttt{max}, \texttt{min},  \texttt{median}, \texttt{mean}.   You can  use methods  of scipy  array class
+describe below:
+
+\url{https://docs.scipy.org/doc/numpy/reference/generated/numpy.amax.html}
+
+\url{https://docs.scipy.org/doc/numpy/reference/generated/numpy.amin.html}
+
+\url{https://docs.scipy.org/doc/numpy/reference/generated/numpy.mean.html}
+
+\url{https://docs.scipy.org/doc/numpy/reference/generated/numpy.median.html}
+
+\begin{work}
+\begin{enumerate}
+\item Start with a simple template, a fixed size moving window of \(3\times 3\)
+   pixels. Write your function.
+\item Modify your function to include an input parameter that control the
+size of the moving window (only consider odd size).
+\item When  your function  is  working  correctly,  try to  improve  the
+processing   time.    You   can   use   the    module   \texttt{time},   see
+\url{https://pymotw.com/2/time/}.
+\item Apply  your function  on the  Ikonos images and  try to  remove the
+noise.
+\end{enumerate}
+\end{work}
 \section{Appendix}
-\label{sec:orgheadline43}
+\label{sec:orgheadline46}
 \subsection{Short introduction to shell}
 \label{sec:orgheadline23}
 This section provides  an introduction to \emph{shell}  programming and \emph{shell
@@ -916,7 +1008,7 @@ To run it, just do
 \end{minted}
 
 \subsubsection{Basic commands}
-\label{sec:orgheadline36}
+\label{sec:orgheadline39}
 \begin{itemize}
 \item \textbf{cd}: Change directory. To enter a directory, do \texttt{cd Name\_Of\_Directory}.
 \item \textbf{ls}: List all the file in the current directory.
@@ -934,7 +1026,7 @@ fabas_10_12_2013.tif  fabas_12_10_2013.tif
 \end{minted}
 
 \subsubsection{Variables}
-\label{sec:orgheadline37}
+\label{sec:orgheadline40}
 In shell, a variable is a string (not a number). It can be defined as:
 
 \begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg,breaklines]{sh}
@@ -976,7 +1068,7 @@ chmod +x script.sh
 \end{minted}
 
 \subsubsection{Loop}
-\label{sec:orgheadline38}
+\label{sec:orgheadline41}
 As in any programming language, loop are very useful to apply a series
 of processing  to several  elements of a  sequence. The  example below
 applies a processing on all \emph{tif} files of the current directory:
@@ -988,7 +1080,7 @@ do
 done
 \end{minted}
 \subsubsection{Sequence}
-\label{sec:orgheadline39}
+\label{sec:orgheadline42}
 It is possible to define sequences of string like this:
 
 \begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg,breaklines]{sh}
@@ -1013,7 +1105,7 @@ A     good    starting     point     is     the    following     link:
 review few things that are usefull  for the labwork. But python is far
 more than this short introduction.
 \subsubsection{String}
-\label{sec:orgheadline40}
+\label{sec:orgheadline43}
 Handling  strings with  python is  very easy.  It is  possible to  add
 strings together, as with number! Pay attention to spaces\ldots{}
 
@@ -1038,7 +1130,7 @@ Bonjour j'ai eu 33 ans
 \end{minted}
 
 \subsubsection{Loop}
-\label{sec:orgheadline41}
+\label{sec:orgheadline44}
 It is very  easy to iterate over  a list with python. The  list can be
 made of numbers, strings etc \ldots{}  Since a list is \href{https://docs.python.org/2/glossary.html}{iterable}, defining a
 \texttt{for} loop is just:
@@ -1069,13 +1161,13 @@ rf
 \end{minted}
 
 \subsubsection{Glob}
-\label{sec:orgheadline42}
+\label{sec:orgheadline45}
 The \href{https://docs.python.org/2/library/glob.html}{glob} module finds all the  path-names matching a given pattern. It
-uses \texttt{Unix} (shell) standard Unix path expansion rules. However, results
-are  returned  in arbitrary  order  and  therefore sometimes  ordering
-operation is necessary. It returns a  list of pathnames, or a iterator
-which can be  useful for large processing. Below some  examples to see
-how it works. First, check what is in my \emph{figures} directory:
+uses standard Unix (shell) path  expansion rules. However, results are
+returned in arbitrary order and therefore sometimes ordering operation
+is necessary. It returns a list  of pathnames, or a iterator which can
+be useful  for large  processing. Below  some examples  to see  how it
+works. First, check what is in my \emph{figures} directory:
 
 \begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg,breaklines]{sh}
 ls figures/
