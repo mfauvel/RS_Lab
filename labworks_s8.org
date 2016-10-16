@@ -7,7 +7,7 @@
 #+SELECT_TAGS: sigma
 #+EXCLUDE_TAGS: noexport export
 #+TODO: TODO INPROGRESS DONE | CANCEL 
-#+OPTIONS:   H:3 num:t toc:2 \n:nil ::t |:t ^:nil -:t f:t *:t <:t prop:nil
+#+OPTIONS:   H:3 num:t toc:2 \n:nil ::t |:t ^:nil -:t f:t *:t <:t prop:nil todo:nil
 
 #+LATEX_CLASS: koma-article
 #+LATEX_CLASS_OPTIONS: [a4paper,11pt,DIV=18]
@@ -182,7 +182,20 @@ respectively. A true color composition is given in Figure [[fabas_1]].
 Images are stored using the [[https://trac.osgeo.org/geotiff/][GeoTIFF]] format.  It is an extended version
 of  the TIFF  format,  which allows  to  embed geospatial  information
 within the file. GeoTIFF can be read by most of the remote sensing and
-GIS software.
+GIS software. Table [[tab:bands:pleiades]] gives the band order of the data.
+
+#+ATTR_LATEX: :booktabs t
+#+CAPTION: Bands and channels information for the Pleiades images
+#+NAME: tab:bands:pleiades
+|------+-----------|
+| Band | Channel   |
+|------+-----------|
+|    1 | Red       |
+|    2 | Green     |
+|    3 | Blue      |
+|    4 | Infra-red |
+|------+-----------|
+** TODO Change detection 
 ** SPOT5 Take-5 Satellite Image Time series
 :PROPERTIES:
 :CUSTOM_ID: sec:sits
@@ -246,6 +259,17 @@ to  all   the  temporal  acquisition   for  one  spectral   band,  see
 | cut_serie_spot5_coteaux_mir.tif   |
 | cut_serie_spot5_coteaux_nir.tif   |
 | cut_serie_spot5_coteaux_red.tif   |
+** Historical Maps
+:PROPERTIES:
+:CUSTOM_ID: sec:data:hm
+:END:
+The figure [[fig:hm]] shows an historical map. This is a scan performed by
+the [[http://www.ign.fr/][IGN]] of an old manually drawn map.
+
+#+CAPTION: Historical Maps
+#+NAME: fig:hist
+#+ATTR_LATEX: :width 0.5\textwidth :options [h]
+[[file:figures/old_map.jpg]]
 
 * Visualization of remote sensing data                                :sigma:
 :PROPERTIES:
@@ -986,16 +1010,23 @@ the automatic segmentation of you data.
 3. Do a visual validation of your results on the thematic map.
 #+END_work
 * Python for Remote Sensing data analysis                             :sigma:
-** Introduction
+** Template filters
+:PROPERTIES:
+:DURATION: 04:00
+:FORMATION: Presential
+:END:
+*** Introduction
 
 In this labwork,  images will be provided under the  =Scipy= format. How
 to open  remote sensing images with  =GDAL= will be addressed  later. To
 load an image using =Scipy= just do
 
-#+BEGIN_SRC python :exports code
+#+BEGIN_SRC python :exports code 
 import scipy as sp
 image = sp.load('dataname.npy')
 #+END_SRC
+
+#+RESULTS:
 
 In the following, you will have to write python functions (mainly
 image filters). In figure [[code:skeleton]] is provided a skeleton of such function, using
@@ -1003,7 +1034,7 @@ simple docstring convention. You are highly encouraged to put comment
 in your code !
 
 #+BEGIN_figure
-#+BEGIN_SRC python :exports code
+#+BEGIN_SRC python :exports code :tangle skeleton.py
 def TheFilter(imin,p1=p1,p2=p2, ...):
     """This  function apply  the  filter  TheFilter  on image imin  with
     parameters p1, p2, ...p2
@@ -1026,6 +1057,9 @@ def TheFilter(imin,p1=p1,p2=p2, ...):
 
     return imout
 #+END_SRC
+
+#+RESULTS:
+
 #+LATEX: \caption{Skeleton of the filter}
 <<code:skeleton>>
 #+END_figure
@@ -1043,8 +1077,7 @@ def TheFilter(imin,p1=p1,p2=p2, ...):
    lines of codes to scan all the pixel of the images.
 #+END_work
 
-
-** Template filters
+*** Template filters function
 Using the previously defined skeleton, implement the following filter:
 =max=, =min=,  =median=, =mean=.   You can  use methods  of scipy  array class
 describe below:
@@ -1068,7 +1101,7 @@ describe below:
 4) Apply  your function  on the  Ikonos images and  try to  remove the
    noise.
    #+END_work
-** To go further
+*** To go further
 - Extend your function for multidimensional images.
 - Provide function with a rectangular template (with odd size).
 - For the mean filter, add a new parameter that define the number of
@@ -1079,6 +1112,55 @@ describe below:
   + =max(im)-im=
   + =im-min(im)=
   + =max(im)-min(im)=
+** Historical map processing
+This section is dedicated to the implementation of the filtering part of the following paper 
+#+BEGIN_QUOTE
+P-A  Herrault,  D  Sheeren,  M   Fauvel,  and  M  Paegelow.  Automatic
+extraction  of  forests from  historical  maps  based on  unsupervised
+classification in  the cielab  color space. In  Geographic Information
+Science at the Heart of  Europe, pages 95--112. Springer International
+Publishing, 2013.
+#+END_QUOTE
+
+It concerns the filtering of  historical maps, see [[#sec:data:hm]] to see
+the data to be processed. The filtering consists in the application of
+the consecutive filters, on every bands of the color image:
+1. Local max filter,
+2. Local min filter,
+3. Local median filter, 
+as  illustrated   in  the  (simplified)  processing   chain  shown  in
+[[fig:hm]]. You should write a script that takes as arguments:
+- The name of the image,
+- the name of the output image,
+- the size of the min/max filter,
+- the size of the median filter,
+an, off course, do the right processing.
+
+#+CAPTION: Processing chain.
+#+NAME: fig:hm
+#+BEGIN_figure :options [h]
+#+BEGIN_LaTeX
+\tikzstyle{process} = [rectangle, draw, fill=blue!20, text width=8em, text centered, rounded corners, minimum height=4em,node distance=3.5cm]
+  \tikzstyle{image} = [draw, rectangle,fill=red!20, node distance=3cm, minimum height=2em]
+  \tikzstyle{vector} = [draw, rectangle,fill=red!20, node distance=1.5cm, minimum height=2em]
+  \tikzstyle{line} = [draw, -latex']
+  \begin{tikzpicture}
+    \node[image] (1) {Input Image};
+    \node[process,right of =1] (2)  {Max filter};
+    \node[process,right of =2]  (3) {Min filter};
+    \node[process,right of =3]  (4) {Median};
+    \node[process,right of =4]  (5) {Classification};
+    \node[vector,above of =5]  (6) {Reference data};
+    \node[vector,below of=5] (7) {Classified image};
+    \path[line] (1)--(2);
+    \path[line] (2)--(3);
+    \path[line] (3)--(4);
+    \path[line] (4)--(5);
+    \path[line] (6)--(5); 
+    \path[line] (5)--(7); 
+  \end{tikzpicture}
+#+END_LaTeX
+#+END_figure
 * Appendix                                                            :sigma:
 ** Short introduction to shell
 :PROPERTIES:
@@ -1738,7 +1820,252 @@ do
     otbcli_KMeansClassification -in stack.tif -ts 1000000 -out kmean_${classe}.tif -nc ${classe} -ram 2048 -outmeans centroids_${classe}
 done
 #+END_SRC
+** Python
+*** Display image
+#+BEGIN_SRC python
+import matplotlib.pyplot as plt
+import scipy as sp
+import skeleton as sk
+# Load image
+image = sp.load("/home/mfauvel/Documents/Enseignement/ENSAT/Master SIGMA/Documents/TP/python/ikonos_part.npy")
 
+# Display image
+plt.imshow(image,cmap="gray")
+
+# Filter image
+imfil = sk.TheFilter(image,p=9)
+plt.figure()
+plt.imshow(imfil,cmap="gray")
+
+plt.show()
+#+END_SRC
+
+#+RESULTS:
+: None
+*** Max filter
+#+BEGIN_SRC python :tangle myfilters.py
+import scipy as sp
+
+def filterMax(imin,p=1):
+    """This  function apply  the  filter  TheFilter  on image imin  with
+    parameters p1, p2, ...p2
+
+    Input:
+    -----
+    imin = image to be processed, Scipy 2D-Array
+    p = window size = 2p+1. Should be strictly positive
+
+    Output:
+    ------    
+    imout = filtered image, Scipy 2D-Array, not necessraly of the same
+    type as imin, depending of the filter
+    """
+    ## Initialization
+    if imin.ndim != 2: # Check  the number of dimensions of the image:
+                       # should be 2
+        return 0
+    
+    H,W = imin.shape # Get the image shape
+
+    imout = sp.empty((H,W),dtype=imin.dtype) # Initialization of the output image
+    ## Size of the window
+    if p<=0:
+        return 0
+    
+    ## Loop over the pixels
+    for i in range(p,H-p):
+        for j in range(p,W-p):
+            imout[i,j]=imin[(i-p):(i+p+1),(j-p):(j+p+1)].max()
+
+    ## Fill border
+    imout[:,:p]=imin[:,:p]
+    imout[:,-p:]=imin[:,-p:]
+    imout[:p,:]=imin[:p,:]
+    imout[-p:,:]=imin[-p:,:]
+    
+    return imout
+
+
+def filterMaxS(imin,p=1):
+    """This  function apply  the  filter  TheFilter  on image imin  with
+    parameters p1, p2, ...p2
+
+    Input:
+    -----
+    imin = image to be processed, Scipy 2D-Array
+    p = window size = 2p+1. Should be strictly positive
+
+    Output:
+    ------    
+    imout = filtered image, Scipy 2D-Array, not necessraly of the same
+    type as imin, depending of the filter
+    """
+    ## Initialization
+    if imin.ndim != 2: # Check  the number of dimensions of the image:
+                       # should be 2
+        return 0
+    
+    H,W = imin.shape # Get the image shape
+
+    imout = sp.empty((H,W),dtype=imin.dtype) # Initialization of the output image
+    ## Size of the window
+    if p<=0:
+        return 0
+    
+    ## Loop over the pixels
+    for j in range(p,W-p):
+        for i in range(p,H-p):
+            imout[i,j]=imin[(i-p):(i+p+1),(j-p):(j+p+1)].max()
+
+    ## Fill border
+    imout[:,:p]=imin[:,:p]
+    imout[:,-p:]=imin[:,-p:]
+    imout[:p,:]=imin[:p,:]
+    imout[-p:,:]=imin[-p:,:]
+    
+    return imout
+#+END_SRC
+
+*** +Test speed+
+
+#+BEGIN_SRC python :results output
+import myfilters as mf
+import time
+import scipy as sp
+
+# Load image
+image = sp.load("/home/mfauvel/Documents/Enseignement/ENSAT/Master SIGMA/Documents/TP/python/ikonos_part.npy")
+
+# 
+tic = time.time()
+im1 = mf.filterMax(image,p=1)
+print "Processing time : {}".format(time.time()-tic)
+
+tic = time.time()
+im1 = mf.filterMaxS(image,p=1)
+print "Processing time : {}".format(time.time()-tic)
+#+END_SRC
+
+#+RESULTS:
+: Processing time : 0.954054117203
+: Processing time : 0.926885128021
+
+*** Load/Write raster
+#+BEGIN_SRC python :tangle rasterTool.py
+import scipy as sp
+from osgeo import gdal
+
+def open_data(filename):
+    '''
+    The function open and load the image given its name. 
+    The type of the data is checked from the file and the scipy array is initialized accordingly.
+    Input:
+        filename: the name of the file
+    Output:
+        im: the data cube
+        GeoTransform: the geotransform information 
+        Projection: the projection information
+    '''
+    data = gdal.Open(filename,gdal.GA_ReadOnly)
+    if data is None:
+        print 'Impossible to open '+filename
+        exit()
+    nc = data.RasterXSize
+    nl = data.RasterYSize
+    d  = data.RasterCount
+    
+    # Get the type of the data
+    gdal_dt = data.GetRasterBand(1).DataType
+    if gdal_dt == gdal.GDT_Byte:
+        dt = 'uint8'
+    elif gdal_dt == gdal.GDT_Int16:
+        dt = 'int16'
+    elif gdal_dt == gdal.GDT_UInt16:
+        dt = 'uint16'
+    elif gdal_dt == gdal.GDT_Int32:
+        dt = 'int32'
+    elif gdal_dt == gdal.GDT_UInt32:
+        dt = 'uint32'
+    elif gdal_dt == gdal.GDT_Float32:
+        dt = 'float32'
+    elif gdal_dt == gdal.GDT_Float64:
+        dt = 'float64'
+    elif gdal_dt == gdal.GDT_CInt16 or gdal_dt == gdal.GDT_CInt32 or gdal_dt == gdal.GDT_CFloat32 or gdal_dt == gdal.GDT_CFloat64 :
+        dt = 'complex64'
+    else:
+        print 'Data type unkown'
+        exit()
+    
+    # Initialize the array
+    if d ==1:
+        im = sp.empty((nl,nc),dtype=dt)
+        im =data.GetRasterBand(1).ReadAsArray()
+    else:
+        im = sp.empty((nl,nc,d),dtype=dt) 
+        for i in range(d):
+            im[:,:,i]=data.GetRasterBand(i+1).ReadAsArray()
+    
+    GeoTransform = data.GetGeoTransform()
+    Projection = data.GetProjection()
+    data = None # Close the file
+    return im,GeoTransform,Projection
+
+def write_data(outname,im,GeoTransform,Projection):
+    '''
+    The function write the image on the  hard drive.
+    Input: 
+        outname: the name of the file to be written
+        im: the image cube
+        GeoTransform: the geotransform information 
+        Projection: the projection information
+    Output:
+        Nothing --
+    '''
+    nl = im.shape[0]
+    nc = im.shape[1]
+    if im.ndim == 2:
+        d=1
+    else:
+        d = im.shape[2]
+    
+    driver = gdal.GetDriverByName('GTiff')
+    dt = im.dtype.name
+    # Get the data type
+    if dt == 'bool' or dt == 'uint8':
+        gdal_dt=gdal.GDT_Byte
+    elif dt == 'int8' or dt == 'int16':
+        gdal_dt=gdal.GDT_Int16
+    elif dt == 'uint16':
+        gdal_dt=gdal.GDT_UInt16
+    elif dt == 'int32':
+        gdal_dt=gdal.GDT_Int32
+    elif dt == 'uint32':
+        gdal_dt=gdal.GDT_UInt32
+    elif dt == 'int64' or dt == 'uint64' or dt == 'float16' or dt == 'float32':
+        gdal_dt=gdal.GDT_Float32
+    elif dt == 'float64':
+        gdal_dt=gdal.GDT_Float64
+    elif dt == 'complex64':
+        gdal_dt=gdal.GDT_CFloat64
+    else:
+        print 'Data type non-suported'
+        exit()
+    
+    dst_ds = driver.Create(outname,nc,nl, d, gdal_dt)
+    dst_ds.SetGeoTransform(GeoTransform)
+    dst_ds.SetProjection(Projection)
+    
+    if d==1:
+        out = dst_ds.GetRasterBand(1)
+        out.WriteArray(im)
+        out.FlushCache()
+    else:
+        for i in range(d):
+            out = dst_ds.GetRasterBand(i+1)
+            out.WriteArray(im[:,:,i])
+            out.FlushCache()
+    dst_ds = None # Close the file
+#+END_SRC
 * TO DO                                                            :noexport:
 ** A compléter
 - [X] Ecrire le fonctionnement des TD
@@ -1752,6 +2079,9 @@ done
 - [50%] Rajouter le détails des bandes dans la section Data sets
   - [X] SITS
   - [ ] Change detection
+- [ ] Mettre l'images HM en ligne
+- [X] Mettre les codes python pour l'ouverture des images, en enlevant les commentaires.
+- [X] Faire codes pour tester les temps de calculs sur le parcours des boucles
 ** Séquences plus ou moins prêtes
 + [X] Ouvertures et Visualisation d'images
 + [X] Segmentation d'images
@@ -1760,16 +2090,16 @@ done
 + [X] Changes detection
 + [X] Classification of remote sensing images
 + [ ] +Python: intro aux traitements d'images+
-+ [ ] Historical Maps
++ [X] Historical Maps
 ** Séquences en non présentielle
 - Segmentation of 2D histograms ?
 - Classification of images for François.
 - *Influence of the spatial correlation for training/testing set*
 - *Get the best dates or couple of date for the classification of SITS ?*
 ** TODO A modifier
-- [ ] script python, c'est de la merde :(
-- [ ] Collecter l'ensemble des solutions pour les scripts
-- [ ] Donner les bandes pour Fabas et les autres images
+- [X] script python, c'est de la merde :(
+- [X] Collecter l'ensemble des solutions pour les scripts
+- [X] Donner les bandes pour Fabas et les autres images
 - [ ] Modifier les images quickbird pour virer la bandes zeros à la fin...
 
 ** Column view
@@ -1797,4 +2127,6 @@ done
 | ** Extraction of the best couple of dates                        | Non Presential |    01:40 |        6 |     |
 |------------------------------------------------------------------+----------------+----------+----------+-----|
 | * Dynamic Habitat Index                                          | Presential     |    04:00 |        5 |     |
+|------------------------------------------------------------------+----------------+----------+----------+-----|
+| ** Template filters                                              | Presential     |    04:00 |          |     |
 #+END:
