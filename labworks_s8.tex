@@ -1,4 +1,4 @@
-% Created 2016-10-12 Wed 11:49
+% Created 2016-10-19 Wed 13:25
 \documentclass[a4paper,11pt,DIV=18]{scrartcl}
                 \usepackage{ucs} 
                 \usepackage{array}
@@ -221,14 +221,14 @@ session.
 \subsection{Pleiades images}
 \label{sec:orgheadline10}
 These images were acquired over the  Fabas forest in 2013. Images were
-acquired   the   \textit{<2013-10-12 Sat>    }    and   the   \textit{<2013-12-10 Tue>},
+acquired   the   \textit{2013-10-12 Sat    }    and   the   \textit{2013-12-10 Tue},
 respectively. A true color composition is given in Figure \ref{fig:orgparagraph1}.
 
 \begin{figure}[htb]
 \centering
 \includegraphics[width=0.5\textwidth]{./figures/quicklook_fabas_12_10_2013.jpg}
 \caption{\label{fig:orgparagraph1}
-Fabas image acquired the \textit{<2013-10-12 Sat>}.}
+Fabas image acquired the \textit{2013-10-12 Sat}.}
 \end{figure}
 
 Images are stored using the \href{https://trac.osgeo.org/geotiff/}{GeoTIFF} format.  It is an extended version
@@ -906,7 +906,7 @@ terms of habitat.
 \end{enumerate}
 \end{work}
 \section{Python for Remote Sensing data analysis}
-\label{sec:orgheadline43}
+\label{sec:orgheadline44}
 \subsection{Template filters}
 \label{sec:orgheadline41}
 \subsubsection{Introduction}
@@ -1016,7 +1016,7 @@ action.
 \end{itemize}
 \end{itemize}
 \subsection{Historical map processing}
-\label{sec:orgheadline42}
+\label{sec:orgheadline43}
 This section is dedicated to the implementation of the filtering part of the following paper 
 \begin{quote}
 P-A  Herrault,  D  Sheeren,  M   Fauvel,  and  M  Paegelow.  Automatic
@@ -1067,8 +1067,28 @@ an, off course, do the right processing.
 \caption{\label{orgspecialblock1}
 Processing chain.}
 \end{figure}
+
+\begin{work}
+\begin{enumerate}
+\item Write the main steps of the filtering:
+\begin{enumerate}
+\item Load the image
+\item Filter the image
+\item Write the results
+\end{enumerate}
+\item Add the necessary machinery to make a python application
+\begin{enumerate}
+\item Add command line arguments parser (see \ref{sec:orgheadline42})
+\item Make you function executable
+\begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg,breaklines]{sh}
+chmod +x yourfunction.py
+\end{minted}
+\end{enumerate}
+\item Play with it to find the best couple of parameters to remove black line in the historical map.
+\end{enumerate}
+\end{work}
 \section{Appendix}
-\label{sec:orgheadline51}
+\label{sec:orgheadline52}
 \subsection{Short introduction to shell}
 \label{sec:orgheadline25}
 This section provides  an introduction to \emph{shell}  programming and \emph{shell
@@ -1107,7 +1127,7 @@ To run it, just do
 \end{minted}
 
 \subsubsection{Basic commands}
-\label{sec:orgheadline44}
+\label{sec:orgheadline45}
 \begin{itemize}
 \item \textbf{cd}: Change directory. To enter a directory, do \texttt{cd Name\_Of\_Directory}.
 \item \textbf{ls}: List all the file in the current directory.
@@ -1125,7 +1145,7 @@ fabas_10_12_2013.tif  fabas_12_10_2013.tif
 \end{minted}
 
 \subsubsection{Variables}
-\label{sec:orgheadline45}
+\label{sec:orgheadline46}
 In shell, a variable is a string (not a number). It can be defined as:
 
 \begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg,breaklines]{sh}
@@ -1167,7 +1187,7 @@ chmod +x script.sh
 \end{minted}
 
 \subsubsection{Loop}
-\label{sec:orgheadline46}
+\label{sec:orgheadline47}
 As in any programming language, loop are very useful to apply a series
 of processing  to several  elements of a  sequence. The  example below
 applies a processing on all \emph{tif} files of the current directory:
@@ -1179,7 +1199,7 @@ do
 done
 \end{minted}
 \subsubsection{Sequence}
-\label{sec:orgheadline47}
+\label{sec:orgheadline48}
 It is possible to define sequences of string like this:
 
 \begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg,breaklines]{sh}
@@ -1204,7 +1224,7 @@ A     good    starting     point     is     the    following     link:
 review few things that are usefull  for the labwork. But python is far
 more than this short introduction.
 \subsubsection{String}
-\label{sec:orgheadline48}
+\label{sec:orgheadline49}
 Handling  strings with  python is  very easy.  It is  possible to  add
 strings together, as with number! Pay attention to spaces\ldots{}
 
@@ -1229,7 +1249,7 @@ Bonjour j'ai eu 33 ans
 \end{minted}
 
 \subsubsection{Loop}
-\label{sec:orgheadline49}
+\label{sec:orgheadline50}
 It is very  easy to iterate over  a list with python. The  list can be
 made of numbers, strings etc \ldots{}  Since a list is \href{https://docs.python.org/2/glossary.html}{iterable}, defining a
 \texttt{for} loop is just:
@@ -1260,7 +1280,7 @@ rf
 \end{minted}
 
 \subsubsection{Glob}
-\label{sec:orgheadline50}
+\label{sec:orgheadline51}
 The \href{https://docs.python.org/2/library/glob.html}{glob} module finds all the  path-names matching a given pattern. It
 uses standard Unix (shell) path  expansion rules. However, results are
 returned in arbitrary order and therefore sometimes ordering operation
@@ -1338,4 +1358,11 @@ for files_ in glob.iglob("figures/*.png"):
 figures/take5spot5.png
 figures/quicklook_seg_eau.png
 \end{minted}
+
+\subsubsection{Argparse}
+\label{sec:orgheadline42}
+Argparse (\url{https://docs.python.org/3.6/library/argparse.html}) is module
+to parse  options and  arguments from  the command-line  interface. It
+defines what  are the  mandatory argument,  generates help  and usages
+messages and errors at runtime.
 \end{document}

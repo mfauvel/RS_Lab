@@ -1161,6 +1161,21 @@ an, off course, do the right processing.
   \end{tikzpicture}
 #+END_LaTeX
 #+END_figure
+
+#+BEGIN_work
+1. Write the main steps of the filtering:
+   1. Load the image
+   2. Filter the image
+   3. Write the results
+2. Add the necessary machinery to make a python application
+   1. Add command line arguments parser (see [[#sec:argparse]])
+   2. Make you function executable
+
+      #+BEGIN_SRC sh
+      chmod +x yourfunction.py      
+      #+END_SRC
+3. Play with it to find the best couple of parameters to remove black line in the historical map.
+#+END_work
 * Appendix                                                            :sigma:
 ** Short introduction to shell
 :PROPERTIES:
@@ -1467,6 +1482,15 @@ for files_ in glob.iglob("figures/*.png"):
 figures/take5spot5.png
 figures/quicklook_seg_eau.png
 #+END_SRC
+
+*** Argparse
+:PROPERTIES:
+:custom_ID: sec:argparse
+:END:
+Argparse (https://docs.python.org/3.6/library/argparse.html) is module
+to parse  options and  arguments from  the command-line  interface. It
+defines what  are the  mandatory argument,  generates help  and usages
+messages and errors at runtime.
 
 * Python and Shell Codes for the labworks                          :noexport:
 :PROPERTIES:
@@ -1825,18 +1849,35 @@ done
 #+BEGIN_SRC python
 import matplotlib.pyplot as plt
 import scipy as sp
-import skeleton as sk
+import myfilters as mf
 # Load image
-image = sp.load("/home/mfauvel/Documents/Enseignement/ENSAT/Master SIGMA/Documents/TP/python/ikonos_part.npy")
+# image = sp.load("/home/mfauvel/Documents/Enseignement/ENSAT/Master SIGMA/Documents/TP/python/ikonos_part.npy")
+image = sp.load("/home/mfauvel/Documents/Enseignement/ENSAT/Master SIGMA/Documents/TP/python/ikonos_part_sp.npy")
 
-# Display image
+plt.figure()
 plt.imshow(image,cmap="gray")
 
-# Filter image
-imfil = sk.TheFilter(image,p=9)
-plt.figure()
-plt.imshow(imfil,cmap="gray")
+# # Filter max
+# plt.figure()
+# filmax = mf.filterMax(image,p=1)
+# plt.imshow(filmax,cmap="gray")
 
+# plt.figure()
+# filmin = mf.filterMin(image,p=1)
+# plt.imshow(filmin,cmap="gray")
+
+# plt.figure()
+# filmedian = mf.filterMedian(image,p=1)
+# plt.imshow(filmedian,cmap="gray")
+
+# plt.figure()
+# filmean = mf.filterMean(image,p=1)
+# plt.imshow(filmean,cmap="gray")
+
+for p in range(1,6):
+    plt.figure()
+    out = mf.filterMedian(image,p=p)
+    plt.imshow(out,cmap="gray")
 plt.show()
 #+END_SRC
 
@@ -1876,6 +1917,123 @@ def filterMax(imin,p=1):
     for i in range(p,H-p):
         for j in range(p,W-p):
             imout[i,j]=imin[(i-p):(i+p+1),(j-p):(j+p+1)].max()
+
+    ## Fill border
+    imout[:,:p]=imin[:,:p]
+    imout[:,-p:]=imin[:,-p:]
+    imout[:p,:]=imin[:p,:]
+    imout[-p:,:]=imin[-p:,:]
+    
+    return imout
+
+def filterMin(imin,p=1):
+    """This  function apply  the  filter  TheFilter  on image imin  with
+    parameters p1, p2, ...p2
+
+    Input:
+    -----
+    imin = image to be processed, Scipy 2D-Array
+    p = window size = 2p+1. Should be strictly positive
+
+    Output:
+    ------    
+    imout = filtered image, Scipy 2D-Array, not necessraly of the same
+    type as imin, depending of the filter
+    """
+    ## Initialization
+    if imin.ndim != 2: # Check  the number of dimensions of the image:
+                       # should be 2
+        return 0
+    
+    H,W = imin.shape # Get the image shape
+
+    imout = sp.empty((H,W),dtype=imin.dtype) # Initialization of the output image
+    ## Size of the window
+    if p<=0:
+        return 0
+    
+    ## Loop over the pixels
+    for i in range(p,H-p):
+        for j in range(p,W-p):
+            imout[i,j]=imin[(i-p):(i+p+1),(j-p):(j+p+1)].min()
+
+    ## Fill border
+    imout[:,:p]=imin[:,:p]
+    imout[:,-p:]=imin[:,-p:]
+    imout[:p,:]=imin[:p,:]
+    imout[-p:,:]=imin[-p:,:]
+    
+    return imout
+
+def filterMean(imin,p=1):
+    """This  function apply  the  filter  TheFilter  on image imin  with
+    parameters p1, p2, ...p2
+
+    Input:
+    -----
+    imin = image to be processed, Scipy 2D-Array
+    p = window size = 2p+1. Should be strictly positive
+
+    Output:
+    ------    
+    imout = filtered image, Scipy 2D-Array, not necessraly of the same
+    type as imin, depending of the filter
+    """
+    ## Initialization
+    if imin.ndim != 2: # Check  the number of dimensions of the image:
+                       # should be 2
+        return 0
+    
+    H,W = imin.shape # Get the image shape
+
+    imout = sp.empty((H,W),dtype=imin.dtype) # Initialization of the output image
+    ## Size of the window
+    if p<=0:
+        return 0
+    
+    ## Loop over the pixels
+    for i in range(p,H-p):
+        for j in range(p,W-p):
+            imout[i,j]=imin[(i-p):(i+p+1),(j-p):(j+p+1)].mean()
+
+    ## Fill border
+    imout[:,:p]=imin[:,:p]
+    imout[:,-p:]=imin[:,-p:]
+    imout[:p,:]=imin[:p,:]
+    imout[-p:,:]=imin[-p:,:]
+    
+    return imout
+
+def filterMedian(imin,p=1):
+    """This  function apply  the  filter  TheFilter  on image imin  with
+    parameters p1, p2, ...p2
+
+    Input:
+    -----
+    imin = image to be processed, Scipy 2D-Array
+    p = window size = 2p+1. Should be strictly positive
+
+    Output:
+    ------    
+    imout = filtered image, Scipy 2D-Array, not necessraly of the same
+    type as imin, depending of the filter
+    """
+    ## Initialization
+    if imin.ndim != 2: # Check  the number of dimensions of the image:
+                       # should be 2
+        return 0
+    
+    H,W = imin.shape # Get the image shape
+
+    imout = sp.empty((H,W),dtype=imin.dtype) # Initialization of the output image
+    ## Size of the window
+    if p<=0:
+        return 0
+    
+    ## Loop over the pixels
+    for i in range(p,H-p):
+        for j in range(p,W-p):
+            imout[i,j]=sp.median(imin[(i-p):(i+p+1),(j-p):(j+p+1)])
 
     ## Fill border
     imout[:,:p]=imin[:,:p]
@@ -2082,6 +2240,7 @@ def write_data(outname,im,GeoTransform,Projection):
 - [ ] Mettre l'images HM en ligne
 - [X] Mettre les codes python pour l'ouverture des images, en enlevant les commentaires.
 - [X] Faire codes pour tester les temps de calculs sur le parcours des boucles
+- [ ] Rajouter intro argparss
 ** Séquences plus ou moins prêtes
 + [X] Ouvertures et Visualisation d'images
 + [X] Segmentation d'images
