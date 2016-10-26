@@ -1176,6 +1176,71 @@ an, off course, do the right processing.
       #+END_SRC
 3. Play with it to find the best couple of parameters to remove black line in the historical map.
 #+END_work
+** QGIS Script
+QGIS offers facilities  to call python scripts directly  from QGIS. We
+are going to see how it is  possible to use our previous script, which
+slight  modifications,  directly in  QGIS.  Doing  this has  two  main
+advantages:
+1. Let QGIS does the job for the selection and the visualization of
+   the images,
+2. Use QGIS pre-defined function to handle arguments of our functions.
+*** Install /Script Runner/
+/Script Runner/ is a QGIS plugin  that allows to integrate python script
+very easily:  you don't  need to  worry about  linking your  script to
+QGIS, it is  done automatically. To install it, just  do /Extensions ->
+Manage and Install Plugins/ and select the plugin.
+
+Once the plugin is installed in QGIS, you can import your scripts.
+*** Creating script for QGIS and /Script Runner/
+Your  script needs  slight modification  in  order to  be imported  in
+/Script Runner/.   
+
+1. Add the following modules to interact with QGIS:
+
+   #+BEGIN_SRC python
+   from PyQt4.QtCore import *
+   from PyQt4.QtGui import *
+   from qgis.core import *
+   from qgis.gui import *
+   #+END_SRC
+
+2. First you  should define  a function  =run_script(iface)= where  the
+   processing is done.  =iface= is a  python object that gives access to
+   several QGIS objects  and classes.  It is used  to communicate with
+   QGIS. You can  also add arguments to the function:  when the script
+   is run, a  window will be automatically created to  ask you to fill
+   the value  of each parameter. For  instance, if you need  to define
+   bands corresponding to infrared and red  and the name of the output
+   file:
+
+  #+BEGIN_SRC python
+  def run_script(iface,IR,R,data_name)
+  #+END_SRC
+
+3. The  second modification  need is to  get the name  of the  data of
+   current layer in QGIS. It is done using =iface= object:
+
+   #+BEGIN_SRC python
+   layer = iface.activeLayer() # Get the current layer
+   name = layer.dataProvider().dataSourceUri() # Get the path of the layer
+   #+END_SRC
+
+   Then, once the processed file has  been saved on the hard drive, it
+   is possible  to load directly  the file  into QGIS, again  by using
+   =iface=:
+
+   #+BEGIN_SRC python
+   raster_lyr = iface.addRasterLayer('name_of_the_data','name_of_the_layer')
+   #+END_SRC
+
+4. The  last modification is not  mandatory, but it will  simplify the
+   use of  your script. Don't  use =import=,  but directly put  all your
+   additional functions before the =run_script= function.
+
+
+#+BEGIN_work
+Make the your script and use it from QGIS.
+#+END_work
 * Appendix                                                            :sigma:
 ** Short introduction to shell
 :PROPERTIES:
@@ -1490,7 +1555,27 @@ figures/quicklook_seg_eau.png
 Argparse (https://docs.python.org/3.6/library/argparse.html) is module
 to parse  options and  arguments from  the command-line  interface. It
 defines what  are the  mandatory argument,  generates help  and usages
-messages and errors at runtime.
+messages and errors at runtime. 
+
+For instance,  suppose we have  a function that needs  two parameters:
+the  name  of a  multispectral  file  and  the  size of  the  template
+filter. Argparse handles everything:
+
+#+BEGIN_SRC python :tangle app.py
+import argparse
+
+# Initialization of the filter
+parser = argparse.ArgumentParser()
+
+# Add arguments
+parser.add_argument("-in",dest="image",help="Image to be processed",type=str)
+parser.add_argument("-p",help="Size of the template",type=int,default=1)
+
+args = parser.parse_args()
+
+print args.image
+print args.p
+#+END_SRC
 
 * Python and Shell Codes for the labworks                          :noexport:
 :PROPERTIES:
@@ -1883,7 +1968,7 @@ plt.show()
 
 #+RESULTS:
 : None
-*** Max filter
+*** Template filters
 #+BEGIN_SRC python :tangle myfilters.py
 import scipy as sp
 
@@ -2044,44 +2129,38 @@ def filterMedian(imin,p=1):
     return imout
 
 
-def filterMaxS(imin,p=1):
-    """This  function apply  the  filter  TheFilter  on image imin  with
-    parameters p1, p2, ...p2
+def filterMulti(imin,p=1,filter='median'):
+    """This  function apply  the  filter  on data cube
 
     Input:
     -----
-    imin = image to be processed, Scipy 2D-Array
+    imin = image to be processed, Scipy 3D-Array
     p = window size = 2p+1. Should be strictly positive
-
+    filter = the kind of filter
     Output:
     ------    
-    imout = filtered image, Scipy 2D-Array, not necessraly of the same
+    imout = filtered image, Scipy 3D-Array, not necessraly of the same
     type as imin, depending of the filter
     """
-    ## Initialization
-    if imin.ndim != 2: # Check  the number of dimensions of the image:
-                       # should be 2
-        return 0
+    H,W,D = imin.shape # Get the image shape
     
-    H,W = imin.shape # Get the image shape
+    imout = sp.empty((H,W,D),dtype=imin.dtype) # Initialization of the output image
 
-    imout = sp.empty((H,W),dtype=imin.dtype) # Initialization of the output image
-    ## Size of the window
-    if p<=0:
-        return 0
-    
-    ## Loop over the pixels
-    for j in range(p,W-p):
-        for i in range(p,H-p):
-            imout[i,j]=imin[(i-p):(i+p+1),(j-p):(j+p+1)].max()
+    # Select the filter
+    if filter == 'max':
+        function = filterMax
+    elif filter == 'min':
+        function = filterMin
+    elif filter == 'mean':
+        function = filterMean
+    else :
+        function = filterMedian
 
-    ## Fill border
-    imout[:,:p]=imin[:,:p]
-    imout[:,-p:]=imin[:,-p:]
-    imout[:p,:]=imin[:p,:]
-    imout[-p:,:]=imin[-p:,:]
-    
+    for d in range(D):
+        imout[:,:,d]=function(imin[:,:,d],p=p)
+
     return imout
+    
 #+END_SRC
 
 *** +Test speed+
@@ -2162,7 +2241,8 @@ def open_data(filename):
         im = sp.empty((nl,nc,d),dtype=dt) 
         for i in range(d):
             im[:,:,i]=data.GetRasterBand(i+1).ReadAsArray()
-    
+
+   
     GeoTransform = data.GetGeoTransform()
     Projection = data.GetProjection()
     data = None # Close the file
@@ -2223,6 +2303,374 @@ def write_data(outname,im,GeoTransform,Projection):
             out.WriteArray(im[:,:,i])
             out.FlushCache()
     dst_ds = None # Close the file
+    out = None
+#+END_SRC
+*** HM
+#+BEGIN_SRC python :tangle test_hm.py
+import myfilters as mf
+import rasterTool as rt
+
+p= 10
+
+# load data
+im,geo,proj = rt.open_data("/tmp/decoup.tif")
+print im.shape
+
+# filter
+im_fmax = mf.filterMulti(im,p=p,filter='max')
+del im
+
+im_fmin = mf.filterMulti(im_fmax,p=p,filter='min')
+del im_fmax
+
+im_fmedian = mf.filterMulti(im_fmin,p=p,filter='median')
+del im_fmin
+
+# save data
+outname = "/tmp/toto_"+str(p) +".tif"
+rt.write_data(outname,im_fmedian,geo,proj)
+#+END_SRC
+*** QGIS Script
+#+BEGIN_SRC python :tangle qgis_script.py
+from PyQt4.QtCore import *
+from PyQt4.QtGui import *
+from qgis.core import *
+from qgis.gui import *
+
+
+import scipy as sp
+from osgeo import gdal
+## FILTERS
+def filterMax(imin,p=1):
+    """This  function apply  the  filter  TheFilter  on image imin  with
+    parameters p1, p2, ...p2
+
+    Input:
+    -----
+    imin = image to be processed, Scipy 2D-Array
+    p = window size = 2p+1. Should be strictly positive
+
+    Output:
+    ------    
+    imout = filtered image, Scipy 2D-Array, not necessraly of the same
+    type as imin, depending of the filter
+    """
+    ## Initialization
+    if imin.ndim != 2: # Check  the number of dimensions of the image:
+                       # should be 2
+        return 0
+    
+    H,W = imin.shape # Get the image shape
+
+    imout = sp.empty((H,W),dtype=imin.dtype) # Initialization of the output image
+    ## Size of the window
+    if p<=0:
+        return 0
+    
+    ## Loop over the pixels
+    for i in range(p,H-p):
+        for j in range(p,W-p):
+            imout[i,j]=imin[(i-p):(i+p+1),(j-p):(j+p+1)].max()
+
+    ## Fill border
+    imout[:,:p]=imin[:,:p]
+    imout[:,-p:]=imin[:,-p:]
+    imout[:p,:]=imin[:p,:]
+    imout[-p:,:]=imin[-p:,:]
+    
+    return imout
+
+def filterMin(imin,p=1):
+    """This  function apply  the  filter  TheFilter  on image imin  with
+    parameters p1, p2, ...p2
+
+    Input:
+    -----
+    imin = image to be processed, Scipy 2D-Array
+    p = window size = 2p+1. Should be strictly positive
+
+    Output:
+    ------    
+    imout = filtered image, Scipy 2D-Array, not necessraly of the same
+    type as imin, depending of the filter
+    """
+    ## Initialization
+    if imin.ndim != 2: # Check  the number of dimensions of the image:
+                       # should be 2
+        return 0
+    
+    H,W = imin.shape # Get the image shape
+
+    imout = sp.empty((H,W),dtype=imin.dtype) # Initialization of the output image
+    ## Size of the window
+    if p<=0:
+        return 0
+    
+    ## Loop over the pixels
+    for i in range(p,H-p):
+        for j in range(p,W-p):
+            imout[i,j]=imin[(i-p):(i+p+1),(j-p):(j+p+1)].min()
+
+    ## Fill border
+    imout[:,:p]=imin[:,:p]
+    imout[:,-p:]=imin[:,-p:]
+    imout[:p,:]=imin[:p,:]
+    imout[-p:,:]=imin[-p:,:]
+    
+    return imout
+
+def filterMean(imin,p=1):
+    """This  function apply  the  filter  TheFilter  on image imin  with
+    parameters p1, p2, ...p2
+
+    Input:
+    -----
+    imin = image to be processed, Scipy 2D-Array
+    p = window size = 2p+1. Should be strictly positive
+
+    Output:
+    ------    
+    imout = filtered image, Scipy 2D-Array, not necessraly of the same
+    type as imin, depending of the filter
+    """
+    ## Initialization
+    if imin.ndim != 2: # Check  the number of dimensions of the image:
+                       # should be 2
+        return 0
+    
+    H,W = imin.shape # Get the image shape
+
+    imout = sp.empty((H,W),dtype=imin.dtype) # Initialization of the output image
+    ## Size of the window
+    if p<=0:
+        return 0
+    
+    ## Loop over the pixels
+    for i in range(p,H-p):
+        for j in range(p,W-p):
+            imout[i,j]=imin[(i-p):(i+p+1),(j-p):(j+p+1)].mean()
+
+    ## Fill border
+    imout[:,:p]=imin[:,:p]
+    imout[:,-p:]=imin[:,-p:]
+    imout[:p,:]=imin[:p,:]
+    imout[-p:,:]=imin[-p:,:]
+    
+    return imout
+
+def filterMedian(imin,p=1):
+    """This  function apply  the  filter  TheFilter  on image imin  with
+    parameters p1, p2, ...p2
+
+    Input:
+    -----
+    imin = image to be processed, Scipy 2D-Array
+    p = window size = 2p+1. Should be strictly positive
+
+    Output:
+    ------    
+    imout = filtered image, Scipy 2D-Array, not necessraly of the same
+    type as imin, depending of the filter
+    """
+    ## Initialization
+    if imin.ndim != 2: # Check  the number of dimensions of the image:
+                       # should be 2
+        return 0
+    
+    H,W = imin.shape # Get the image shape
+
+    imout = sp.empty((H,W),dtype=imin.dtype) # Initialization of the output image
+    ## Size of the window
+    if p<=0:
+        return 0
+    
+    ## Loop over the pixels
+    for i in range(p,H-p):
+        for j in range(p,W-p):
+            imout[i,j]=sp.median(imin[(i-p):(i+p+1),(j-p):(j+p+1)])
+
+    ## Fill border
+    imout[:,:p]=imin[:,:p]
+    imout[:,-p:]=imin[:,-p:]
+    imout[:p,:]=imin[:p,:]
+    imout[-p:,:]=imin[-p:,:]
+    
+    return imout
+
+
+def filterMulti(imin,p=1,filter='median'):
+    """This  function apply  the  filter  on data cube
+
+    Input:
+    -----
+    imin = image to be processed, Scipy 3D-Array
+    p = window size = 2p+1. Should be strictly positive
+    filter = the kind of filter
+    Output:
+    ------    
+    imout = filtered image, Scipy 3D-Array, not necessraly of the same
+    type as imin, depending of the filter
+    """
+    H,W,D = imin.shape # Get the image shape
+    
+    imout = sp.empty((H,W,D),dtype=imin.dtype) # Initialization of the output image
+
+    # Select the filter
+    if filter == 'max':
+        function = filterMax
+    elif filter == 'min':
+        function = filterMin
+    elif filter == 'mean':
+        function = filterMean
+    else :
+        function = filterMedian
+
+    for d in range(D):
+        imout[:,:,d]=function(imin[:,:,d],p=p)
+
+    return imout
+    
+
+## RASTER TOOL
+def open_data(filename):
+    '''
+    The function open and load the image given its name. 
+    The type of the data is checked from the file and the scipy array is initialized accordingly.
+    Input:
+        filename: the name of the file
+    Output:
+        im: the data cube
+        GeoTransform: the geotransform information 
+        Projection: the projection information
+    '''
+    data = gdal.Open(filename,gdal.GA_ReadOnly)
+    if data is None:
+        print 'Impossible to open '+filename
+        exit()
+    nc = data.RasterXSize
+    nl = data.RasterYSize
+    d  = data.RasterCount
+    
+    # Get the type of the data
+    gdal_dt = data.GetRasterBand(1).DataType
+    if gdal_dt == gdal.GDT_Byte:
+        dt = 'uint8'
+    elif gdal_dt == gdal.GDT_Int16:
+        dt = 'int16'
+    elif gdal_dt == gdal.GDT_UInt16:
+        dt = 'uint16'
+    elif gdal_dt == gdal.GDT_Int32:
+        dt = 'int32'
+    elif gdal_dt == gdal.GDT_UInt32:
+        dt = 'uint32'
+    elif gdal_dt == gdal.GDT_Float32:
+        dt = 'float32'
+    elif gdal_dt == gdal.GDT_Float64:
+        dt = 'float64'
+    elif gdal_dt == gdal.GDT_CInt16 or gdal_dt == gdal.GDT_CInt32 or gdal_dt == gdal.GDT_CFloat32 or gdal_dt == gdal.GDT_CFloat64 :
+        dt = 'complex64'
+    else:
+        print 'Data type unkown'
+        exit()
+    
+    # Initialize the array
+    if d ==1:
+        im = sp.empty((nl,nc),dtype=dt)
+        im =data.GetRasterBand(1).ReadAsArray()
+    else:
+        im = sp.empty((nl,nc,d),dtype=dt) 
+        for i in range(d):
+            im[:,:,i]=data.GetRasterBand(i+1).ReadAsArray()
+
+   
+    GeoTransform = data.GetGeoTransform()
+    Projection = data.GetProjection()
+    data = None # Close the file
+    return im,GeoTransform,Projection
+
+def write_data(outname,im,GeoTransform,Projection):
+    '''
+    The function write the image on the  hard drive.
+    Input: 
+        outname: the name of the file to be written
+        im: the image cube
+        GeoTransform: the geotransform information 
+        Projection: the projection information
+    Output:
+        Nothing --
+    '''
+    nl = im.shape[0]
+    nc = im.shape[1]
+    if im.ndim == 2:
+        d=1
+    else:
+        d = im.shape[2]
+    
+    driver = gdal.GetDriverByName('GTiff')
+    dt = im.dtype.name
+    # Get the data type
+    if dt == 'bool' or dt == 'uint8':
+        gdal_dt=gdal.GDT_Byte
+    elif dt == 'int8' or dt == 'int16':
+        gdal_dt=gdal.GDT_Int16
+    elif dt == 'uint16':
+        gdal_dt=gdal.GDT_UInt16
+    elif dt == 'int32':
+        gdal_dt=gdal.GDT_Int32
+    elif dt == 'uint32':
+        gdal_dt=gdal.GDT_UInt32
+    elif dt == 'int64' or dt == 'uint64' or dt == 'float16' or dt == 'float32':
+        gdal_dt=gdal.GDT_Float32
+    elif dt == 'float64':
+        gdal_dt=gdal.GDT_Float64
+    elif dt == 'complex64':
+        gdal_dt=gdal.GDT_CFloat64
+    else:
+        print 'Data type non-suported'
+        exit()
+    
+    dst_ds = driver.Create(outname,nc,nl, d, gdal_dt)
+    dst_ds.SetGeoTransform(GeoTransform)
+    dst_ds.SetProjection(Projection)
+    
+    if d==1:
+        out = dst_ds.GetRasterBand(1)
+        out.WriteArray(im)
+        out.FlushCache()
+    else:
+        for i in range(d):
+            out = dst_ds.GetRasterBand(i+1)
+            out.WriteArray(im[:,:,i])
+            out.FlushCache()
+    dst_ds = None # Close the file
+    out = None
+
+## The core function
+def run_script(iface,p,output_name):
+
+    ## Get the filename of the data to be processed
+    layer = iface.activeLayer() # Get the current layer
+    name = layer.dataProvider().dataSourceUri() # Get the path of the layer
+
+    ## Do the processing (copy/paste from previous function)
+    # load data
+    im,geo,proj = open_data(name)
+        
+    # filter
+    im_fmax = filterMulti(im,p=p,filter='max')
+    del im
+    
+    im_fmin = filterMulti(im_fmax,p=p,filter='min')
+    del im_fmax
+    
+    im_fmedian = filterMulti(im_fmin,p=p,filter='median')
+    del im_fmin
+    
+    # save data
+    write_data(output_name,im_fmedian,geo,proj)
+
+    # Load data into QGIS
+    raster_lyr = iface.addRasterLayer(output_name,'FilterImage')
 #+END_SRC
 * TO DO                                                            :noexport:
 ** A compléter

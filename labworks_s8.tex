@@ -1,4 +1,4 @@
-% Created 2016-10-19 Wed 13:25
+% Created 2016-10-26 Wed 12:30
 \documentclass[a4paper,11pt,DIV=18]{scrartcl}
                 \usepackage{ucs} 
                 \usepackage{array}
@@ -221,14 +221,14 @@ session.
 \subsection{Pleiades images}
 \label{sec:orgheadline10}
 These images were acquired over the  Fabas forest in 2013. Images were
-acquired   the   \textit{2013-10-12 Sat    }    and   the   \textit{2013-12-10 Tue},
+acquired   the   \textit{<2013-10-12 Sat>    }    and   the   \textit{<2013-12-10 Tue>},
 respectively. A true color composition is given in Figure \ref{fig:orgparagraph1}.
 
 \begin{figure}[htb]
 \centering
 \includegraphics[width=0.5\textwidth]{./figures/quicklook_fabas_12_10_2013.jpg}
 \caption{\label{fig:orgparagraph1}
-Fabas image acquired the \textit{2013-10-12 Sat}.}
+Fabas image acquired the \textit{<2013-10-12 Sat>}.}
 \end{figure}
 
 Images are stored using the \href{https://trac.osgeo.org/geotiff/}{GeoTIFF} format.  It is an extended version
@@ -906,7 +906,7 @@ terms of habitat.
 \end{enumerate}
 \end{work}
 \section{Python for Remote Sensing data analysis}
-\label{sec:orgheadline44}
+\label{sec:orgheadline47}
 \subsection{Template filters}
 \label{sec:orgheadline41}
 \subsubsection{Introduction}
@@ -1080,6 +1080,7 @@ Processing chain.}
 \begin{enumerate}
 \item Add command line arguments parser (see \ref{sec:orgheadline42})
 \item Make you function executable
+
 \begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg,breaklines]{sh}
 chmod +x yourfunction.py
 \end{minted}
@@ -1087,8 +1088,80 @@ chmod +x yourfunction.py
 \item Play with it to find the best couple of parameters to remove black line in the historical map.
 \end{enumerate}
 \end{work}
+\subsection{QGIS Script}
+\label{sec:orgheadline46}
+QGIS offers facilities  to call python scripts directly  from QGIS. We
+are going to see how it is  possible to use our previous script, which
+slight  modifications,  directly in  QGIS.  Doing  this has  two  main
+advantages:
+\begin{enumerate}
+\item Let QGIS does the job for the selection and the visualization of
+the images,
+\item Use QGIS pre-defined function to handle arguments of our functions.
+\end{enumerate}
+\subsubsection{Install \emph{Script Runner}}
+\label{sec:orgheadline44}
+\emph{Script Runner} is a QGIS plugin  that allows to integrate python script
+very easily:  you don't  need to  worry about  linking your  script to
+QGIS, it is  done automatically. To install it, just  do \emph{Extensions ->
+Manage and Install Plugins} and select the plugin.
+
+Once the plugin is installed in QGIS, you can import your scripts.
+\subsubsection{Creating script for QGIS and \emph{Script Runner}}
+\label{sec:orgheadline45}
+Your  script needs  slight modification  in  order to  be imported  in
+\emph{Script Runner}.   
+
+\begin{enumerate}
+\item Add the following modules to interact with QGIS:
+
+\begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg,breaklines]{python}
+from PyQt4.QtCore import *
+from PyQt4.QtGui import *
+from qgis.core import *
+from qgis.gui import *
+\end{minted}
+
+\item First you  should define  a function  \texttt{run\_script(iface)} where  the
+processing is done.  \texttt{iface} is a  python object that gives access to
+several QGIS objects  and classes.  It is used  to communicate with
+QGIS. You can  also add arguments to the function:  when the script
+is run, a  window will be automatically created to  ask you to fill
+the value  of each parameter. For  instance, if you need  to define
+bands corresponding to infrared and red  and the name of the output
+file:
+
+\begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg,breaklines]{python}
+def run_script(iface,IR,R,data_name)
+\end{minted}
+
+\item The  second modification  need is to  get the name  of the  data of
+current layer in QGIS. It is done using \texttt{iface} object:
+
+\begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg,breaklines]{python}
+layer = iface.activeLayer() # Get the current layer
+name = layer.dataProvider().dataSourceUri() # Get the path of the layer
+\end{minted}
+
+Then, once the processed file has  been saved on the hard drive, it
+is possible  to load directly  the file  into QGIS, again  by using
+\texttt{iface}:
+
+\begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg,breaklines]{python}
+raster_lyr = iface.addRasterLayer('name_of_the_data','name_of_the_layer')
+\end{minted}
+
+\item The  last modification is not  mandatory, but it will  simplify the
+use of  your script. Don't  use \texttt{import},  but directly put  all your
+additional functions before the \texttt{run\_script} function.
+\end{enumerate}
+
+
+\begin{work}
+Make the your script and use it from QGIS.
+\end{work}
 \section{Appendix}
-\label{sec:orgheadline52}
+\label{sec:orgheadline55}
 \subsection{Short introduction to shell}
 \label{sec:orgheadline25}
 This section provides  an introduction to \emph{shell}  programming and \emph{shell
@@ -1127,7 +1200,7 @@ To run it, just do
 \end{minted}
 
 \subsubsection{Basic commands}
-\label{sec:orgheadline45}
+\label{sec:orgheadline48}
 \begin{itemize}
 \item \textbf{cd}: Change directory. To enter a directory, do \texttt{cd Name\_Of\_Directory}.
 \item \textbf{ls}: List all the file in the current directory.
@@ -1145,7 +1218,7 @@ fabas_10_12_2013.tif  fabas_12_10_2013.tif
 \end{minted}
 
 \subsubsection{Variables}
-\label{sec:orgheadline46}
+\label{sec:orgheadline49}
 In shell, a variable is a string (not a number). It can be defined as:
 
 \begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg,breaklines]{sh}
@@ -1187,7 +1260,7 @@ chmod +x script.sh
 \end{minted}
 
 \subsubsection{Loop}
-\label{sec:orgheadline47}
+\label{sec:orgheadline50}
 As in any programming language, loop are very useful to apply a series
 of processing  to several  elements of a  sequence. The  example below
 applies a processing on all \emph{tif} files of the current directory:
@@ -1199,7 +1272,7 @@ do
 done
 \end{minted}
 \subsubsection{Sequence}
-\label{sec:orgheadline48}
+\label{sec:orgheadline51}
 It is possible to define sequences of string like this:
 
 \begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg,breaklines]{sh}
@@ -1224,7 +1297,7 @@ A     good    starting     point     is     the    following     link:
 review few things that are usefull  for the labwork. But python is far
 more than this short introduction.
 \subsubsection{String}
-\label{sec:orgheadline49}
+\label{sec:orgheadline52}
 Handling  strings with  python is  very easy.  It is  possible to  add
 strings together, as with number! Pay attention to spaces\ldots{}
 
@@ -1249,7 +1322,7 @@ Bonjour j'ai eu 33 ans
 \end{minted}
 
 \subsubsection{Loop}
-\label{sec:orgheadline50}
+\label{sec:orgheadline53}
 It is very  easy to iterate over  a list with python. The  list can be
 made of numbers, strings etc \ldots{}  Since a list is \href{https://docs.python.org/2/glossary.html}{iterable}, defining a
 \texttt{for} loop is just:
@@ -1280,7 +1353,7 @@ rf
 \end{minted}
 
 \subsubsection{Glob}
-\label{sec:orgheadline51}
+\label{sec:orgheadline54}
 The \href{https://docs.python.org/2/library/glob.html}{glob} module finds all the  path-names matching a given pattern. It
 uses standard Unix (shell) path  expansion rules. However, results are
 returned in arbitrary order and therefore sometimes ordering operation
@@ -1364,5 +1437,25 @@ figures/quicklook_seg_eau.png
 Argparse (\url{https://docs.python.org/3.6/library/argparse.html}) is module
 to parse  options and  arguments from  the command-line  interface. It
 defines what  are the  mandatory argument,  generates help  and usages
-messages and errors at runtime.
+messages and errors at runtime. 
+
+For instance,  suppose we have  a function that needs  two parameters:
+the  name  of a  multispectral  file  and  the  size of  the  template
+filter. Argparse handles everything:
+
+\begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg,breaklines]{python}
+import argparse
+
+# Initialization of the filter
+parser = argparse.ArgumentParser()
+
+# Add arguments
+parser.add_argument("-in",dest="image",help="Image to be processed",type=str)
+parser.add_argument("-p",help="Size of the template",type=int,default=1)
+
+args = parser.parse_args()
+
+print args.image
+print args.p
+\end{minted}
 \end{document}
