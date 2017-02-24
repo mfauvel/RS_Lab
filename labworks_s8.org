@@ -195,69 +195,7 @@ GIS software. Table [[tab:bands:pleiades]] gives the band order of the data.
 |    3 | Blue      |
 |    4 | Infra-red |
 |------+-----------|
-** SPOT5 Take-5 Satellite Image Time series                       :noexport:
-:PROPERTIES:
-:CUSTOM_ID: sec:sits
-:END:
-These times  series were acquired  over the  Fabas forest in  2015. 15
-dates were acquired between [2015-05-15 Fri] and [2015-09-07 Mon]. See
-\ref{fig:SITS} for  detail.  The figure  [[sits_1]] shows the NDVI  of one
-date during the summer.
- 
-#+BEGIN_EXPORT LaTeX
-\begin{figure}[h]
-  \centering
-  \begin{tikzpicture}
-    \begin{axis}[hide y axis,axis lines=middle,
-      date coordinates in=x,
-      xticklabel={\texttt{\month}},
-      x tick label style={},
-      date ZERO=2014-12-12,
-      xmin=2015-04-15, 
-      xmax=2015-10-15,
-      ymin=-0.25,ymax=0.25,
-      xtick={{2015-05-01},{2015-06-01},{2015-07-01},{2015-08-01},{2015-09-01},{2015-10-01}}
-      ,clip=false]
-      \addplot [blue,thick,mark=*,only marks]coordinates{
-      (2015-05-15,0)
-      (2015-05-20,0)
-      (2015-06-04,0)
-      (2015-06-24,0)
-      (2015-06-29,0)
-      (2015-07-04,0)
-      (2015-07-09,0)
-      (2015-07-14,0)
-      (2015-07-19,0)
-      (2015-07-24,0)
-      (2015-08-13,0)
-      (2015-08-18,0)
-      (2015-08-28,0)
-      (2015-09-02,0)
-      (2015-09-07,0)};      
-      \end{axis}
-  \end{tikzpicture}
-  \caption{Acquisition dates for the SITS 2015.}
-  \label{fig:SITS}
-\end{figure}
-#+END_EXPORT
 
-#+CAPTION: NDVI of one date in Jully for the SITS data.
-#+NAME: sits_1
-#+ATTR_LATEX: :width 0.85\textwidth
-[[file:./figures/take5spot5.png]]
-
-In the labwork, we have access  to four images, each one corresponding
-to  all   the  temporal  acquisition   for  one  spectral   band,  see
-[[tab:sits:file]].
-#+ATTR_LATEX: :booktabs t
-#+CAPTION: Filenames of each image.
-#+NAME: tab:sits:file
-| File names                        |
-|-----------------------------------|
-| cut_serie_spot5_coteaux_green.tif |
-| cut_serie_spot5_coteaux_mir.tif   |
-| cut_serie_spot5_coteaux_nir.tif   |
-| cut_serie_spot5_coteaux_red.tif   |
 ** Formosat 2 Satellite image time series 
 :PROPERTIES:
 :CUSTOM_ID: sec:sits
@@ -460,7 +398,7 @@ it can be related to chlorophyll content and photosynthesis.
    otbcli_BandMath -il fabas_12_10_2013.tif -out ndvi_fabas.tif -exp "(im1b4-im1b1)/(im1b4+im1b1)"   
    #+END_SRC
 
-2) Compare the two NDVI and explain your results.
+2) Compare the NDVI obtained for each date and explain your results.
 #+END_work
 * Segmentation of remote sensing images                            :sigma:2A:
 :PROPERTIES:
@@ -491,7 +429,7 @@ depending on the number of materials.
 #+CAPTION: Binary image for Water.
 #+NAME: fig:mask:water
 #+ATTR_LATEX: :width 0.65\linewidth
-[[file:./../figures/quicklook_seg_eau.png]]
+[[file:./figures/quicklook_seg_eau.png]]
 
 A usual  work-flow is proposed  in this part.  First, QGIS is  used to
 analyze the data and set-up the processing (parameters /etc/). Then, the
@@ -520,7 +458,7 @@ of the NDVI.
 * Change detection: /Detection of floods/                            :sigma:2A:
 :PROPERTIES:
 :FORMATION: Presential
-:DURATION: 01:30
+:DURATION: 01:40
 :SEQUENCE: 3
 :END:
 Change detection  in remote sensing consists  in detecting differences
@@ -555,7 +493,7 @@ impacted area to provide a map of these zones
 #+CAPTION: Google view of the impacted area. The red square represents the area of Figure [[fig:cd]].
 #+NAME: fig:larger
 #+ATTR_LATEX: :width 0.75\textwidth
-[[file:./../figures/google_bridge.jpg]]
+[[file:./figures/google_bridge.jpg]]
 
 * Classification of remote sensing images                          :sigma:2A:
 :PROPERTIES:
@@ -591,7 +529,7 @@ In this  works, the  ground-truth is  provided as  a vector  file, see
 #+CAPTION: Ground truth for the /Fabas/ image.
 #+NAME: fig:gt
 #+ATTR_LATEX: :width 0.75\textwidth
-[[file:./../figures/label_fabas.jpg]]
+[[file:./figures/label_fabas.jpg]]
 
 #+CAPTION: Classes of interest. Numbers corresponding to the attribute in the GIS file is also given.
 #+NAME: tab:classes
@@ -636,7 +574,7 @@ This should be done for one image and one classifier only.
    - User accuracy.
 #+END_work
      
-** Automatize the process with scripts
+** Automatize the process with scripts (shell or python)
 It  is possible  to run  directly  the /OTB-Applications/  from the  the
 command line  (on linux-based  OS). This  way, it  is possible  to run
 several  operations  on   one  data  set  or  on   several  data  sets
@@ -761,7 +699,7 @@ _Works_:
 3) Report the results on the /collaborative spreadsheet/.   
 ** Influence of the spatial distribution of the learning samples
 :PROPERTIES:
-:FORMATION: Presential
+:FORMATION: Non Presential
 :DURATION: 01:00
 :SEQUENCE: 4
 :END:
@@ -826,7 +764,8 @@ build  a Satellite  Image Time  Series (SITS)  given a  set of  images
 acquired  over  the  same  area.   Then,  we  are  going  to  classify
 winter/summer crops  using the SITS. Reference  and validation samples
 were extracted from the [[https://www.data.gouv.fr/fr/datasets/registre-parcellaire-graphique-2012-contours-des-ilots-culturaux-et-leur-groupe-de-cultures-majorita/][RPG]] for  the same year. Table [[tab:RPG]] provides
-the different classes available of these area.
+the different classes available of  these area. Details about the data
+are given [[#sec:sits]].
 
 #+ATTR_LATEX: :booktabs t
 #+CAPTION: RPG nomenclature and conversion used in the labwork
@@ -2771,19 +2710,19 @@ def run_script(iface,p,output_name):
 |---------------------------------------------------------------+----------------+----------+----------+-----|
 | Visualization of remote sensing data                          | Presential     |     1:10 |        1 |     |
 |---------------------------------------------------------------+----------------+----------+----------+-----|
-| Spectral indices: /Normalized Difference Vegetation Index/  | Presential     |    01:00 |        2 |     |
+| Spectral indices: /Normalized Difference Vegetation Index/    | Presential     |    01:00 |        2 |     |
 |---------------------------------------------------------------+----------------+----------+----------+-----|
 | Segmentation of remote sensing images                         | Presential     |     2:00 |        2 |     |
 |---------------------------------------------------------------+----------------+----------+----------+-----|
-| Change detection: /Detection of floods/                       | Presential     |    01:30 |        3 |     |
+| Change detection: /Detection of floods/                       | Presential     |    01:40 |        3 |     |
 |---------------------------------------------------------------+----------------+----------+----------+-----|
 | Classification of remote sensing images                       | Presential     |    04:00 |      3-4 |     |
 |---------------------------------------------------------------+----------------+----------+----------+-----|
-| Influence of the spatial distribution of the learning samples | Presential     |    01:00 |        4 |     |
+| Influence of the spatial distribution of the learning samples | Non Presential |    01:00 |        4 |     |
 |---------------------------------------------------------------+----------------+----------+----------+-----|
 | Satellite Image Time Series                                   | Presential     |    04:00 |      4-5 |     |
 |---------------------------------------------------------------+----------------+----------+----------+-----|
-| Extraction of the best couple of dates                        | Non Presential |    01:40 |        6 |     |
+| Extraction of the best couple of dates                        | Non Presential |    01:40 |          |     |
 |---------------------------------------------------------------+----------------+----------+----------+-----|
 | Dynamic Habitat Index                                         | Presential     |    04:00 |        5 |     |
 |---------------------------------------------------------------+----------------+----------+----------+-----|
