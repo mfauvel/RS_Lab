@@ -4,10 +4,10 @@
 #+AUTHOR: Mathieu Fauvel
 #+EMAIL: mathieu.fauvel@ensat.fr
 #+LANGUAGE: en
-#+SELECT_TAGS: sigma
-#+EXCLUDE_TAGS: noexport export
+#+SELECT_TAGS: 2A
+#+EXCLUDE_TAGS: noexport
 #+TODO: TODO INPROGRESS DONE | CANCEL 
-#+OPTIONS:   H:3 num:t toc:2 \n:nil ::t |:t ^:nil -:t f:t *:t <:t prop:nil todo:nil
+#+OPTIONS:   H:3 num:t toc:2 \n:nil ::t |:t ^:nil -:t f:t *:t <:t prop:nil todo:nil tags:nil
 
 #+LATEX_CLASS: koma-article
 #+LATEX_CLASS_OPTIONS: [a4paper,11pt,DIV=18]
@@ -16,7 +16,7 @@
 #+LATEX_HEADER_EXTRA: \newtcolorbox[auto counter,number within=section]{work}[1][]{colback=black!5!white,colframe=black!50!white,fonttitle=\sffamily\bfseries,title=Work~\thetcbcounter: #1}
 #+COLUMNS: %25ITEM %FORMATION %DURATION %SEQUENCE %TAG
 
-* Introduction                                                        :sigma:
+* Introduction                                                     :sigma:2A:
 :PROPERTIES:
 :FORMATION: Presential
 :DURATION:   0:30
@@ -163,7 +163,7 @@ For  the /non  presential/  sequences,  you will  be  asked  to write  a
 document  that  describe briefly  the  results  and how  you  obtained
 them.  Discussion between  all groups  will  be done  during the  next
 session.
-* Data sets                                                           :sigma:
+* Data sets                                                        :sigma:2A:
 :PROPERTIES:
 :FORMATION: Presential
 :DURATION:   0
@@ -174,7 +174,7 @@ These images were acquired over the  Fabas forest in 2013. Images were
 acquired   the   <2013-10-12   Sat>    and   the   <2013-12-10   Tue>,
 respectively. A true color composition is given in Figure [[fabas_1]].
 
-#+CAPTION: Fabas image acquired the <2013-10-12 Sat>.
+#+CAPTION: Fabas image acquired the [2013-10-12 Sat].
 #+NAME: fabas_1
 #+ATTR_LATEX: :width 0.5\textwidth 
 [[file:./figures/quicklook_fabas_12_10_2013.jpg]]
@@ -195,8 +195,7 @@ GIS software. Table [[tab:bands:pleiades]] gives the band order of the data.
 |    3 | Blue      |
 |    4 | Infra-red |
 |------+-----------|
-** TODO Change detection 
-** SPOT5 Take-5 Satellite Image Time series
+** SPOT5 Take-5 Satellite Image Time series                       :noexport:
 :PROPERTIES:
 :CUSTOM_ID: sec:sits
 :END:
@@ -205,7 +204,7 @@ dates were acquired between [2015-05-15 Fri] and [2015-09-07 Mon]. See
 \ref{fig:SITS} for  detail.  The figure  [[sits_1]] shows the NDVI  of one
 date during the summer.
  
-#+BEGIN_LaTeX
+#+BEGIN_EXPORT LaTeX
 \begin{figure}[h]
   \centering
   \begin{tikzpicture}
@@ -240,7 +239,7 @@ date during the summer.
   \caption{Acquisition dates for the SITS 2015.}
   \label{fig:SITS}
 \end{figure}
-#+END_LaTeX
+#+END_EXPORT
 
 #+CAPTION: NDVI of one date in Jully for the SITS data.
 #+NAME: sits_1
@@ -259,6 +258,57 @@ to  all   the  temporal  acquisition   for  one  spectral   band,  see
 | cut_serie_spot5_coteaux_mir.tif   |
 | cut_serie_spot5_coteaux_nir.tif   |
 | cut_serie_spot5_coteaux_red.tif   |
+** Formosat 2 Satellite image time series 
+:PROPERTIES:
+:CUSTOM_ID: sec:sits
+:END:
+
+#+CAPTION: Formosat 2 image acquired the [2012-05-03 Thu].
+#+NAME: sits:f2
+#+ATTR_LATEX: :width 0.5\textwidth
+[[file:figures/sits_f2.png]]
+
+This time series was acquired in 2012 over the region of /Saint Lys/. It
+consists  in  a  set  of   [[http://www.satimagingcorp.com/satellite-sensors/other-satellite-sensors/formosat-2/][Formosat-2]]  images  along  the  year  2012.
+Figure\nbsp{}\ref{fig:SITS} provide information  about the acquisition
+date and the Figure\nbsp{}[[sits:f2]] shows a false colors composition for
+the date [2012-05-03 Thu].
+
+#+BEGIN_EXPORT LaTeX
+\begin{figure}[tb]
+  \centering
+  \begin{tikzpicture}
+    \begin{axis}[hide y axis,axis lines=middle,
+      date coordinates in=x,
+      xticklabel={\texttt{\month}},
+      x tick label style={},
+      date ZERO=2011-12-12,
+      xmin=2011-12-15, 
+      xmax=2013-01-15,
+      ymin=-0.25,ymax=0.25,
+      xtick={{2012-01-01},{2012-02-01},{2012-03-01},{2012-04-01},{2012-05-01},{2012-06-01},{2012-07-01},{2012-08-01},{2012-09-01},{2012-10-01},{2012-11-01},{2012-12-01}},clip=false]
+      \addplot [blue,thick,mark=*,only marks]coordinates{
+        (2012-01-12,0)
+        (2012-02-18,0)
+        (2012-03-07,0)
+        (2012-03-27,0)
+        (2012-05-03,0)
+        (2012-06-20,0)
+        (2012-07-07,0)
+        (2012-07-17,0)
+        (2012-08-10,0)
+        (2012-08-22,0)
+        (2012-11-01,0)
+        (2012-12-15,0)
+        (2012-12-31,0)
+        };      
+      \end{axis}
+  \end{tikzpicture}
+  \caption{Acquisition dates for the SITS 2012.}
+  \label{fig:SITS}
+\end{figure}
+#+END_EXPORT
+
 ** Historical Maps
 :PROPERTIES:
 :CUSTOM_ID: sec:data:hm
@@ -267,11 +317,11 @@ The figure [[fig:hm]] shows an historical map. This is a scan performed by
 the [[http://www.ign.fr/][IGN]] of an old manually drawn map.
 
 #+CAPTION: Historical Maps
-#+NAME: fig:hist
-#+ATTR_LATEX: :width 0.5\textwidth :options [h]
+#+NAME: fig:hm
+#+ATTR_LATEX: :width 0.5\textwidth
 [[file:figures/old_map.jpg]]
 
-* Visualization of remote sensing data                                :sigma:
+* Visualization of remote sensing data                             :sigma:2A:
 :PROPERTIES:
 :FORMATION: Presential
 :DURATION:   1:10
@@ -374,7 +424,7 @@ On the /Fabas/ data set, get the following information.
 4. Position of the upper left pixel,
 5. Projection.
 #+END_work
-* Spectral indices: /Normalized Difference Vegetation Index/            :sigma:
+* Spectral indices: /Normalized Difference Vegetation Index/         :sigma:2A:
 :PROPERTIES:
 :FORMATION: Presential
 :DURATION: 01:00
@@ -412,7 +462,7 @@ it can be related to chlorophyll content and photosynthesis.
 
 2) Compare the two NDVI and explain your results.
 #+END_work
-* Segmentation of remote sensing images                               :sigma:
+* Segmentation of remote sensing images                            :sigma:2A:
 :PROPERTIES:
 :FORMATION: Presential
 :DURATION: 2:00
@@ -467,7 +517,7 @@ http://docs.qgis.org/2.14/en/docs/user_manual/processing/modeler.html.
 Define your model  to perform the segmentation of  intro three classes
 of the NDVI.
 #+END_work
-* Change detection: /Detection of floods/                               :sigma:
+* Change detection: /Detection of floods/                            :sigma:2A:
 :PROPERTIES:
 :FORMATION: Presential
 :DURATION: 01:30
@@ -484,13 +534,13 @@ impacted area to provide a map of these zones
 #+CAPTION: False colours images of Lhonga Leupung area (a) before and (b) after flooding.
 #+NAME: fig:cd
 #+BEGIN_figure :options [h]
-#+BEGIN_LaTeX 
+#+BEGIN_EXPORT LaTeX 
   \centering
   \begin{tabular}{cc}
     \includegraphics[width=0.45\linewidth]{figures/tsunami_before.jpg}&\includegraphics[width=0.45\linewidth]{figures/tsunami_after.jpg}\\
     (a)&(b)
   \end{tabular}
-#+END_LaTeX
+#+END_EXPORT
 #+END_figure
 
 #+BEGIN_work
@@ -507,7 +557,7 @@ impacted area to provide a map of these zones
 #+ATTR_LATEX: :width 0.75\textwidth
 [[file:./../figures/google_bridge.jpg]]
 
-* Classification of remote sensing images                             :sigma:
+* Classification of remote sensing images                          :sigma:2A:
 :PROPERTIES:
 :FORMATION: Presential
 :DURATION: 04:00
@@ -763,7 +813,7 @@ res = [[sp.mean(oa_train),sp.std(oa_train)],[sp.mean(oa_valid),sp.std(oa_valid)]
 sp.savetxt('acc.csv',res,delimiter=',',fmt='%1.3f')
 #+END_SRC
 #+END_figure
-* Satellite Image Time Series                                        :export:
+* Satellite Image Time Series                                            :2A:
 :PROPERTIES:
 :FORMATION: Presential
 :DURATION: 04:00
@@ -774,13 +824,9 @@ sp.savetxt('acc.csv',res,delimiter=',',fmt='%1.3f')
 The objectives  of this part are  two-folds. First, it is  proposed to
 build  a Satellite  Image Time  Series (SITS)  given a  set of  images
 acquired  over  the  same  area.   Then,  we  are  going  to  classify
-winter/summer crops using the SITS.
-
-The  time series  consists  in  a set  of  FORMOSAT  images along  the
-year  2012.  Figure  \ref{fig:SITS}   provide  information  about  the
-acquisition date. Reference and validation samples were extracted from
-the [[https://www.data.gouv.fr/fr/datasets/registre-parcellaire-graphique-2012-contours-des-ilots-culturaux-et-leur-groupe-de-cultures-majorita/][RPG]] for the same year. Table [[tab:RPG]] provides the different
-classes available of these area.
+winter/summer crops  using the SITS. Reference  and validation samples
+were extracted from the [[https://www.data.gouv.fr/fr/datasets/registre-parcellaire-graphique-2012-contours-des-ilots-culturaux-et-leur-groupe-de-cultures-majorita/][RPG]] for  the same year. Table [[tab:RPG]] provides
+the different classes available of these area.
 
 #+ATTR_LATEX: :booktabs t
 #+CAPTION: RPG nomenclature and conversion used in the labwork
@@ -805,54 +851,21 @@ Before classifying the  SITS, you need to built it.  In these labwork,
 two SITS  will be considered. One  build will all the  spectral bands,
 and the other one using the NDVI only.
 
-_Works_:
+#+BEGIN_work
 1. Compute the NDVI for each date,
 2. Concatenate all the dates,
    + For  the spectral bands  (/i.e./ all the  blue bands, then  all the
      green bands ...),
    + For the NDVI
-3. Using QGIS, plot the temporal profile for several objects.
-
-#+BEGIN_LaTeX
-\begin{figure}[tb]
-  \centering
-  \begin{tikzpicture}
-    \begin{axis}[hide y axis,axis lines=middle,
-      date coordinates in=x,
-      xticklabel={\texttt{\month}},
-      x tick label style={},
-      date ZERO=2011-12-12,
-      xmin=2011-12-15, 
-      xmax=2013-01-15,
-      ymin=-0.25,ymax=0.25,
-      xtick={{2012-01-01},{2012-02-01},{2012-03-01},{2012-04-01},{2012-05-01},{2012-06-01},{2012-07-01},{2012-08-01},{2012-09-01},{2012-10-01},{2012-11-01},{2012-12-01}},clip=false]
-      \addplot [blue,thick,mark=*,only marks]coordinates{
-        (2012-01-12,0)
-        (2012-02-18,0)
-        (2012-03-07,0)
-        (2012-03-27,0)
-        (2012-05-03,0)
-        (2012-06-20,0)
-        (2012-07-07,0)
-        (2012-07-17,0)
-        (2012-08-10,0)
-        (2012-08-22,0)
-        (2012-11-01,0)
-        (2012-12-15,0)
-        (2012-12-31,0)
-        };      
-      \end{axis}
-  \end{tikzpicture}
-  \caption{Acquisition dates for the SITS 2012.}
-  \label{fig:SITS}
-\end{figure}
-#+END_LaTeX
-
+3.  Using QGIS,  plot the  temporal  profile for  several objects  and
+   discuss of their shape w.r.t the phenology.
+#+END_work
 ** Classification of the SITS
 Two scenario will be considered in this labwork. Classification of the
-whole SITS and classification of the /best date/
+whole SITS and classification of the /best date./
 
-_Works_: (with the classifier of your choice)
+#+BEGIN_work
+/With the classifier of your choice/
 1. Do the classification of the  whole SITS given the training layers,
    and compute the predicted thematic map, restricted to pixels inside
    the RPG  (use the  mask provided). Compute  classification accuracy
@@ -860,14 +873,12 @@ _Works_: (with the classifier of your choice)
    /collaborative spreadsheet/.
 2.  Do the  classification for  each date  independently, compute  the
    classification accuracy and report the results in the /collaborative
-   spreadsheet/.
-
+   spreadsheet/. /Tips: It can (must) be automatized .../
+#+END_work
 ** Extraction of the best couple of dates
 :PROPERTIES:
 :FORMATION: Non Presential
 :DURATION: 01:40
-:SEQUENCE: 6
-:DAYS:     [2016-04-06 Wed 10:20-12:00]
 :END:
 We have seen in the previous part that one date is not enough to get a
 correct classification rate. In that section, we are going to test all
@@ -924,7 +935,7 @@ Analyze the three best results in terms of accuracy. Interpret the
 results given the classes to be classified, the geographical area and
 its practical consideration (should we buy the complete SITS, or just
 some periods of the years? ...)
-* Dynamic Habitat Index                                               :sigma:
+* Dynamic Habitat Index                                            :sigma:2A:
 :PROPERTIES:
 :FORMATION: Presential
 :DURATION: 04:00
@@ -956,12 +967,12 @@ The first (easy)  part is to convert NDVI values  to fPAR like values.
 Since fPAR is a fraction, its values  are between 0 and 1. You have to
 convert the interval  range of NDVI to  0 and 1 using  a simple linear
 function: $f(x)=ax+b$. You have to find $a$ and $b$ !
-#+BEGIN_LaTeX
+#+BEGIN_EXPORT LaTeX
 \begin{eqnarray*}
   f:[-1,1] &\to& [0,1]\\
   x&\mapsto&f(x)=ax+b
 \end{eqnarray*}
-#+END_LaTeX
+#+END_EXPORT
 #+END_work
 
 ** Construction of the SITS
@@ -970,7 +981,7 @@ Before analyzing the  SITS, you need to built it.
 1. Compute the NDVI for each date,
 2. Convert to fPAR-like values,
 3. Concatenate all the dates,
-4. Using QGIS, plot the temporal profile for several objects.
+4.  Using QGIS,  plot the  temporal  profile for  several objects.
 #+END_work
 
 ** Computation of the dynamic indices
@@ -979,17 +990,17 @@ indices.   Let  us  note  the  vector   of  fPAR  values  of  pixel  i
 $\mathbf{x}_i=[\mathbf{x}_i(t_1),\ldots,\mathbf{x}_i(t_d)]$.     Three
 indices have been defined:
 1. The cumulative annual greenness,
-#+BEGIN_LaTeX
+#+BEGIN_EXPORT LaTeX
 $$CG = \sum_{j=1}^d\mathbf{x}_i(t_j)$$
-#+END_LaTeX
+#+END_EXPORT
 2. The annual minimum cover,
-#+BEGIN_LaTeX
-$$MC = \min_{j}\left[\mathbf{x}_i(t_1),\ldots,\mathbf{x}_i(t_j),\ldots,\mathbf{x}_i(t_d)\rigth]$$
-#+END_LaTeX
+#+BEGIN_EXPORT LaTeX
+$$MC = \min_{j}\left[\mathbf{x}_i(t_1),\ldots,\mathbf{x}_i(t_j),\ldots,\mathbf{x}_i(t_d)\right]$$
+#+END_EXPORT
 3. The greenness coefficient of variation.
-#+BEGIN_LaTeX
-$$GCV = \frac{\sigma_{\mathbf{x}_i}}{\mu_{\mathbf{x}}_i}$$
-#+END_LaTeX
+#+BEGIN_EXPORT LaTeX
+$$GCV = \frac{\sigma_{\mathbf{x}_i}}{\mu_{\mathbf{x}_i}}$$
+#+END_EXPORT
 
 #+BEGIN_work
 1. Write the python scripts to compute all indices.
@@ -1139,7 +1150,7 @@ an, off course, do the right processing.
 #+CAPTION: Processing chain.
 #+NAME: fig:hm
 #+BEGIN_figure :options [h]
-#+BEGIN_LaTeX
+#+BEGIN_EXPORT LaTeX
 \tikzstyle{process} = [rectangle, draw, fill=blue!20, text width=8em, text centered, rounded corners, minimum height=4em,node distance=3.5cm]
   \tikzstyle{image} = [draw, rectangle,fill=red!20, node distance=3cm, minimum height=2em]
   \tikzstyle{vector} = [draw, rectangle,fill=red!20, node distance=1.5cm, minimum height=2em]
@@ -1159,7 +1170,7 @@ an, off course, do the right processing.
     \path[line] (6)--(5); 
     \path[line] (5)--(7); 
   \end{tikzpicture}
-#+END_LaTeX
+#+END_EXPORT
 #+END_figure
 
 #+BEGIN_work
@@ -1241,7 +1252,7 @@ Your  script needs  slight modification  in  order to  be imported  in
 #+BEGIN_work
 Make the your script and use it from QGIS.
 #+END_work
-* Appendix                                                            :sigma:
+* Appendix                                                         :sigma:2A:
 ** Short introduction to shell
 :PROPERTIES:
 :CUSTOM_ID: sec:shell
@@ -1299,7 +1310,7 @@ fabas_10_12_2013.tif  fabas_12_10_2013.tif
 *** Variables
 In shell, a variable is a string (not a number). It can be defined as:
 
-#+BEGIN_SRC sh
+#+BEGIN_SRC sh :session toy
 var1='Mathieu' # Store "Mathieu" in variables "var1"
 var2='Fauvel'
 var3='34'
@@ -1311,7 +1322,7 @@ Be  careful to  spaces: there  are no  spaces, otherwise  an error  is
 returned!  A  variable is  displayed using the  =echo= function  and the
 variable is accessed with the command =$=.
 
-#+BEGIN_SRC sh
+#+BEGIN_SRC sh :exports both :session toy :results code
 echo $var1 $var2      # print "Mathieu Fauvel"
 echo "$var3 ans"      # print "33 ans"
 echo '$var3 ans'      # print "$var3 ans"
@@ -1333,7 +1344,7 @@ when the  script is called.  They are  accessible using the  command =$=
 following by the order number of appearance when the script is
 called. Let define the =script.sh= file.
 
-#+BEGIN_SRC sh
+#+BEGIN_SRC sh :tangle script.sh :exports code
 # ./script.sh Name FamilyName Age
 echo $1 $2
 echo "J ai (eu) $3 ans !"
@@ -1341,7 +1352,7 @@ echo "J ai (eu) $3 ans !"
 
 When we do this, we have the following output:
 
-#+BEGIN_SRC sh
+#+BEGIN_SRC sh :exports both :results code
 chmod +x script.sh
 ./script.sh Mathieu Fauvel 33
 #+END_SRC
@@ -1366,7 +1377,7 @@ done
 *** Sequence
 It is possible to define sequences of string like this:
 
-#+BEGIN_SRC sh
+#+BEGIN_SRC sh :exports both :results code
 for name in bayes libsvm knn rf
 do
     echo $name
@@ -1383,7 +1394,7 @@ rf
 
 Sequences of numbers can be defined like this:
 
-#+BEGIN_SRC sh
+#+BEGIN_SRC sh :exports both :results code
 for i in `seq 1 5`
 do
 echo $i
@@ -1400,9 +1411,9 @@ done
 #+END_SRC
 ** Short introduction to Python
 :PROPERTIES:
-:exports:  both
-:results:  output code
 :CUSTOM_ID: sec:python
+:header-args: :exports both 
+:header-args+: :results output
 :END:
 A     good    starting     point     is     the    following     link:
 http://kitchingroup.cheme.cmu.edu/pycse/pycse.html.   Here,   I   just
@@ -1419,9 +1430,7 @@ print name + surname
 #+END_SRC
 
 #+RESULTS:
-#+BEGIN_SRC python
-MathieuFauvel
-#+END_SRC
+: MathieuFauvel
 
 To use numbers in strings, it is necessary to convert them, using the function =str=
 
@@ -1430,9 +1439,7 @@ print "Bonjour j\'ai eu " + str(33) + " ans"
 #+END_SRC
 
 #+RESULTS:
-#+BEGIN_SRC python
-Bonjour j'ai eu 33 ans
-#+END_SRC
+: Bonjour j'ai eu 33 ans
 
 *** Loop
 It is very  easy to iterate over  a list with python. The  list can be
@@ -1482,11 +1489,14 @@ ls figures/
 google_bridge.jpg
 label_fabas.jpg
 label_fabas.jpgw
+old_map.jgw
 old_map.jpg
 pixel.pdf
 quicklook_fabas_10_12_2013.jpg
 quicklook_fabas_12_10_2013.jpg
 quicklook_seg_eau.png
+sits_f2.pgw
+sits_f2.png
 take5spot5.png
 tsunami_after.jpg
 tsunami_before.jpg
@@ -1504,17 +1514,20 @@ for files_ in files:
 
 #+RESULTS:
 #+BEGIN_SRC python
+figures/sits_f2.png
+figures/quicklook_fabas_12_10_2013.jpg
+figures/tsunami_after.jpg
 figures/take5spot5.png
-figures/label_fabas.jpg
-figures/google_bridge.jpg
+figures/sits_f2.pgw
 figures/quicklook_fabas_10_12_2013.jpg
 figures/pixel.pdf
-figures/old_map.jpg
-figures/quicklook_fabas_12_10_2013.jpg
+figures/label_fabas.jpg
 figures/tsunami_before.jpg
-figures/label_fabas.jpgw
+figures/old_map.jpg
 figures/quicklook_seg_eau.png
-figures/tsunami_after.jpg
+figures/label_fabas.jpgw
+figures/old_map.jgw
+figures/google_bridge.jpg
 #+END_SRC
 
 If we only want the /png/ files:
@@ -1529,6 +1542,7 @@ for files_ in files:
 
 #+RESULTS:
 #+BEGIN_SRC python
+figures/sits_f2.png
 figures/take5spot5.png
 figures/quicklook_seg_eau.png
 #+END_SRC
@@ -1544,6 +1558,7 @@ for files_ in glob.iglob("figures/*.png"):
 
 #+RESULTS:
 #+BEGIN_SRC python
+figures/sits_f2.png
 figures/take5spot5.png
 figures/quicklook_seg_eau.png
 #+END_SRC
@@ -1931,7 +1946,7 @@ done
 #+END_SRC
 ** Python
 *** Display image
-#+BEGIN_SRC python
+#+BEGIN_SRC python :tanlg
 import matplotlib.pyplot as plt
 import scipy as sp
 import myfilters as mf
@@ -2330,6 +2345,43 @@ del im_fmin
 outname = "/tmp/toto_"+str(p) +".tif"
 rt.write_data(outname,im_fmedian,geo,proj)
 #+END_SRC
+*** Parser
+#+BEGIN_SRC python :tangle parse_hm.py
+import myfilters as mf
+import rasterTool as rt
+import argparse
+
+# Initialize parser
+parser = argparse.ArgumentParser()
+
+# Add arguments
+parser.add_argument("-in",dest="imageIn",help="Image to be processed",type=str,default=None)
+parser.add_argument("-out",dest="imageOut",help="Image processed",type=str,default=None)
+parser.add_argument("-p",help="Size of the template",type=int,default=1)
+
+args = parser.parse_args()
+
+# Some tests
+if args.imageIn == None:
+    exit()
+
+# load data
+im,geo,proj = rt.open_data(args.imageIn)
+print im.shape
+
+# filter
+im_fmax = mf.filterMulti(im,p=args.p,filter='max')
+del im
+
+im_fmin = mf.filterMulti(im_fmax,p=args.p,filter='min')
+del im_fmax
+
+im_fmedian = mf.filterMulti(im_fmin,p=args.p,filter='median')
+del im_fmin
+
+# save data
+rt.write_data(args.imageOut,im_fmedian,geo,proj)
+#+END_SRC
 *** QGIS Script
 #+BEGIN_SRC python :tangle qgis_script.py
 from PyQt4.QtCore import *
@@ -2711,29 +2763,29 @@ def run_script(iface,p,output_name):
 
 ** Column view
 #+BEGIN: columnview :hlines 2 :id global :skip-empty-rows t
-| ITEM                                                             | FORMATION      | DURATION | SEQUENCE | TAG |
-|------------------------------------------------------------------+----------------+----------+----------+-----|
-| * Introduction                                                   | Presential     |     0:30 |        1 |     |
-|------------------------------------------------------------------+----------------+----------+----------+-----|
-| * Data sets                                                      | Presential     |        0 |          |     |
-|------------------------------------------------------------------+----------------+----------+----------+-----|
-| * Visualization of remote sensing data                           | Presential     |     1:10 |        1 |     |
-|------------------------------------------------------------------+----------------+----------+----------+-----|
-| * Spectral indices: /Normalized Difference Vegetation Index/     | Presential     |    01:00 |        2 |     |
-|------------------------------------------------------------------+----------------+----------+----------+-----|
-| * Segmentation of remote sensing images                          | Presential     |     2:00 |        2 |     |
-|------------------------------------------------------------------+----------------+----------+----------+-----|
-| * Change detection: /Detection of floods/                        | Presential     |    01:30 |        3 |     |
-|------------------------------------------------------------------+----------------+----------+----------+-----|
-| * Classification of remote sensing images                        | Presential     |    04:00 |      3-4 |     |
-|------------------------------------------------------------------+----------------+----------+----------+-----|
-| ** Influence of the spatial distribution of the learning samples | Presential     |    01:00 |        4 |     |
-|------------------------------------------------------------------+----------------+----------+----------+-----|
-| * Satellite Image Time Series                                    | Presential     |    04:00 |      4-5 |     |
-|------------------------------------------------------------------+----------------+----------+----------+-----|
-| ** Extraction of the best couple of dates                        | Non Presential |    01:40 |        6 |     |
-|------------------------------------------------------------------+----------------+----------+----------+-----|
-| * Dynamic Habitat Index                                          | Presential     |    04:00 |        5 |     |
-|------------------------------------------------------------------+----------------+----------+----------+-----|
-| ** Template filters                                              | Presential     |    04:00 |          |     |
+| ITEM                                                          | FORMATION      | DURATION | SEQUENCE | TAG |
+|---------------------------------------------------------------+----------------+----------+----------+-----|
+| Introduction                                                  | Presential     |     0:30 |        1 |     |
+|---------------------------------------------------------------+----------------+----------+----------+-----|
+| Data sets                                                     | Presential     |        0 |          |     |
+|---------------------------------------------------------------+----------------+----------+----------+-----|
+| Visualization of remote sensing data                          | Presential     |     1:10 |        1 |     |
+|---------------------------------------------------------------+----------------+----------+----------+-----|
+| Spectral indices: /Normalized Difference Vegetation Index/  | Presential     |    01:00 |        2 |     |
+|---------------------------------------------------------------+----------------+----------+----------+-----|
+| Segmentation of remote sensing images                         | Presential     |     2:00 |        2 |     |
+|---------------------------------------------------------------+----------------+----------+----------+-----|
+| Change detection: /Detection of floods/                       | Presential     |    01:30 |        3 |     |
+|---------------------------------------------------------------+----------------+----------+----------+-----|
+| Classification of remote sensing images                       | Presential     |    04:00 |      3-4 |     |
+|---------------------------------------------------------------+----------------+----------+----------+-----|
+| Influence of the spatial distribution of the learning samples | Presential     |    01:00 |        4 |     |
+|---------------------------------------------------------------+----------------+----------+----------+-----|
+| Satellite Image Time Series                                   | Presential     |    04:00 |      4-5 |     |
+|---------------------------------------------------------------+----------------+----------+----------+-----|
+| Extraction of the best couple of dates                        | Non Presential |    01:40 |        6 |     |
+|---------------------------------------------------------------+----------------+----------+----------+-----|
+| Dynamic Habitat Index                                         | Presential     |    04:00 |        5 |     |
+|---------------------------------------------------------------+----------------+----------+----------+-----|
+| Template filters                                              | Presential     |    04:00 |          |     |
 #+END:

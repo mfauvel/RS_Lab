@@ -1,6 +1,6 @@
-% Created 2016-10-26 Wed 12:30
+% Created 2017-02-24 Fri 17:58
+% Intended LaTeX compiler: pdflatex
 \documentclass[a4paper,11pt,DIV=18]{scrartcl}
-                \usepackage{ucs} 
                 \usepackage{array}
                 \usepackage[utf8]{inputenc}                   
                 \usepackage[T1]{fontenc}
@@ -13,7 +13,7 @@
                 \usepackage[osf,sc]{mathpazo}
                 \usepackage{booktabs}
                 \usepackage{graphicx}
-
+                \usepackage{csquotes}
                 \usepackage[usenames,dvipsnames]{xcolor}\definecolor{bg}{rgb}{0.95,0.95,0.95}
                 \usepackage[english]{babel}\usepackage{minted}\usemintedstyle{emacs}
 \usepackage{tikz}\usepackage{pgfplots}\usepgfplotslibrary{dateplot}\usetikzlibrary{shapes,arrows}\usepackage[]{tcolorbox}
@@ -29,9 +29,9 @@
 \tableofcontents
 
 \section{Introduction}
-\label{sec:orgheadline9}
+\label{sec:orge7673d8}
 \subsection{Objectives of the labworks}
-\label{sec:orgheadline1}
+\label{sec:org68745c8}
 The main objective of these labworks is to
 \begin{center}
 \emph{be able to  use and to extract information from  remote sensing images
@@ -42,12 +42,12 @@ land-use, humidity, \ldots{})  that is used to understand the configuration
 and/or the evolution of landscape.
 
 In terms of  \emph{competences}, you should be  able to master at  the end of
-the sessions  the items listed in  tables \ref{tab:orgtable1}, \ref{tab:orgtable2}, \ref{tab:orgtable3},  \ref{tab:orgtable4} and \ref{tab:orgtable5}.
+the sessions  the items listed in  tables \ref{tab:org7a3c27d}, \ref{tab:org300c7fb}, \ref{tab:orgc75dad3},  \ref{tab:org7234354} and \ref{tab:org9528ea8}.
 Each of them  is organized as a  set of tasks that  should be mastered
 progressively.
 
-\begin{table}[htb]
-\caption{\label{tab:orgtable1}
+\begin{table}[htbp]
+\caption{\label{tab:org7a3c27d}
 Choose images with properties adapted to your problematic.}
 \centering
 \begin{tabular}{lp{0.85\linewidth}}
@@ -62,8 +62,8 @@ Choose images with properties adapted to your problematic.}
 \end{tabular}
 \end{table}
 
-\begin{table}[htb]
-\caption{\label{tab:orgtable2}
+\begin{table}[htbp]
+\caption{\label{tab:org300c7fb}
 Compute and use spectral indices.}
 \centering
 \begin{tabular}{lp{0.85\linewidth}}
@@ -78,8 +78,8 @@ Compute and use spectral indices.}
 \end{tabular}
 \end{table}
 
-\begin{table}[htb]
-\caption{\label{tab:orgtable3}
+\begin{table}[htbp]
+\caption{\label{tab:orgc75dad3}
 Define, identify and analyze radiometric behavior.}
 \centering
 \begin{tabular}{lp{0.85\linewidth}}
@@ -94,8 +94,8 @@ Define, identify and analyze radiometric behavior.}
 \end{tabular}
 \end{table}
 
-\begin{table}[htb]
-\caption{\label{tab:orgtable4}
+\begin{table}[htbp]
+\caption{\label{tab:org7234354}
 Do and analyze pixel-wise classification of image}
 \centering
 \begin{tabular}{lp{0.85\linewidth}}
@@ -110,8 +110,8 @@ Do and analyze pixel-wise classification of image}
 \end{tabular}
 \end{table}
 
-\begin{table}[htb]
-\caption{\label{tab:orgtable5}
+\begin{table}[htbp]
+\caption{\label{tab:org9528ea8}
 Define and implement a processing chain}
 \centering
 \begin{tabular}{lp{0.85\linewidth}}
@@ -127,7 +127,7 @@ Define and implement a processing chain}
 \end{table}
 
 \subsection{Remote sensing software}
-\label{sec:orgheadline6}
+\label{sec:orge3aabb7}
 In these  labworks, \href{https://www.fsf.org/}{free and  open sources  softwares} will be  used to
 visualize  remote sensing  images, to  process them  and to  implement
 processing  chains.  In  the  following, each  software/tools will  be
@@ -137,11 +137,11 @@ detailed. However, they  can be freely download and  installed on many
 operating systems from their official website.
 
 \subsubsection{Orfeo ToolBox (OTB)}
-\label{sec:orgheadline2}
+\label{sec:org0a6e810}
 \href{https://www.orfeo-toolbox.org/}{OTB} is a C++ library for remote sensing images processing. It has been
 developed by the  \href{https://cnes.fr/en}{CNES} (French space agency) during  the ORFEO program
 to \emph{prepare, accompany and promote the use and the exploitation of the
-images derived from \href{https://en.wikipedia.org/wiki/Pleiades_\%28satellite\%29}{Pleiades satellites} (PHR)}.  Processing tools from
+images derived from \href{https://en.wikipedia.org/wiki/Pleiades\_\%28satellite\%29}{Pleiades satellites} (PHR)}.  Processing tools from
 OTB  are appropriated  to big  images.  When  possible, processes  are
 paralyzed and tiled automatically for users. Many applications derived
 from OTB and  called \emph{OTB-Applications} are directly usable  for most of
@@ -154,7 +154,7 @@ and process  remote sensing images  with \emph{OTB-Applications}. It  is also
 developed by the CNES during the ORFEO program. 
 
 \subsubsection{QGIS}
-\label{sec:orgheadline3}
+\label{sec:orge830091}
 \href{http://www.qgis.org/en/site/}{QGIS} is  a \emph{Geographic Information System}  (GIS).  It is used  to open,
 visualize  and  process  digital  map.  It  includes  several  spatial
 analysis tools working mainly on vector  data. QGIS can be extended by
@@ -162,14 +162,14 @@ several plugin  (\url{https://plugins.qgis.org/}) and  modules, such  as the
 OTB applications.
 
 \subsubsection{Geospatial Data Abstraction Library (GDAL)}
-\label{sec:orgheadline4}
+\label{sec:org6badb3f}
 \href{http://www.gdal.org/}{GDAL}  is   a  library  for   the  processing  of  raster   and  vector
 data. Similar  to OTB, it  has several  applications that can  be used
 directly. For advanced users, it  is possible to develop program based
 on the GDAL library (not considered in these labworks).
 
 \subsubsection{Python}
-\label{sec:orgheadline5}
+\label{sec:orgdddcc4d}
 \href{https://www.python.org/}{Pyhton}  is   a  programming  language.  It   has  several  programming
 capabilities, such as \emph{object-oriented}, \emph{functional programming}, \emph{dynamic
 type}  and  \emph{memory management}  that  make  it  widely used  in  several
@@ -183,8 +183,8 @@ It has a large  number of available packages that can  be used in many
 applications. For instance, it is possible to call \emph{OTB-Applications} or
 \emph{GDAL} from Python.
 \subsection{Sequences}
-\label{sec:orgheadline7}
-\begin{table}[htb]
+\label{sec:orgdd42fe9}
+\begin{table}[htbp]
 \caption{Sequences}
 \centering
 \begin{tabular}{lrr}
@@ -204,7 +204,7 @@ Total & 21 & \\
 \end{table}
 
 \subsection{During the labworks}
-\label{sec:orgheadline8}
+\label{sec:org16a2c36}
 For the \emph{presential} sequences, you won't have to do any report. But you
 will have to  write your personal material on remote  sensing. You are
 encouraged to write it progressively  during the sessions.  \textbf{It will be
@@ -217,27 +217,27 @@ document  that  describe briefly  the  results  and how  you  obtained
 them.  Discussion between  all groups  will  be done  during the  next
 session.
 \section{Data sets}
-\label{sec:orgheadline14}
+\label{sec:org87a0034}
 \subsection{Pleiades images}
-\label{sec:orgheadline10}
+\label{sec:org6a49d9b}
 These images were acquired over the  Fabas forest in 2013. Images were
 acquired   the   \textit{<2013-10-12 Sat>    }    and   the   \textit{<2013-12-10 Tue>},
-respectively. A true color composition is given in Figure \ref{fig:orgparagraph1}.
+respectively. A true color composition is given in Figure \ref{fig:org11aaaf7}.
 
-\begin{figure}[htb]
+\begin{figure}[htbp]
 \centering
 \includegraphics[width=0.5\textwidth]{./figures/quicklook_fabas_12_10_2013.jpg}
-\caption{\label{fig:orgparagraph1}
-Fabas image acquired the \textit{<2013-10-12 Sat>}.}
+\caption{\label{fig:org11aaaf7}
+Fabas image acquired the \textit{[2013-10-12 Sat]}.}
 \end{figure}
 
 Images are stored using the \href{https://trac.osgeo.org/geotiff/}{GeoTIFF} format.  It is an extended version
 of  the TIFF  format,  which allows  to  embed geospatial  information
 within the file. GeoTIFF can be read by most of the remote sensing and
-GIS software. Table \ref{tab:orgtable6} gives the band order of the data.
+GIS software. Table \ref{tab:orgbcbaf3d} gives the band order of the data.
 
-\begin{table}[htb]
-\caption{\label{tab:orgtable6}
+\begin{table}[htbp]
+\caption{\label{tab:orgbcbaf3d}
 Bands and channels information for the Pleiades images}
 \centering
 \begin{tabular}{rl}
@@ -252,90 +252,71 @@ Band & Channel\\
 \end{tabular}
 \end{table}
 \subsection{Change detection}
-\label{sec:orgheadline11}
-\subsection{SPOT5 Take-5 Satellite Image Time series}
-\label{sec:orgheadline12}
-These times  series were acquired  over the  Fabas forest in  2015. 15
-dates were acquired between \textit{[2015-05-15 Fri] } and \textit{[2015-09-07 Mon]}. See
-\ref{fig:SITS} for  detail.  The figure  \ref{fig:orgparagraph2} shows the NDVI  of one
-date during the summer.
+\label{sec:orga656e0d}
+\subsection{Formosat 2 Satellite image time series}
+\label{sec:org95910f2}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.5\textwidth]{figures/sits_f2.png}
+\caption{\label{fig:org69c30ba}
+Formosat 2 image acquired the \textit{[2012-05-03 Thu]}.}
+\end{figure}
 
-\begin{figure}[h]
+This time series was acquired in 2012 over the region of \emph{Saint Lys}. It
+consists  in  a  set  of   \href{http://www.satimagingcorp.com/satellite-sensors/other-satellite-sensors/formosat-2/}{Formosat-2}  images  along  the  year  2012.
+Figure~\ref{fig:SITS} provide information  about the acquisition
+date and the Figure~\ref{fig:org69c30ba} shows a false colors composition for
+the date \textit{[2012-05-03 Thu]}.
+
+\begin{figure}[tb]
   \centering
   \begin{tikzpicture}
     \begin{axis}[hide y axis,axis lines=middle,
       date coordinates in=x,
       xticklabel={\texttt{\month}},
       x tick label style={},
-      date ZERO=2014-12-12,
-      xmin=2015-04-15, 
-      xmax=2015-10-15,
+      date ZERO=2011-12-12,
+      xmin=2011-12-15, 
+      xmax=2013-01-15,
       ymin=-0.25,ymax=0.25,
-      xtick={{2015-05-01},{2015-06-01},{2015-07-01},{2015-08-01},{2015-09-01},{2015-10-01}}
-      ,clip=false]
+      xtick={{2012-01-01},{2012-02-01},{2012-03-01},{2012-04-01},{2012-05-01},{2012-06-01},{2012-07-01},{2012-08-01},{2012-09-01},{2012-10-01},{2012-11-01},{2012-12-01}},clip=false]
       \addplot [blue,thick,mark=*,only marks]coordinates{
-      (2015-05-15,0)
-      (2015-05-20,0)
-      (2015-06-04,0)
-      (2015-06-24,0)
-      (2015-06-29,0)
-      (2015-07-04,0)
-      (2015-07-09,0)
-      (2015-07-14,0)
-      (2015-07-19,0)
-      (2015-07-24,0)
-      (2015-08-13,0)
-      (2015-08-18,0)
-      (2015-08-28,0)
-      (2015-09-02,0)
-      (2015-09-07,0)};      
+        (2012-01-12,0)
+        (2012-02-18,0)
+        (2012-03-07,0)
+        (2012-03-27,0)
+        (2012-05-03,0)
+        (2012-06-20,0)
+        (2012-07-07,0)
+        (2012-07-17,0)
+        (2012-08-10,0)
+        (2012-08-22,0)
+        (2012-11-01,0)
+        (2012-12-15,0)
+        (2012-12-31,0)
+        };      
       \end{axis}
   \end{tikzpicture}
-  \caption{Acquisition dates for the SITS 2015.}
+  \caption{Acquisition dates for the SITS 2012.}
   \label{fig:SITS}
 \end{figure}
 
-\begin{figure}[htb]
-\centering
-\includegraphics[width=0.85\textwidth]{./figures/take5spot5.png}
-\caption{\label{fig:orgparagraph2}
-NDVI of one date in Jully for the SITS data.}
-\end{figure}
-
-In the labwork, we have access  to four images, each one corresponding
-to  all   the  temporal  acquisition   for  one  spectral   band,  see
-\ref{tab:orgtable7}.
-\begin{table}[htb]
-\caption{\label{tab:orgtable7}
-Filenames of each image.}
-\centering
-\begin{tabular}{l}
-\toprule
-File names\\
-\midrule
-cut\_serie\_spot5\_coteaux\_green.tif\\
-cut\_serie\_spot5\_coteaux\_mir.tif\\
-cut\_serie\_spot5\_coteaux\_nir.tif\\
-cut\_serie\_spot5\_coteaux\_red.tif\\
-\bottomrule
-\end{tabular}
-\end{table}
 \subsection{Historical Maps}
-\label{sec:orgheadline13}
-The figure \ref{orgspecialblock1} shows an historical map. This is a scan performed by
+\label{sec:org028d3f1}
+The figure \ref{fig:org444793b} shows an historical map. This is a scan performed by
 the \href{http://www.ign.fr/}{IGN} of an old manually drawn map.
 
-\begin{figure}[htb]
+\begin{figure}[htbp]
 \centering
-\includegraphics[h,width=0.5\textwidth]{figures/old_map.jpg}
-\caption{\label{fig:orgparagraph3}
+\includegraphics[width=0.5\textwidth]{figures/old_map.jpg}
+\caption{\label{fig:org444793b}
 Historical Maps}
 \end{figure}
 
 \section{Visualization of remote sensing data}
-\label{sec:orgheadline19}
+\label{sec:org3210fc4}
 \subsection{Vizualization of remote sensing image}
-\label{sec:orgheadline17}
+\label{sec:orgda167a1}
 The vizualisation  of remote  sensing images can  be done  either with
 Monteverdi2  or QGIS\footnote{The  library \texttt{matplotlib}  of  python is  not
 adapted to  visualize remote  sensing image  and should  be avoided.}.
@@ -345,27 +326,27 @@ these labworks.
 
 Most of  the information  regarding the  vizualisation of  raster data
 with         QGIS         can          be         found         online
-\url{http://docs.qgis.org/2.14/en/docs/user_manual/working_with_raster/raster_properties.html}.
+\url{http://docs.qgis.org/2.14/en/docs/user\_manual/working\_with\_raster/raster\_properties.html}.
 
 More  generally,  to use  raster  data  with  QGIS is  described  here
-\url{http://docs.qgis.org/2.14/en/docs/user_manual/working_with_raster/index.html}.
+\url{http://docs.qgis.org/2.14/en/docs/user\_manual/working\_with\_raster/index.html}.
 
 In  this labwork,  a  few  properties will  be  reviewed  and you  are
 encouraged to check (at least) the given references.
 
 \subsubsection{Vizualization of grayscale image}
-\label{sec:orgheadline15}
+\label{sec:orga6f08ff}
 Open the image  \emph{fabas\_10\_12\_2013.tif} with QGIS. The default  view is a
 colour composition, with the bands/channels association given in Table
-\ref{tab:orgtable8}. To start easy, we just open  one band at a time: right click
+\ref{tab:org6ca40eb}. To start easy, we just open  one band at a time: right click
 on  the  name  of  the  opened  image in  the  \emph{Layer}  pane  et  select
 \emph{Properties}.   Then select  the tab  \emph{Style} and  \emph{Band rendering}.  In the
 \emph{render type}, select \emph{Singleband gray} and the band you want to display.
 
 You surely have to do \emph{Contrast enhancement}. Check the doc for that.
 
-\begin{table}[htb]
-\caption{\label{tab:orgtable8}
+\begin{table}[htbp]
+\caption{\label{tab:org6ca40eb}
 Bands and channels default association in QGIS (if there is not a set of specified spectral bands in the metadata).}
 \centering
 \begin{tabular}{rl}
@@ -388,7 +369,7 @@ you observe ?
 \end{enumerate}
 \end{work}
 \subsubsection{Vizualization of colour image}
-\label{sec:orgheadline16}
+\label{sec:org0c88959}
 Now you  can visualize  a colour images,  by selecting  three spectral
 bands among those available  from the data. Again, \emph{Contrast
 enhancement} should be done.
@@ -400,38 +381,38 @@ is easily seen on each of them.
 \item Get spectral  values for several pixels  corresponding to different
 materials  (water,  grassland,  forest  and bare  soil). For that,
 use the tool \emph{Identify features}, see
-\url{http://docs.qgis.org/2.14/en/docs/user_manual/introduction/general_tools.html}
+\url{http://docs.qgis.org/2.14/en/docs/user\_manual/introduction/general\_tools.html}
 for detail.
 \item Fill  the \emph{collaborative spreadsheet}  with your pixel values:
 \begin{itemize}
-\item \url{https://framacalc.org/fauvel_rs_water}
-\item \url{https://framacalc.org/fauvel_rs_grassland}
-\item \url{https://framacalc.org/fauvel_rs_forest}
-\item \url{https://framacalc.org/fauvel_rs_baresoil}
+\item \url{https://framacalc.org/fauvel\_rs\_water}
+\item \url{https://framacalc.org/fauvel\_rs\_grassland}
+\item \url{https://framacalc.org/fauvel\_rs\_forest}
+\item \url{https://framacalc.org/fauvel\_rs\_baresoil}
 \end{itemize}
 \end{enumerate}
 \end{work}
 \subsection{Get data information}
-\label{sec:orgheadline18}
+\label{sec:org59874be}
 Before  opening a  remote sensing  data, it  is possible  to get  some
 information about its  properties. For instance, using  \texttt{gdalinfo} it is
 possible to extract several information.  It can be used as
 
-\begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg,breaklines]{sh}
+\begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg]{sh}
 gdalinfo fabas_10_12_2013.tif
 \end{minted}
 
 Help  on the function  can be obtained using  the command alone or by
 doing :
 
-\begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg,breaklines]{sh}
+\begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg]{sh}
 man gdalinfo
 \end{minted}
 
 Equivalently, it is possible to get the same information using the
 function \texttt{otbcli\_ReadImageInfo} from the \emph{OTB-Applications}:
 
-\begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg,breaklines]{sh}
+\begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg]{sh}
 otbcli_ReadImageInfo -in fabas_10_12_2013.tif
 \end{minted}
 
@@ -447,7 +428,7 @@ On the \emph{Fabas} data set, get the following information.
 \end{enumerate}
 \end{work}
 \section{Spectral indices: \emph{Normalized Difference Vegetation Index}}
-\label{sec:orgheadline20}
+\label{sec:org621e97c}
 Among the available  radiometric indices, only the  NDVI is considered
 in this labwork. NDVI is widely used for vegetation monitoring because
 it can be related to chlorophyll content and photosynthesis.
@@ -457,7 +438,7 @@ it can be related to chlorophyll content and photosynthesis.
 \item Compute  the NDVI for each  \emph{Fabas} image.  You can  compute the NDVI
 using several  ways, using  either \emph{OTB-Applications} or  the \emph{Raster
 Calculator}
-\url{http://docs.qgis.org/2.14/en/docs/user_manual/working_with_raster/raster_analysis.html#raster-calculator}.
+\url{http://docs.qgis.org/2.14/en/docs/user\_manual/working\_with\_raster/raster\_analysis.html\#raster-calculator}.
 For a per  band analysis, both methods are  equivalent.  Using QGIS
 provides the Graphical user interface,  which can be convenient for
 processing  few images,  while  \emph{OTB-Applications}  allow to  process
@@ -466,25 +447,25 @@ large number of images using \emph{shell} programming.
 Using the raster calculator, the following formula can be used (for
 the Fabas image):
 
-\begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg,breaklines]{sh}
-("fabas_12_10_2013@4"-"fabas_12_10_2013@1")/("fabas_12_10_2013@4"+"fabas_12_10_2013@1")
+\begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg]{sh}
+   ("fabas_12_10_2013@4"-"fabas_12_10_2013@1")/("fabas_12_10_2013@4"+"fabas_12_10_2013@1")
 \end{minted}
 
 Using    the   \emph{OTB-Applications},    it   is    possible   to    use
 \texttt{otbcli\_BandMath}. The syntax is similar, since we need to define the
 image, the bands used and the expression of our processing:
 
-\begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg,breaklines]{sh}
-otbcli_BandMath -il fabas_12_10_2013.tif -out ndvi_fabas.tif -exp "(im1b4-im1b1)/(im1b4+im1b1)"
+\begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg]{sh}
+   otbcli_BandMath -il fabas_12_10_2013.tif -out ndvi_fabas.tif -exp "(im1b4-im1b1)/(im1b4+im1b1)"
 \end{minted}
 
 \item Compare the two NDVI and explain your results.
 \end{enumerate}
 \end{work}
 \section{Segmentation of remote sensing images}
-\label{sec:orgheadline24}
+\label{sec:org87511f2}
 \subsection{Radiometric analysis}
-\label{sec:orgheadline21}
+\label{sec:org2f29d65}
 \begin{work}
 For   the  \emph{near   infra  red}   band  and   the  NDVI   of  the   image
 \textit{[2013-10-12 Sat]}, do
@@ -497,20 +478,20 @@ image,
 \end{enumerate}
 \end{work}
 \subsection{Segmentation of 1D histogram}
-\label{sec:orgheadline22}
+\label{sec:org9f658fe}
 In  this part,  the  extraction  of image's  pixels  sharing the  same
 \emph{radiometric behavior} is considered.  The  analysis of the histogram is
 used to estimate this \emph{behavior}.   When only one material is segmented,
 the output is a  binary image (image with value \texttt{0}  or \texttt{1}), where pixels
-having  value \texttt{1}  are from  the same  material.  Figure  \ref{fig:orgparagraph4}
+having  value \texttt{1}  are from  the same  material.  Figure  \ref{fig:org6b49686}
 gives  an  example  of  such   outputs.   When  several  material  are
 considered, the output is an images with integer values (\texttt{1}, \texttt{2}, \texttt{3} \ldots{}),
 depending on the number of materials.
 
-\begin{figure}[htb]
+\begin{figure}[htbp]
 \centering
 \includegraphics[width=0.65\linewidth]{./../figures/quicklook_seg_eau.png}
-\caption{\label{fig:orgparagraph4}
+\caption{\label{fig:org6b49686}
 Binary image for Water.}
 \end{figure}
 
@@ -526,7 +507,7 @@ Implement the processing using the  \texttt{BandMath} application or the Raster
 calculator.
 \end{work}
 \subsection{Graphical Modeler}
-\label{sec:orgheadline23}
+\label{sec:org8e279ed}
 For the segmentation of the NVDI, two processings are required
 \begin{enumerate}
 \item First, the computation of the NDVI from the original image,
@@ -535,19 +516,19 @@ relevant pixels.
 \end{enumerate}
 With the graphical modeler, it is possible to define your workflow, to
 automatize      complex      tasks.      Take      a      look      at
-\url{http://docs.qgis.org/2.14/en/docs/user_manual/processing/modeler.html}.  
+\url{http://docs.qgis.org/2.14/en/docs/user\_manual/processing/modeler.html}.  
 
 \begin{work}
 Define your model  to perform the segmentation of  intro three classes
 of the NDVI.
 \end{work}
 \section{Change detection: \emph{Detection of floods}}
-\label{sec:orgheadline26}
+\label{sec:orgb42463e}
 Change detection  in remote sensing consists  in detecting differences
 between two  images, or  a set of  images.  It can  be used  to detect
 changes in vegetation properties or in land cover.  It is also used in
 disaster management, to detect impacted areas. In this labwork, we are
-dealing with floods.  In Figure  \ref{orgspecialblock2} is shown two quickbird images,
+dealing with floods.  In Figure  \ref{orgd9fafe1} is shown two quickbird images,
 before  and  after a  flooding.   The  objective  is to  identify  the
 impacted area to provide a map of these zones
 
@@ -557,7 +538,7 @@ impacted area to provide a map of these zones
   \includegraphics[width=0.45\linewidth]{figures/tsunami_before.jpg}&\includegraphics[width=0.45\linewidth]{figures/tsunami_after.jpg}\\
   (a)&(b)
 \end{tabular}
-\caption{\label{orgspecialblock2}
+\caption{\label{orgd9fafe1}
 False colours images of Lhonga Leupung area (a) before and (b) after flooding.}
 \end{figure}
 
@@ -568,21 +549,21 @@ False colours images of Lhonga Leupung area (a) before and (b) after flooding.}
 \item Define the processing chain to extract these areas.
 \item Implement the processing chain with the graphical modeler.
 \item \uline{Optional}: Implement  the same processing chain  with shell scripts,
-see \ref{sec:orgheadline25}.
+see \ref{sec:org8d77583}.
 \end{enumerate}
 \end{work}
 
-\begin{figure}[htb]
+\begin{figure}[htbp]
 \centering
 \includegraphics[width=0.75\textwidth]{./../figures/google_bridge.jpg}
-\caption{\label{fig:orgparagraph5}
-Google view of the impacted area. The red square represents the area of Figure \ref{orgspecialblock2}.}
+\caption{\label{fig:org73b79f4}
+Google view of the impacted area. The red square represents the area of Figure \ref{orgd9fafe1}.}
 \end{figure}
 
 \section{Classification of remote sensing images}
-\label{sec:orgheadline32}
+\label{sec:org44866fd}
 \subsection{Introduction}
-\label{sec:orgheadline27}
+\label{sec:orgb4ef676}
 The aim  of this labwork  is to  perform the classification  of remote
 sensing images using supervised algorithms.  The principle is the same
 than segmentation.  But  now the gray level intervals  are not defined
@@ -605,18 +586,18 @@ level.
 \item Do photo-interpretation when possible.
 \end{itemize}
 In this  works, the  ground-truth is  provided as  a vector  file, see
-\ref{fig:orgparagraph6}.   Five  classes  are  considered,  they  are  given  in  Table
-\ref{tab:orgtable9}.
+\ref{fig:org6f5fbfd}.   Five  classes  are  considered,  they  are  given  in  Table
+\ref{tab:org8f0ee1b}.
 
-\begin{figure}[htb]
+\begin{figure}[htbp]
 \centering
 \includegraphics[width=0.75\textwidth]{./../figures/label_fabas.jpg}
-\caption{\label{fig:orgparagraph6}
+\caption{\label{fig:org6f5fbfd}
 Ground truth for the \emph{Fabas} image.}
 \end{figure}
 
-\begin{table}[htb]
-\caption{\label{tab:orgtable9}
+\begin{table}[htbp]
+\caption{\label{tab:org8f0ee1b}
 Classes of interest. Numbers corresponding to the attribute in the GIS file is also given.}
 \centering
 \begin{tabular}{cccccc}
@@ -637,7 +618,7 @@ proposed in OTB and all the combination of input data, \emph{i.e.}:
 \emph{concatenated} dates.
 \end{itemize}
 \subsection{Getting started with OTB}
-\label{sec:orgheadline28}
+\label{sec:orgf1bc4e0}
 There are several steps to do a classification.
 \begin{enumerate}
 \item \emph{Learn   the    classifier}:   It    is   done    with
@@ -674,12 +655,12 @@ compute the following indices:
 \end{work}
 
 \subsection{Automatize the process with scripts}
-\label{sec:orgheadline30}
+\label{sec:org4d89326}
 It  is possible  to run  directly  the \emph{OTB-Applications}  from the  the
 command line  (on linux-based  OS). This  way, it  is possible  to run
 several  operations  on   one  data  set  or  on   several  data  sets
 automatically.  A brief introduction to command line tools is given in
-Appendix \ref{sec:orgheadline25}.
+Appendix \ref{sec:org8d77583}.
 
 The  three previous  \emph{OTB-Applications} are  available from  the command
 line interface (CLI), same name with the prefix \texttt{otbcli\_} :
@@ -696,7 +677,7 @@ directory where the data are, learning the KNN classifier with default
 parameters do the following, classifying the whole image and computing
 the confusion matrix reduce to
 
-\begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg,breaklines]{sh}
+\begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg]{sh}
 otbcli_TrainImagesClassifier \
     -io.il fabas_12_10_2013.tif \
     -io.vd train_fabas.shp \
@@ -722,7 +703,7 @@ to process strings.
 
 Let's start with an example, to run the first application
 
-\begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg,breaklines]{python}
+\begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg]{python}
 # Load the module
 import os
 
@@ -734,7 +715,7 @@ os.system('otbcli_ComputeConfusionMatrix -in fabas_classif.tif -out matconf.csv 
 
 or equivalently:
 
-\begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg,breaklines]{python}
+\begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg]{python}
 # Load the module
 import os
 
@@ -749,7 +730,7 @@ os.system(classify)
 os.system(validate)
 \end{minted}
 
-Additional usefull references are  given section \ref{sec:orgheadline29}, take the
+Additional usefull references are  given section \ref{sec:org4ef4d6e}, take the
 time to read them.
 
 \begin{work}
@@ -757,7 +738,7 @@ time to read them.
 \item Write  the script  to learn  the model  for all  the classification
 methods and with each date.  Each time extract the confusion matrix
 and compute the global accuracy and the class average accuracy.
-\item Report the results on the \emph{collaborative spreadsheet}: \url{https://framacalc.org/fauvel_res_classification}
+\item Report the results on the \emph{collaborative spreadsheet}: \url{https://framacalc.org/fauvel\_res\_classification}
 \item For  the best method  in terms of classification  accuracy, discuss
 about the errors obtained with the confusion matrix.
 \item Classify the  whole image  and  compare by  visual inspection  the
@@ -765,7 +746,7 @@ errors with what you have inferred from the confusion matrix.
 \end{enumerate}
 \end{work}
 \subsection{Influence of the spatial distribution of the learning samples}
-\label{sec:orgheadline31}
+\label{sec:org06795d2}
 In order to evaluate the influence of the validation samples, you will
 investigate  several   reference  layers  to  compute   the  confusion
 matrix. Since OTB only select a few samples from all the available one
@@ -783,7 +764,7 @@ Repeat \uline{20} times the following test:
 \item Learn  with  \emph{train\_fabas}  and compute  the  confusion  matrix  with
 \emph{valid\_fabas}. Save the confusion matrix for each repetition.
 \item Compute the average global accuracy and the mean class accuracy and
-their standard deviation. \emph{You can check the figure \ref{orgspecialblock3} to do it automatically}.
+their standard deviation. \emph{You can check the figure \ref{orge72e9ad} to do it automatically}.
 \end{enumerate}
 
 
@@ -791,7 +772,7 @@ Discuss about the results.
 \end{work}
 
 \begin{figure}
-\begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg,breaklines]{python}
+\begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg]{python}
 import scipy as sp
 import glob
 # get all the csv files that match the pattern and order the list in increasing order
@@ -813,13 +794,142 @@ for name_train,name_valid in zip(NAMES_TRAIN,NAMES_VALID):
 res = [[sp.mean(oa_train),sp.std(oa_train)],[sp.mean(oa_valid),sp.std(oa_valid)]]
 sp.savetxt('acc.csv',res,delimiter=',',fmt='%1.3f')
 \end{minted}
-\caption{\label{orgspecialblock3}
+\caption{\label{orge72e9ad}
 Sample code to process a set of \texttt{csv} files.}
 \end{figure}
+\section{Satellite Image Time Series}
+\label{sec:org8e3bea7}
+\subsection{Objectives}
+\label{sec:org9b4d345}
+The objectives  of this part are  two-folds. First, it is  proposed to
+build  a Satellite  Image Time  Series (SITS)  given a  set of  images
+acquired  over  the  same  area.   Then,  we  are  going  to  classify
+winter/summer crops  using the SITS. Reference  and validation samples
+were extracted from the \href{https://www.data.gouv.fr/fr/datasets/registre-parcellaire-graphique-2012-contours-des-ilots-culturaux-et-leur-groupe-de-cultures-majorita/}{RPG} for  the same year. Table \ref{tab:orgd58a66d} provides
+the different classes available of these area.
+
+\begin{table}[htbp]
+\caption{\label{tab:orgd58a66d}
+RPG nomenclature and conversion used in the labwork}
+\centering
+\begin{tabular}{rllr}
+\toprule
+Value & Label & Class & Attribute\\
+\midrule
+1 & Wheat & Winter Crop & 1\\
+2 & Grain maize and silage & Summer Crop & 2\\
+3 & Barley & Winter Crop & 1\\
+4 & Other cereals & Winter Crop & 1\\
+5 & Rapeseed & Winter Crop & 1\\
+6 & Sunflower & Summer Crop & 2\\
+7 & Other oleaginous & Summer Crop & 2\\
+8 & Protein crops & Summer Crop & 2\\
+15 & Grain leguminous & Winter Crop & 2\\
+16 & Fodder & Grassland & 3\\
+18 & Permanent grassland & Grassland & 3\\
+19 & Temporary meadows & Grassland & 3\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Construction of the SITS}
+\label{sec:orga4ea011}
+Before classifying the  SITS, you need to built it.  In these labwork,
+two SITS  will be considered. One  build will all the  spectral bands,
+and the other one using the NDVI only.
+
+\begin{work}
+\begin{enumerate}
+\item Compute the NDVI for each date,
+\item Concatenate all the dates,
+\begin{itemize}
+\item For  the spectral bands  (\emph{i.e.} all the  blue bands, then  all the
+green bands \ldots{}),
+\item For the NDVI
+\end{itemize}
+\item Using QGIS,  plot the  temporal  profile for  several objects  and
+discuss of their shape w.r.t the phenology.
+\end{enumerate}
+\end{work}
+\subsection{Classification of the SITS}
+\label{sec:org816e422}
+Two scenario will be considered in this labwork. Classification of the
+whole SITS and classification of the \emph{best date.}
+
+\begin{work}
+\emph{With the classifier of your choice}
+\begin{enumerate}
+\item Do the classification of the  whole SITS given the training layers,
+and compute the predicted thematic map, restricted to pixels inside
+the RPG  (use the  mask provided). Compute  classification accuracy
+using  the  validation   layer  and  report  the   results  in  the
+\emph{collaborative spreadsheet}.
+\item Do the  classification for  each date  independently, compute  the
+classification accuracy and report the results in the \emph{collaborative
+spreadsheet}. \emph{Tips: It can (must) be automatized \ldots{}}
+\end{enumerate}
+\end{work}
+\subsection{Extraction of the best couple of dates}
+\label{sec:org21a9f0a}
+We have seen in the previous part that one date is not enough to get a
+correct classification rate. In that section, we are going to test all
+the  possible couple  of  dates, to  find  the best  one  in terms  of
+classification accuracy. 
+
+How to do it ? Just test  all the possible combinations! Be aware that
+using \texttt{t1}  and \texttt{t2} is  the same than  using \texttt{t2} and  \texttt{t1}. Here we  have 13
+dates, so the  total number of couples is  . I really
+hope you can use bash script now \ldots{}
+
+The code given  figure \ref{org42d5855} might help you.  It extracts all
+the  possible  couples  of files  from  a  set  of  files in  a  given
+directory, the files ended with \texttt{*m.tif}.
+
+\begin{figure}
+\begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg]{sh}
+FILE=`ls *m.tif` # Get all the files that end with 'm.tif'
+EFILE=''
+for file in $FILE
+do
+    # Add  variables to  be excluded  from the  second loop:  EFILE ->
+    # Exclude file
+    EFILE=`echo $EFILE $file`
+
+    # Exclude these variables from the next loop
+    FILES=$FILE # Copy the variable
+    for efile in $EFILE
+    do
+	FILES=`echo  $FILES |  sed "s/\b$efile\b//g"`  # Exclude  from
+						    # FILES   all  the
+						    # file  from EFILE
+						    # (substitute with
+						    # nothing)
+    done
+
+    # Do the process, given the couple of images
+    for files in $FILES
+    do
+	echo Process file $file and $files
+	# Add  you  code here  to  process  the data:  concatentation,
+	# training and extraction of the confusion matrix
+	echo ${file:17:8}${files:17:8} #  Name of the input  data : to
+				       # be  use to  set  name of  the
+				       # confusion matrix
+    done
+    echo ""
+done
+\end{minted}
+\caption{\label{org42d5855}
+Bash script to get all the possible couples of files.}
+\end{figure}
+Analyze the three best results in terms of accuracy. Interpret the
+results given the classes to be classified, the geographical area and
+its practical consideration (should we buy the complete SITS, or just
+some periods of the years? \ldots{})
 \section{Dynamic Habitat Index}
-\label{sec:orgheadline37}
+\label{sec:org5902e12}
 \subsection{Introduction}
-\label{sec:orgheadline33}
+\label{sec:org078d427}
 In this labworks, we are going to compute several indices of habitat
 dynamic's in order to define several ecozones. It is bases on the
 following paper: 
@@ -837,7 +947,7 @@ Ecological  Indicators,  Volume  8,  Issue 5,  September  2008,  Pages
 These indicators underly vegetation dynamic, they are usually computed
 in the \emph{fraction of photosynthetically active radiation (fPAR)} absorbed
 by the vegetation.  However these data  are not available.  So in this
-lab, the NDVI will be used. The data is described in \ref{sec:orgheadline12}.
+lab, the NDVI will be used. The data is described in \ref{sec:org95910f2}.
 
 
 \begin{work}
@@ -852,19 +962,19 @@ function: \(f(x)=ax+b\). You have to find \(a\) and \(b\) !
 \end{work}
 
 \subsection{Construction of the SITS}
-\label{sec:orgheadline34}
+\label{sec:orgfa5ef75}
 Before analyzing the  SITS, you need to built it.   
 \begin{work}
 \begin{enumerate}
 \item Compute the NDVI for each date,
 \item Convert to fPAR-like values,
 \item Concatenate all the dates,
-\item Using QGIS, plot the temporal profile for several objects.
+\item Using QGIS,  plot the  temporal  profile for  several objects.
 \end{enumerate}
 \end{work}
 
 \subsection{Computation of the dynamic indices}
-\label{sec:orgheadline35}
+\label{sec:org2a67231}
 The second part of the labwork  concern the computation of the dynamic
 indices.   Let  us  note  the  vector   of  fPAR  values  of  pixel  i
 \(\mathbf{x}_i=[\mathbf{x}_i(t_1),\ldots,\mathbf{x}_i(t_d)]\).     Three
@@ -876,11 +986,11 @@ $$CG = \sum_{j=1}^d\mathbf{x}_i(t_j)$$
 \begin{enumerate}
 \item The annual minimum cover,
 \end{enumerate}
-$$MC = \min_{j}\left[\mathbf{x}_i(t_1),\ldots,\mathbf{x}_i(t_j),\ldots,\mathbf{x}_i(t_d)\rigth]$$
+$$MC = \min_{j}\left[\mathbf{x}_i(t_1),\ldots,\mathbf{x}_i(t_j),\ldots,\mathbf{x}_i(t_d)\right]$$
 \begin{enumerate}
 \item The greenness coefficient of variation.
 \end{enumerate}
-$$GCV = \frac{\sigma_{\mathbf{x}_i}}{\mu_{\mathbf{x}}_i}$$
+$$GCV = \frac{\sigma_{\mathbf{x}_i}}{\mu_{\mathbf{x}_i}}$$
 
 \begin{work}
 \begin{enumerate}
@@ -889,7 +999,7 @@ $$GCV = \frac{\sigma_{\mathbf{x}_i}}{\mu_{\mathbf{x}}_i}$$
 \end{enumerate}
 \end{work}
 \subsection{Characterization of ecozones}
-\label{sec:orgheadline36}
+\label{sec:orgb7e8ca6}
 
 Perform a  segmentation of the SITS  using the three indices  as input
 values. A  primarily study suggests  the number  of ecozones is  \texttt{4} for
@@ -905,302 +1015,47 @@ terms of habitat.
 \item Do a visual validation of your results on the thematic map.
 \end{enumerate}
 \end{work}
-\section{Python for Remote Sensing data analysis}
-\label{sec:orgheadline47}
-\subsection{Template filters}
-\label{sec:orgheadline41}
-\subsubsection{Introduction}
-\label{sec:orgheadline38}
-
-In this labwork,  images will be provided under the  \texttt{Scipy} format. How
-to open  remote sensing images with  \texttt{GDAL} will be addressed  later. To
-load an image using \texttt{Scipy} just do
-
-\begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg,breaklines]{python}
-import scipy as sp
-image = sp.load('dataname.npy')
-\end{minted}
-
-In the following, you will have to write python functions (mainly
-image filters). In figure \ref{orgtarget1} is provided a skeleton of such function, using
-simple docstring convention. You are highly encouraged to put comment
-in your code !
-
-\begin{figure}
-\begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg,breaklines]{python}
-def TheFilter(imin,p1=p1,p2=p2, ...):
-    """This  function apply  the  filter  TheFilter  on image imin  with
-    parameters p1, p2, ...p2
-
-    Input:
-    -----
-    imin = image to be processed, Scipy 2D-Array
-    p1 = parameter 1 of the filter, default value p1
-    p2 = parameter 1 of the filter, default value p2
-
-    Output:
-    ------    
-    imout = filtered image, Scipy 2D-Array, not necessraly of the same
-    type as imin, depending of the filter
-    """
-
-    ## Some processing
-
-    ## Other processing
-
-    return imout
-\end{minted}
-
-\caption{Skeleton of the filter}
-\label{orgtarget1}
-\end{figure}
-
-\begin{work}
-\begin{enumerate}
-\item With  template filters,  there are a  list of  pre-processing that
-needs to  be done  every time. Find  them out. (Here  we do  not care
-about \emph{edge  effect}: pixels at the  border of the image  will not be
-processed)
-\begin{itemize}
-\item check of inputs,
-\item initialization of the output image,
-\item \ldots{}
-\end{itemize}
-\item Complete  the skeleton to  have a ready-to-use function,  where you
-will just have to implement  the operation in the neighborhood. Few
-lines of codes to scan all the pixel of the images.
-\end{enumerate}
-\end{work}
-
-\subsubsection{Template filters function}
-\label{sec:orgheadline39}
-Using the previously defined skeleton, implement the following filter:
-\texttt{max}, \texttt{min},  \texttt{median}, \texttt{mean}.   You can  use methods  of scipy  array class
-describe below:
-
-\url{https://docs.scipy.org/doc/numpy/reference/generated/numpy.amax.html}
-
-\url{https://docs.scipy.org/doc/numpy/reference/generated/numpy.amin.html}
-
-\url{https://docs.scipy.org/doc/numpy/reference/generated/numpy.mean.html}
-
-\url{https://docs.scipy.org/doc/numpy/reference/generated/numpy.median.html}
-
-\begin{work}
-\begin{enumerate}
-\item Start with a simple template, a fixed size moving window of \(3\times 3\)
-   pixels. Write your function.
-\item Modify your function to include an input parameter that control the
-size of the moving window (only consider odd size).
-\item When  your function  is  working  correctly,  try to  improve  the
-processing   time.    You   can   use   the    module   \texttt{time},   see
-\url{https://pymotw.com/2/time/}.
-\item Apply  your function  on the  Ikonos images and  try to  remove the
-noise.
-\end{enumerate}
-\end{work}
-\subsubsection{To go further}
-\label{sec:orgheadline40}
-\begin{itemize}
-\item Extend your function for multidimensional images.
-\item Provide function with a rectangular template (with odd size).
-\item For the mean filter, add a new parameter that define the number of
-\emph{cycle}, i.e., the number of times the filter is applied iteratively
-on the image.
-\item Implement the  following filters  and try to  explain what  are they
-action.
-\begin{itemize}
-\item \texttt{max(im)-im}
-\item \texttt{im-min(im)}
-\item \texttt{max(im)-min(im)}
-\end{itemize}
-\end{itemize}
-\subsection{Historical map processing}
-\label{sec:orgheadline43}
-This section is dedicated to the implementation of the filtering part of the following paper 
-\begin{quote}
-P-A  Herrault,  D  Sheeren,  M   Fauvel,  and  M  Paegelow.  Automatic
-extraction  of  forests from  historical  maps  based on  unsupervised
-classification in  the cielab  color space. In  Geographic Information
-Science at the Heart of  Europe, pages 95--112. Springer International
-Publishing, 2013.
-\end{quote}
-
-It concerns the filtering of  historical maps, see \ref{sec:orgheadline13} to see
-the data to be processed. The filtering consists in the application of
-the consecutive filters, on every bands of the color image:
-\begin{enumerate}
-\item Local max filter,
-\item Local min filter,
-\item Local median filter,
-\end{enumerate}
-as  illustrated   in  the  (simplified)  processing   chain  shown  in
-\ref{orgspecialblock1}. You should write a script that takes as arguments:
-\begin{itemize}
-\item The name of the image,
-\item the name of the output image,
-\item the size of the min/max filter,
-\item the size of the median filter,
-\end{itemize}
-an, off course, do the right processing.
-
-\begin{figure}
-\tikzstyle{process} = [rectangle, draw, fill=blue!20, text width=8em, text centered, rounded corners, minimum height=4em,node distance=3.5cm]
-  \tikzstyle{image} = [draw, rectangle,fill=red!20, node distance=3cm, minimum height=2em]
-  \tikzstyle{vector} = [draw, rectangle,fill=red!20, node distance=1.5cm, minimum height=2em]
-  \tikzstyle{line} = [draw, -latex']
-  \begin{tikzpicture}
-    \node[image] (1) {Input Image};
-    \node[process,right of =1] (2)  {Max filter};
-    \node[process,right of =2]  (3) {Min filter};
-    \node[process,right of =3]  (4) {Median};
-    \node[process,right of =4]  (5) {Classification};
-    \node[vector,above of =5]  (6) {Reference data};
-    \node[vector,below of=5] (7) {Classified image};
-    \path[line] (1)--(2);
-    \path[line] (2)--(3);
-    \path[line] (3)--(4);
-    \path[line] (4)--(5);
-    \path[line] (6)--(5); 
-    \path[line] (5)--(7); 
-  \end{tikzpicture}
-\caption{\label{orgspecialblock1}
-Processing chain.}
-\end{figure}
-
-\begin{work}
-\begin{enumerate}
-\item Write the main steps of the filtering:
-\begin{enumerate}
-\item Load the image
-\item Filter the image
-\item Write the results
-\end{enumerate}
-\item Add the necessary machinery to make a python application
-\begin{enumerate}
-\item Add command line arguments parser (see \ref{sec:orgheadline42})
-\item Make you function executable
-
-\begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg,breaklines]{sh}
-chmod +x yourfunction.py
-\end{minted}
-\end{enumerate}
-\item Play with it to find the best couple of parameters to remove black line in the historical map.
-\end{enumerate}
-\end{work}
-\subsection{QGIS Script}
-\label{sec:orgheadline46}
-QGIS offers facilities  to call python scripts directly  from QGIS. We
-are going to see how it is  possible to use our previous script, which
-slight  modifications,  directly in  QGIS.  Doing  this has  two  main
-advantages:
-\begin{enumerate}
-\item Let QGIS does the job for the selection and the visualization of
-the images,
-\item Use QGIS pre-defined function to handle arguments of our functions.
-\end{enumerate}
-\subsubsection{Install \emph{Script Runner}}
-\label{sec:orgheadline44}
-\emph{Script Runner} is a QGIS plugin  that allows to integrate python script
-very easily:  you don't  need to  worry about  linking your  script to
-QGIS, it is  done automatically. To install it, just  do \emph{Extensions ->
-Manage and Install Plugins} and select the plugin.
-
-Once the plugin is installed in QGIS, you can import your scripts.
-\subsubsection{Creating script for QGIS and \emph{Script Runner}}
-\label{sec:orgheadline45}
-Your  script needs  slight modification  in  order to  be imported  in
-\emph{Script Runner}.   
-
-\begin{enumerate}
-\item Add the following modules to interact with QGIS:
-
-\begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg,breaklines]{python}
-from PyQt4.QtCore import *
-from PyQt4.QtGui import *
-from qgis.core import *
-from qgis.gui import *
-\end{minted}
-
-\item First you  should define  a function  \texttt{run\_script(iface)} where  the
-processing is done.  \texttt{iface} is a  python object that gives access to
-several QGIS objects  and classes.  It is used  to communicate with
-QGIS. You can  also add arguments to the function:  when the script
-is run, a  window will be automatically created to  ask you to fill
-the value  of each parameter. For  instance, if you need  to define
-bands corresponding to infrared and red  and the name of the output
-file:
-
-\begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg,breaklines]{python}
-def run_script(iface,IR,R,data_name)
-\end{minted}
-
-\item The  second modification  need is to  get the name  of the  data of
-current layer in QGIS. It is done using \texttt{iface} object:
-
-\begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg,breaklines]{python}
-layer = iface.activeLayer() # Get the current layer
-name = layer.dataProvider().dataSourceUri() # Get the path of the layer
-\end{minted}
-
-Then, once the processed file has  been saved on the hard drive, it
-is possible  to load directly  the file  into QGIS, again  by using
-\texttt{iface}:
-
-\begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg,breaklines]{python}
-raster_lyr = iface.addRasterLayer('name_of_the_data','name_of_the_layer')
-\end{minted}
-
-\item The  last modification is not  mandatory, but it will  simplify the
-use of  your script. Don't  use \texttt{import},  but directly put  all your
-additional functions before the \texttt{run\_script} function.
-\end{enumerate}
-
-
-\begin{work}
-Make the your script and use it from QGIS.
-\end{work}
 \section{Appendix}
-\label{sec:orgheadline55}
+\label{sec:orge3eeb9d}
 \subsection{Short introduction to shell}
-\label{sec:orgheadline25}
+\label{sec:org8d77583}
 This section provides  an introduction to \emph{shell}  programming and \emph{shell
 scripts}.   A script  is a  set of  commands, which  allows to  write a
 processing chain  for a given image,  or to apply one  processing to a
 set  of   images.   Of   course,  mixing   these  two   situations  is
 possible. You  can find  more information  easily on  the web,  a good
-starting point can be the \href{https://en.wikibooks.org/wiki/Bash_Shell_Scripting}{Wikibook}.
+starting point can be the \href{https://en.wikibooks.org/wiki/Bash\_Shell\_Scripting}{Wikibook}.
 
 Shell is  a programming  language that is  available on  all GNU/Linux
 distributions. It  can be used  directly from the  prompt (interactive
 mode), or  by writing a file  with a set  of commands to be  run. This
 file should start with the line
 
-\begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg,breaklines]{sh}
+\begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg]{sh}
 #!/bin/bash
 \end{minted}
 In  the following,  it is  assumed  that we  are working  on the  file
 \texttt{script.sh}. To insert comment inside the script, the symbol \texttt{\#} has to be
 used.
 
-\begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg,breaklines]{sh}
+\begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg]{sh}
 # This is a comment
 \end{minted}
 With Linux, a file can be  \emph{writable}, \emph{readable} and/or \emph{executable}. To be
 run as a script, it should be at least \emph{executable} by the OS. It can be
 by done by running the following command:
 
-\begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg,breaklines]{sh}
+\begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg]{sh}
 chmod +x script.sh
 \end{minted}
 To run it, just do
 
-\begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg,breaklines]{sh}
+\begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg]{sh}
 ./script.sh
 \end{minted}
 
 \subsubsection{Basic commands}
-\label{sec:orgheadline48}
+\label{sec:org1533c58}
 \begin{itemize}
 \item \textbf{cd}: Change directory. To enter a directory, do \texttt{cd Name\_Of\_Directory}.
 \item \textbf{ls}: List all the file in the current directory.
@@ -1212,16 +1067,16 @@ To run it, just do
 
 For instance, to get all the \texttt{tif} files in the current folder:
 
-\begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg,breaklines]{sh}
+\begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg]{sh}
 ls *tif
 fabas_10_12_2013.tif  fabas_12_10_2013.tif
 \end{minted}
 
 \subsubsection{Variables}
-\label{sec:orgheadline49}
+\label{sec:org2080295}
 In shell, a variable is a string (not a number). It can be defined as:
 
-\begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg,breaklines]{sh}
+\begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg]{sh}
 var1='Mathieu' # Store "Mathieu" in variables "var1"
 var2='Fauvel'
 var3='34'
@@ -1231,10 +1086,16 @@ Be  careful to  spaces: there  are no  spaces, otherwise  an error  is
 returned!  A  variable is  displayed using the  \texttt{echo} function  and the
 variable is accessed with the command \texttt{\$}.
 
-\begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg,breaklines]{sh}
+\begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg]{sh}
 echo $var1 $var2      # print "Mathieu Fauvel"
 echo "$var3 ans"      # print "33 ans"
 echo '$var3 ans'      # print "$var3 ans"
+\end{minted}
+
+\begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg]{sh}
+Mathieu Fauvel
+34 ans
+$var3 ans
 \end{minted}
 
 Note the  difference between the simple  quote \texttt{'} and the  double quote
@@ -1246,7 +1107,7 @@ when the  script is called.  They are  accessible using the  command \texttt{\$}
 following by the order number of appearance when the script is
 called. Let define the \texttt{script.sh} file.
 
-\begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg,breaklines]{sh}
+\begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg]{sh}
 # ./script.sh Name FamilyName Age
 echo $1 $2
 echo "J ai (eu) $3 ans !"
@@ -1254,80 +1115,100 @@ echo "J ai (eu) $3 ans !"
 
 When we do this, we have the following output:
 
-\begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg,breaklines]{sh}
+\begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg]{sh}
 chmod +x script.sh
 ./script.sh Mathieu Fauvel 33
 \end{minted}
 
+\begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg]{sh}
+Mathieu Fauvel
+J ai (eu) 33 ans !
+\end{minted}
+
 \subsubsection{Loop}
-\label{sec:orgheadline50}
+\label{sec:orge0804e7}
 As in any programming language, loop are very useful to apply a series
 of processing  to several  elements of a  sequence. The  example below
 applies a processing on all \emph{tif} files of the current directory:
 
-\begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg,breaklines]{sh}
+\begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg]{sh}
 for i in *.tif # For all tif file
 do
     cp $i ndvi_$i # create a new file and add ndvi_ at the beginning of the filename
 done
 \end{minted}
 \subsubsection{Sequence}
-\label{sec:orgheadline51}
+\label{sec:org9d0ef08}
 It is possible to define sequences of string like this:
 
-\begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg,breaklines]{sh}
+\begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg]{sh}
 for name in bayes libsvm knn rf
 do
     echo $name
 done
 \end{minted}
 
+\begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg]{sh}
+bayes
+libsvm
+knn
+rf
+\end{minted}
+
 Sequences of numbers can be defined like this:
 
-\begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg,breaklines]{sh}
+\begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg]{sh}
 for i in `seq 1 5`
 do
 echo $i
 done
 \end{minted}
+
+\begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg]{sh}
+1
+2
+3
+4
+5
+\end{minted}
 \subsection{Short introduction to Python}
-\label{sec:orgheadline29}
+\label{sec:org4ef4d6e}
 A     good    starting     point     is     the    following     link:
 \url{http://kitchingroup.cheme.cmu.edu/pycse/pycse.html}.   Here,   I   just
 review few things that are usefull  for the labwork. But python is far
 more than this short introduction.
 \subsubsection{String}
-\label{sec:orgheadline52}
+\label{sec:orgf398556}
 Handling  strings with  python is  very easy.  It is  possible to  add
 strings together, as with number! Pay attention to spaces\ldots{}
 
-\begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg,breaklines]{python}
+\begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg]{python}
 name="Mathieu"
 surname="Fauvel"
 print name + surname
 \end{minted}
 
-\begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg,breaklines]{python}
+\begin{verbatim}
 MathieuFauvel
-\end{minted}
+\end{verbatim}
 
 To use numbers in strings, it is necessary to convert them, using the function \texttt{str}
 
-\begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg,breaklines]{python}
+\begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg]{python}
 print "Bonjour j\'ai eu " + str(33) + " ans"
 \end{minted}
 
-\begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg,breaklines]{python}
+\begin{verbatim}
 Bonjour j'ai eu 33 ans
-\end{minted}
+\end{verbatim}
 
 \subsubsection{Loop}
-\label{sec:orgheadline53}
+\label{sec:orgfac59ce}
 It is very  easy to iterate over  a list with python. The  list can be
 made of numbers, strings etc \ldots{}  Since a list is \href{https://docs.python.org/2/glossary.html}{iterable}, defining a
 \texttt{for} loop is just:
 
-\begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg,breaklines]{python}
+\begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg]{python}
 listeNumber = [1,2,3,4]
 print listeNumber
 for item in listeNumber:
@@ -1339,7 +1220,7 @@ for item in listeString:
     print(item)
 \end{minted}
 
-\begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg,breaklines]{python}
+\begin{verbatim}
 [1, 2, 3, 4]
 1
 2
@@ -1350,10 +1231,10 @@ knn
 bayes
 libsvm
 rf
-\end{minted}
+\end{verbatim}
 
 \subsubsection{Glob}
-\label{sec:orgheadline54}
+\label{sec:org0cb17de}
 The \href{https://docs.python.org/2/library/glob.html}{glob} module finds all the  path-names matching a given pattern. It
 uses standard Unix (shell) path  expansion rules. However, results are
 returned in arbitrary order and therefore sometimes ordering operation
@@ -1361,27 +1242,30 @@ is necessary. It returns a list  of pathnames, or a iterator which can
 be useful  for large  processing. Below  some examples  to see  how it
 works. First, check what is in my \emph{figures} directory:
 
-\begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg,breaklines]{sh}
+\begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg]{sh}
 ls figures/
 \end{minted}
 
-\begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg,breaklines]{sh}
+\begin{verbatim}
 google_bridge.jpg
 label_fabas.jpg
 label_fabas.jpgw
+old_map.jgw
 old_map.jpg
 pixel.pdf
 quicklook_fabas_10_12_2013.jpg
 quicklook_fabas_12_10_2013.jpg
 quicklook_seg_eau.png
+sits_f2.pgw
+sits_f2.png
 take5spot5.png
 tsunami_after.jpg
 tsunami_before.jpg
-\end{minted}
+\end{verbatim}
 
 If we want to get all the files, we just need to do
 
-\begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg,breaklines]{python}
+\begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg]{python}
 import glob
 
 files = glob.glob("figures/*")
@@ -1389,23 +1273,26 @@ for files_ in files:
     print files_
 \end{minted}
 
-\begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg,breaklines]{python}
+\begin{verbatim}
+figures/sits_f2.png
+figures/quicklook_fabas_12_10_2013.jpg
+figures/tsunami_after.jpg
 figures/take5spot5.png
-figures/label_fabas.jpg
-figures/google_bridge.jpg
+figures/sits_f2.pgw
 figures/quicklook_fabas_10_12_2013.jpg
 figures/pixel.pdf
-figures/old_map.jpg
-figures/quicklook_fabas_12_10_2013.jpg
+figures/label_fabas.jpg
 figures/tsunami_before.jpg
-figures/label_fabas.jpgw
+figures/old_map.jpg
 figures/quicklook_seg_eau.png
-figures/tsunami_after.jpg
-\end{minted}
+figures/label_fabas.jpgw
+figures/old_map.jgw
+figures/google_bridge.jpg
+\end{verbatim}
 
 If we only want the \emph{png} files:
 
-\begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg,breaklines]{python}
+\begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg]{python}
 import glob
 
 files = glob.glob("figures/*.png")
@@ -1413,27 +1300,29 @@ for files_ in files:
     print files_
 \end{minted}
 
-\begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg,breaklines]{python}
+\begin{verbatim}
+figures/sits_f2.png
 figures/take5spot5.png
 figures/quicklook_seg_eau.png
-\end{minted}
+\end{verbatim}
 
 The iterator is \texttt{iglob}, it does the same job than \texttt{glob}, but without storing all the results simultaneously.
 
-\begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg,breaklines]{python}
+\begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg]{python}
 import glob
 
 for files_ in glob.iglob("figures/*.png"):
     print files_
 \end{minted}
 
-\begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg,breaklines]{python}
+\begin{verbatim}
+figures/sits_f2.png
 figures/take5spot5.png
 figures/quicklook_seg_eau.png
-\end{minted}
+\end{verbatim}
 
 \subsubsection{Argparse}
-\label{sec:orgheadline42}
+\label{sec:org94fb0a8}
 Argparse (\url{https://docs.python.org/3.6/library/argparse.html}) is module
 to parse  options and  arguments from  the command-line  interface. It
 defines what  are the  mandatory argument,  generates help  and usages
@@ -1443,7 +1332,7 @@ For instance,  suppose we have  a function that needs  two parameters:
 the  name  of a  multispectral  file  and  the  size of  the  template
 filter. Argparse handles everything:
 
-\begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg,breaklines]{python}
+\begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg]{python}
 import argparse
 
 # Initialization of the filter
@@ -1458,4 +1347,9 @@ args = parser.parse_args()
 print args.image
 print args.p
 \end{minted}
+
+\begin{verbatim}
+None
+1
+\end{verbatim}
 \end{document}
