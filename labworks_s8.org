@@ -139,16 +139,23 @@ applications. For instance, it is possible to call /OTB-Applications/ or
 ** Sequences                           
 #+ATTR_LATEX: :booktabs t
 #+CAPTION: Sequences
-| Days             | TimeSlot (h) |   Room |
-|------------------+--------------+--------|
-| [2016-09-21 Wed] |            4 | Info 1 |
-| [2016-09-23 Fri] |            3 |   1003 |
-| [2016-09-26 Mon] |            4 |   1003 |
-| [2016-09-28 Wed] |            4 |   1003 |
-| [2016-09-30 Fri] |            3 |   1003 |
-| [2016-10-05 Wed] |            3 |   1003 |
-|------------------+--------------+--------|
-| Total            |           21 |        |
+| Séquences                    | Type |   Volume | Séance                                                   |
+|------------------------------+------+----------+----------------------------------------------------------|
+| <2017-02-28 Tue 10:10-12:10> | CTD  | 02:00:00 | Visualization of remote sensing data                     |
+| <2017-02-28 Tue 13:30-17:30> | CTD  | 04:00:00 | Spectral indices + Segmentation of remote sensing images |
+| <2017-02-02 Thu 10:10-12:10> | CTD  | 02:00:00 | Detection of floods                                      |
+| <2017-03-08 Wed 13:30-17:00> | CTD  | 04:00:00 | Classification of remote sensing images                  |
+| <2017-03-10 Fri 13:30-15:30> | CTD  | 00:00:00 | *Non présentiel* -> Spatial distribution of pixels         |
+| <2017-03-10 Fri 15:30-17:30> | CTD  | 02:00:00 | SITS 1/2                                                 |
+| <2017-03-14 Tue 10:10-12:10> | CTD  | 02:00:00 | SITS 2/2                                                 |
+| <2017-03-14 Tue 13:30-15:30> | CTD  | 00:00:00 | *Non présentiel* -> Best couples of dates                  |
+| <2017-03-14 Tue 15:30-17:30> | CTD  | 02:00:00 | Dynamic Habitat Index 1/2                                |
+| <2017-03-16 Thu 10:10-12:10> | CTD  | 02:00:00 | Dynamic Habitat Index 2/2 + reviews             |
+| <2017-03-23 Thu 10:10-12:10> | CTD  | 02:00:00 | EXAM Groupe 1                                            |
+| <2017-03-24 Fri 10:10-12:10> | CTD  | 02:00:00 | EXAM Groupe 2                                            |
+|------------------------------+------+----------+----------------------------------------------------------|
+| Total                        |      | 30:00:00 |                                                          |
+#+TBLFM: @>$3=vsum(@I$3..@II$3)*1.25;T
 #+TBLFM: @8$2=vsum(@I..@II)
 
 ** During the labworks
