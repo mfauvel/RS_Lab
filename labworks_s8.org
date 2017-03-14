@@ -820,6 +820,8 @@ whole SITS and classification of the /best date./
 2.  Do the  classification for  each date  independently, compute  the
    classification accuracy and report the results in the /collaborative
    spreadsheet/. /Tips: It can (must) be automatized .../
+
+   [[https://framacalc.org/fauvel_res_sits]]
 #+END_work
 ** Extraction of the best couple of dates
 :PROPERTIES:
@@ -1544,7 +1546,7 @@ print args.p
 :END:
 ** Visualization
 *** Get pixels mean values on collaborative spreadsheet
-#+BEGIN_SRC python
+#+BEGIN_SRC python :tangle visu_mean_pixel.py
 import scipy as sp
 import urllib2
 import time
@@ -1556,8 +1558,6 @@ matplotlib.style.use('ggplot')
 URL = ['https://framacalc.org/fauvel_rs_water','https://framacalc.org/fauvel_rs_grassland','https://framacalc.org/fauvel_rs_forest','https://framacalc.org/fauvel_rs_baresoil']
 LABEL = ['Water','Grassland','Forest','Bare soil']
 COLOR = ['b','g','r','m']
-fig=plt.figure()
-
 
 for i,url in enumerate(URL):
     try:
@@ -1568,11 +1568,10 @@ for i,url in enumerate(URL):
 
         m,s=data.mean(axis=0),data.std(axis=0)
 
-        ax = fig.add_subplot(4,1,i+1)
-        ax.clear()
-        ax.plot(range(1,5),m,'k',lw=2)
-        ax.set_title(LABEL[i])
-        ax.set_ylim([0,1000])
+        plt.figure()
+        plt.plot(range(1,5),m,'k',lw=2)
+        plt.title(LABEL[i])
+        plt.ylim([0,1000])
         plt.draw()
     except KeyboardInterrupt:
         exit()
@@ -1645,6 +1644,9 @@ import os
 
 #+END_SRC
 
+#+RESULTS:
+: None
+
 #+BEGIN_SRC python
 import scipy as sp
 import urllib2
@@ -1674,7 +1676,7 @@ for i in xrange(3):
     plt.figure()
     plt.bar(index,m[i*4:i*4+4],width=bar_width,alpha=opacity,color='b',yerr=s[i*4:i*4+4],error_kw=error_config)
     plt.xticks(index+bar_width/2,classifier)
-    plt.axis([-0.5, 3.5, 0.5, 1])
+    plt.axis([-0.5, 3.5, 0.75, 1])
     plt.grid('on')
 plt.show()
 #+END_SRC
@@ -2705,7 +2707,9 @@ def run_script(iface,p,output_name):
 - [X] script python, c'est de la merde :(
 - [X] Collecter l'ensemble des solutions pour les scripts
 - [X] Donner les bandes pour Fabas et les autres images
-- [ ] Modifier les images quickbird pour virer la bandes zeros à la fin...
+- [X] Modifier les images quickbird pour virer la bandes zeros à la fin...
+- [ ] Rajouter les bandes spectrales pour SITS
+- [ ] Rajouter le traitement par lots dans QGIS
 
 ** Column view
 #+BEGIN: columnview :hlines 2 :id global :skip-empty-rows t
