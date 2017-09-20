@@ -4,7 +4,7 @@
 #+AUTHOR: Mathieu Fauvel
 #+EMAIL: mathieu.fauvel@ensat.fr
 #+LANGUAGE: en
-#+SELECT_TAGS: 2A
+#+SELECT_TAGS: sigma
 #+EXCLUDE_TAGS: noexport
 #+TODO: TODO INPROGRESS DONE | CANCEL 
 #+OPTIONS:   H:3 num:t toc:2 \n:nil ::t |:t ^:nil -:t f:t *:t <:t prop:nil todo:nil tags:nil
@@ -68,7 +68,7 @@ progressively.
 | /Create/     | Perform a segmentation using radiometric statistics on one or many spectral variables and/or indices. |
 
 #+ATTR_LATEX: :booktabs t :align lp{0.85\linewidth} 
-#+CAPTION: Do and analyze pixel-wise classification of image
+#+CAPTION: Perform and discuss pixel-wise classification of image
 #+NAME: c:4
 | /Remember/   | Definition of pixel-wise supervised classification.                                                                                                                         |
 | /Understand/ | The parameters of  several classification algorithm, how  the spatial sampling of the ground truth data influence the training  and validation steps.                                 |
@@ -149,19 +149,16 @@ applications. For instance, it is possible to call /OTB-Applications/ or
 #+CAPTION: Sequences
 | Sequences                    | Type    |   Volume | Topics                                                  |
 |------------------------------+---------+----------+---------------------------------------------------------|
-| [2017-04-18 Tue 08:00-12:00] | CTD     | 04:00:00 | Visualization of remote sensing data + Spectral indices |
-| [2017-04-19 Wed 13:30-17:30] | CTD     | 04:00:00 | Segmentation of RS images + Floods detection            |
-| [2017-04-20 Thu 08:00-12:00] | CTD     | 04:00:00 | Classification of RS images 1/2                         |
-| [2017-04-21 Fri 08:00-12:00] | CTD     | 04:00:00 | SITS                                                    |
-| [2017-04-21 Fri 13:30-15:30] | Project | 00:00:00 | Spatial distribution of pixels                          |
-| [2017-04-21 Fri 15:30-17:30] | CTD     | 02:00:00 | Dynamic Habitat Index                                   |
-| [2017-04-25 Tue 08:00-10:00] | Project | 00:00:00 |                                                         |
-| [2017-05-02 Tue 08:00-10:00] | CTD     | 02:00:00 | Dynamic Habitat Index + review                          |
-| [2017-05-02 Tue 10:00-12:00] | EXAM    | 02:00:00 | EXAM Groupe 1                                           |
-| [2017-05-02 Tue 13:30-15:30] | EXAM    | 02:00:00 | EXAM Groupe 2                                           |
+| [2017-09-20 Wed 13:30-17:30] | CTD     | 04:00:00 | Visualization of remote sensing data + Spectral indices |
+| [2017-09-22 Fri 13:30-17:30] | CTD     | 04:00:00 | Segmentation of RS images + Floods detection            |
+| [2017-09-25 Mon 13:30-17:30] | CTD     | 04:00:00 | Classification of RS images                             |
+| [2017-09-27 Wed 13:30-15:30] | CTD     | 02:00:00 | Classification of RS images                             |
+| [2017-09-27 Wed 15:30-17:30] | Project | 02:00:00 | Spatial distribution of pixels                          |
+| [2017-09-29 Fri 13:30-16:30] | CTD     | 03:00:00 | Dynamic Habitat Index                                   |
+| [2017-10-02 Mon 08:00-10:00] | EXAM    | 02:00:00 | EXAM Groupe 1 & 2                                       |
 |------------------------------+---------+----------+---------------------------------------------------------|
-| Total                        |         | 30:00:00 |                                                         |
-#+TBLFM: @>$3=vsum(@I$3..@II$3)*1.25;T
+| Total                        |         | 21:00:00 |                                                         |
+#+TBLFM: @>$3=vsum(@I$3..@II$3)*1;T
 
 ** During the labworks
 For the /presential/ sequences, you won't have to do any report. But you
@@ -433,8 +430,7 @@ it can be related to chlorophyll content and photosynthesis.
 :END:
 ** Radiometric analysis
 #+BEGIN_work
-For   the  /near   infra  red/   band  and   the  NDVI   of  the   image
-[2013-10-12 Sat], do
+For the NDVI of the image [2013-10-12 Sat], do
 1) Look  at the  histogram and  identify the  local maxima.   For each
    local  maximum, try  to identify  the corresponding  pixels in  the
    image,
@@ -461,11 +457,10 @@ analyze the data and set-up the processing (parameters /etc/). Then, the
 /OTB-Applications/ are used to automatize the processing.
 
 #+BEGIN_work
-For  the /near  infra red/  band and  the NDVI,  segment the  identified
-material. For  that, you need to  define interval of pixel  values for
-which a  specific action  is done  (/e.g./, set  the value  to 0  or 1).
-Implement the processing using the  =BandMath= application or the Raster
-calculator.
+Segment the  identified material on the  NDVI.  For that, you  need to
+define interval  of pixel values for  which a specific action  is done
+(/e.g./, set the  value to 0 or 1).  Implement  the processing using the
+=BandMath= application.
 #+END_work
 ** Graphical Modeler
 For the segmentation of the NVDI, two processings are required
@@ -600,6 +595,9 @@ This should be done for one image and one classifier only.
 #+END_work
      
 ** Automatize the process with scripts (shell, python or the Graphical modeler)
+:PROPERTIES:
+:CUSTOM_ID: sec:classif:automatize
+:END:
 It  is possible  to run  directly  the /OTB-Applications/  from the  the
 command line.  This way, it is  possible to run several  operations on
 one  data  set  or  on  several  data  sets  automatically.   A  brief
@@ -1629,11 +1627,12 @@ URL = ['https://framacalc.org/fauvel_rs_water','https://framacalc.org/fauvel_rs_
 LABEL = ['Water','Grassland','Forest','Bare soil']
 
 fig=plt.figure()
+data=[]
 for i,url in enumerate(URL):
     try:
         with open('temp.csv','wb') as file:
             file.write(urllib2.urlopen(url+'.csv').read())
-        data = sp.genfromtxt('temp.csv',delimiter=',',skip_header=1)
+        data.append(sp.genfromtxt('temp.csv',delimiter=',',skip_header=1))
         os.remove("temp.csv")
         
         ax = fig.add_subplot(4,1,i+1)
@@ -1671,14 +1670,6 @@ otbcli_BandMath -il diff.tif -out floods.tif -exp "(im1b1<-0.4?1:0)" # if(im1b1<
 #+END_SRC
 ** Comparison of several classifier and several  data set
 #+BEGIN_SRC python
-import os
-
-#+END_SRC
-
-#+RESULTS:
-: None
-
-#+BEGIN_SRC python
 import scipy as sp
 import urllib2
 import time
@@ -1688,7 +1679,7 @@ import matplotlib
 matplotlib.style.use('ggplot')
 
 url = 'https://framacalc.org/fauvel_res_classification'
-classifier =['SVM','RF','GMM','KNN']
+classifier =['RF','GMM','KNN']
 
 # Read the file
 with open('temp.csv','wb') as file:
@@ -1696,7 +1687,7 @@ with open('temp.csv','wb') as file:
 data = sp.genfromtxt('temp.csv',delimiter=',',skip_header=2)
 os.remove("temp.csv")
 
-index = sp.arange(4)
+index = sp.arange(3)
 bar_width = 0.35
 opacity = 0.4
 error_config = {'ecolor': '0.3','lw':2,'capsize':5, 'capthick':2}
@@ -1705,7 +1696,7 @@ error_config = {'ecolor': '0.3','lw':2,'capsize':5, 'capthick':2}
 m,s=sp.nanmean(data,axis=0),sp.nanstd(data,axis=0)
 for i in xrange(3):
     plt.figure()
-    plt.bar(index,m[i*4:i*4+4],width=bar_width,alpha=opacity,color='b',yerr=s[i*4:i*4+4],error_kw=error_config)
+    plt.bar(index,m[i*3:i*3+3],width=bar_width,alpha=opacity,color='b',yerr=s[i*3:i*3+3],error_kw=error_config)
     plt.xticks(index+bar_width/2,classifier)
     plt.axis([-0.5, 3.5, 0.75, 1])
     plt.grid('on')
@@ -1713,7 +1704,6 @@ plt.show()
 #+END_SRC
 
 #+RESULTS:
-: None
 
 #+BEGIN_SRC sh
 for name in fabas*.tif
@@ -2720,6 +2710,12 @@ def run_script(iface,p,output_name):
 - [X] Mettre les codes python pour l'ouverture des images, en enlevant les commentaires.
 - [X] Faire codes pour tester les temps de calculs sur le parcours des boucles
 - [X] Rajouter intro argparss
+- [ ] Refaire les box-plots par bande plutot que par classe
+- [ ] Ecrire une syntaxe sur Band Math
+  + Opération classique
+  + Comparaison "if" etc ...
+  + 
+- [ ] Modifier la partie [[#sec:classif:automatize]] pour la partie python, utiliser les commandes internes.
 ** Séquences plus ou moins prêtes
 + [X] Ouvertures et Visualisation d'images
 + [X] Segmentation d'images
