@@ -145,6 +145,7 @@ applications. For instance, it is possible to call /OTB-Applications/ or
 /GDAL/ from Python.
 ** Sequences                           
 
+*** Remote Sensing - First approach
 #+ATTR_LATEX: :booktabs t
 #+CAPTION: Sequences
 | Sequences                    | Type    |   Volume | Topics                                                  |
@@ -159,6 +160,7 @@ applications. For instance, it is possible to call /OTB-Applications/ or
 |------------------------------+---------+----------+---------------------------------------------------------|
 | Total                        |         | 21:00:00 |     |       
 
+*** Remote Sensing - Advanced
 #+ATTR_LATEX: :booktabs t
 #+CAPTION: Sequences
 | Sequences                    | Type    |   Volume | Topics                                                  |
