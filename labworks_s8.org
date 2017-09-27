@@ -14,6 +14,7 @@
 #+LATEX_HEADER:\usepackage[english]{babel}\usepackage{minted}\usemintedstyle{emacs}
 #+LATEX_HEADER_EXTRA:\usepackage{tikz}\usepackage{pgfplots}\usepgfplotslibrary{dateplot}\usetikzlibrary{shapes,arrows}\usepackage[]{tcolorbox}
 #+LATEX_HEADER_EXTRA: \newtcolorbox[auto counter,number within=section]{work}[1][]{colback=black!5!white,colframe=black!50!white,fonttitle=\sffamily\bfseries,title=Work~\thetcbcounter: #1}
+
 #+COLUMNS: %25ITEM %FORMATION %DURATION %SEQUENCE %TAG
 
 * Introduction                                                     :sigma:2A:
@@ -1627,12 +1628,11 @@ URL = ['https://framacalc.org/fauvel_rs_water','https://framacalc.org/fauvel_rs_
 LABEL = ['Water','Grassland','Forest','Bare soil']
 
 fig=plt.figure()
-data=[]
 for i,url in enumerate(URL):
     try:
         with open('temp.csv','wb') as file:
             file.write(urllib2.urlopen(url+'.csv').read())
-        data.append(sp.genfromtxt('temp.csv',delimiter=',',skip_header=1))
+        data = sp.genfromtxt('temp.csv',delimiter=',',skip_header=1)
         os.remove("temp.csv")
         
         ax = fig.add_subplot(4,1,i+1)
@@ -2768,3 +2768,4 @@ def run_script(iface,p,output_name):
 |---------------------------------------------------------------+----------------+----------+----------+-----|
 | Template filters                                              | Presential     |    04:00 |          |     |
 #+END:
+

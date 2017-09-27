@@ -1,4 +1,4 @@
-% Created 2017-09-20 Wed 11:16
+% Created 2017-09-25 Mon 09:58
 % Intended LaTeX compiler: pdflatex
 \documentclass[a4paper,11pt,DIV=18]{scrartcl}
                 \usepackage{array}
@@ -29,9 +29,9 @@
 \tableofcontents
 
 \section{Introduction}
-\label{sec:org8bb507b}
+\label{sec:org25a166b}
 \subsection{Objectives of the labworks}
-\label{sec:orgf0d6b9e}
+\label{sec:org21965e3}
 The main objective of these labworks is to
 \begin{center}
 \emph{be able to  use and to extract information from  remote sensing images
@@ -42,12 +42,12 @@ land-use, humidity, \ldots{})  that is used to understand the configuration
 and/or the evolution of landscape.
 
 In terms of  \emph{competences}, you should be  able to master at  the end of
-the sessions  the items listed in  tables \ref{tab:org98a2408}, \ref{tab:orga2be2ad}, \ref{tab:org6341001},  \ref{tab:org8505dbc} and \ref{tab:org17116b9}.
+the sessions  the items listed in  tables \ref{tab:orgbf1ef19}, \ref{tab:org2542c25}, \ref{tab:orgde1ec49},  \ref{tab:orgb0b6de0} and \ref{tab:org8b0a75f}.
 Each of them  is organized as a  set of tasks that  should be mastered
 progressively.
 
 \begin{table}[htbp]
-\caption{\label{tab:org98a2408}
+\caption{\label{tab:orgbf1ef19}
 Choose images with properties adapted to your problematic.}
 \centering
 \begin{tabular}{lp{0.85\linewidth}}
@@ -63,7 +63,7 @@ Choose images with properties adapted to your problematic.}
 \end{table}
 
 \begin{table}[htbp]
-\caption{\label{tab:orga2be2ad}
+\caption{\label{tab:org2542c25}
 Compute and use spectral indices.}
 \centering
 \begin{tabular}{lp{0.85\linewidth}}
@@ -79,7 +79,7 @@ Compute and use spectral indices.}
 \end{table}
 
 \begin{table}[htbp]
-\caption{\label{tab:org6341001}
+\caption{\label{tab:orgde1ec49}
 Define, identify and analyze radiometric behavior.}
 \centering
 \begin{tabular}{lp{0.85\linewidth}}
@@ -95,7 +95,7 @@ Define, identify and analyze radiometric behavior.}
 \end{table}
 
 \begin{table}[htbp]
-\caption{\label{tab:org8505dbc}
+\caption{\label{tab:orgb0b6de0}
 Perform and discuss pixel-wise classification of image}
 \centering
 \begin{tabular}{lp{0.85\linewidth}}
@@ -111,7 +111,7 @@ Perform and discuss pixel-wise classification of image}
 \end{table}
 
 \begin{table}[htbp]
-\caption{\label{tab:org17116b9}
+\caption{\label{tab:org8b0a75f}
 Define and implement a processing chain}
 \centering
 \begin{tabular}{lp{0.85\linewidth}}
@@ -127,7 +127,7 @@ Define and implement a processing chain}
 \end{table}
 
 \subsection{Remote sensing software}
-\label{sec:orge30c11d}
+\label{sec:orgf1c26ea}
 In these  labworks, \href{https://www.fsf.org/}{free and  open sources  softwares} will be  used to
 visualize  remote sensing  images, to  process them  and to  implement
 processing  chains.  In  the  following, each  software/tools will  be
@@ -144,7 +144,7 @@ the                        different                        softwares:
 \end{center}
 
 \subsubsection{Orfeo ToolBox (OTB)}
-\label{sec:orgd4b9b73}
+\label{sec:org85cb224}
 \href{https://www.orfeo-toolbox.org/}{OTB} is a C++ library for remote sensing images processing. It has been
 developed by the  \href{https://cnes.fr/en}{CNES} (French space agency) during  the ORFEO program
 to \emph{prepare, accompany and promote the use and the exploitation of the
@@ -161,7 +161,7 @@ and process  remote sensing images  with \emph{OTB-Applications}. It  is also
 developed by the CNES during the ORFEO program. 
 
 \subsubsection{QGIS}
-\label{sec:org5a0e360}
+\label{sec:orgf290134}
 \href{http://www.qgis.org/en/site/}{QGIS} is  a \emph{Geographic Information System}  (GIS).  It is used  to open,
 visualize  and  process  digital  map.  It  includes  several  spatial
 analysis tools working mainly on vector  data. QGIS can be extended by
@@ -169,14 +169,14 @@ several plugin  (\url{https://plugins.qgis.org/}) and  modules, such  as the
 OTB applications.
 
 \subsubsection{Geospatial Data Abstraction Library (GDAL)}
-\label{sec:org825404c}
+\label{sec:orgbc64fa4}
 \href{http://www.gdal.org/}{GDAL}  is   a  library  for   the  processing  of  raster   and  vector
 data. Similar  to OTB, it  has several  applications that can  be used
 directly. For advanced users, it  is possible to develop program based
 on the GDAL library (not considered in these labworks).
 
 \subsubsection{Python}
-\label{sec:orgc970844}
+\label{sec:org087e57f}
 \href{https://www.python.org/}{Pyhton}  is   a  programming  language.  It   has  several  programming
 capabilities, such as \emph{object-oriented}, \emph{functional programming}, \emph{dynamic
 type}  and  \emph{memory management}  that  make  it  widely used  in  several
@@ -190,7 +190,7 @@ It has a large  number of available packages that can  be used in many
 applications. For instance, it is possible to call \emph{OTB-Applications} or
 \emph{GDAL} from Python.
 \subsection{Sequences}
-\label{sec:org93cf7d6}
+\label{sec:org922f354}
 
 \begin{table}[htbp]
 \caption{Sequences}
@@ -213,7 +213,7 @@ Total &  & 21:00:00 & \\
 \end{table}
 
 \subsection{During the labworks}
-\label{sec:orgf3442bf}
+\label{sec:org15a2f24}
 For the \emph{presential} sequences, you won't have to do any report. But you
 will have to  write your personal material on remote  sensing. You are
 encouraged to write it progressively  during the sessions.  \textbf{It will be
@@ -226,27 +226,27 @@ document  that  describe briefly  the  results  and how  you  obtained
 them.  Discussion between  all groups  will  be done  during the  next
 session.
 \section{Data sets}
-\label{sec:org7c9f3b7}
+\label{sec:orgdeca9ca}
 \subsection{Pleiades images}
-\label{sec:orge920252}
+\label{sec:orgd996493}
 These images were acquired over the  Fabas forest in 2013. Images were
 acquired   the   \textit{<2013-10-12 Sat>    }    and   the   \textit{<2013-12-10 Tue>},
-respectively. A true color composition is given in Figure \ref{fig:org0257e96}.
+respectively. A true color composition is given in Figure \ref{fig:orgd82a81b}.
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.5\textwidth]{./figures/quicklook_fabas_12_10_2013.jpg}
-\caption{\label{fig:org0257e96}
+\caption{\label{fig:orgd82a81b}
 Fabas image acquired the \textit{[2013-10-12 Sat]}.}
 \end{figure}
 
 Images are stored using the \href{https://trac.osgeo.org/geotiff/}{GeoTIFF} format.  It is an extended version
 of  the TIFF  format,  which allows  to  embed geospatial  information
 within the file. GeoTIFF can be read by most of the remote sensing and
-GIS software. Table \ref{tab:org1fe8bba} gives the band order of the data.
+GIS software. Table \ref{tab:org1b82d91} gives the band order of the data.
 
 \begin{table}[htbp]
-\caption{\label{tab:org1fe8bba}
+\caption{\label{tab:org1b82d91}
 Bands and channels information for the Pleiades images}
 \centering
 \begin{tabular}{rl}
@@ -262,23 +262,23 @@ Band & Channel\\
 \end{table}
 
 \subsection{Formosat 2 Satellite image time series}
-\label{sec:orgcb2ebba}
+\label{sec:orgf29b71c}
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.5\textwidth]{figures/sits_f2.png}
-\caption{\label{fig:org093f927}
+\caption{\label{fig:org4235163}
 Formosat 2 image acquired the \textit{[2012-05-03 Thu]}.}
 \end{figure}
 
 This time series was acquired in 2012 over the region of \emph{Saint Lys}. It
 consists  in  a  set  of   \href{http://www.satimagingcorp.com/satellite-sensors/other-satellite-sensors/formosat-2/}{Formosat-2}  images  along  the  year  2012.
 Figure~\ref{fig:SITS} provide information  about the acquisition
-date and the Figure~\ref{fig:org093f927} shows a false colors composition for
-the  date \textit{[2012-05-03 Thu]}. Table~\ref{tab:orgb983ded}  gives the
+date and the Figure~\ref{fig:org4235163} shows a false colors composition for
+the  date \textit{[2012-05-03 Thu]}. Table~\ref{tab:org857b7c3}  gives the
 band order of the data.
 
 \begin{table}[htbp]
-\caption{\label{tab:orgb983ded}
+\caption{\label{tab:org857b7c3}
 Bands and channels information for the Formosat images}
 \centering
 \begin{tabular}{rl}
@@ -327,21 +327,21 @@ Band & Channel\\
 \end{figure}
 
 \subsection{Historical Maps}
-\label{sec:org5381341}
-The figure \ref{fig:org801f3b9} shows an historical map. This is a scan performed by
+\label{sec:orgc04658a}
+The figure \ref{fig:org26a7bd0} shows an historical map. This is a scan performed by
 the \href{http://www.ign.fr/}{IGN} of an old manually drawn map.
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.5\textwidth]{figures/old_map.jpg}
-\caption{\label{fig:org801f3b9}
+\caption{\label{fig:org26a7bd0}
 Historical Maps}
 \end{figure}
 
 \section{Visualization of remote sensing data}
-\label{sec:org78a9713}
+\label{sec:org6b5d9bc}
 \subsection{Vizualization of remote sensing image}
-\label{sec:org555fe78}
+\label{sec:org31a9d84}
 The vizualisation  of remote  sensing images can  be done  either with
 Monteverdi2  or QGIS\footnote{The  library \texttt{matplotlib}  of  python is  not
 adapted to  visualize remote  sensing image  and should  be avoided.}.
@@ -360,10 +360,10 @@ In  this labwork,  a  few  properties will  be  reviewed  and you  are
 encouraged to check (at least) the given references.
 
 \subsubsection{Vizualization of grayscale image}
-\label{sec:org3f41314}
+\label{sec:org10d9882}
 Open the image  \emph{fabas\_10\_12\_2013.tif} with QGIS. The default  view is a
 colour composition, with the bands/channels association given in Table
-\ref{tab:orgcd14d07}. To start easy, we just open  one band at a time: right click
+\ref{tab:org1f0853f}. To start easy, we just open  one band at a time: right click
 on  the  name  of  the  opened  image in  the  \emph{Layer}  pane  et  select
 \emph{Properties}.   Then select  the tab  \emph{Style} and  \emph{Band rendering}.  In the
 \emph{render type}, select \emph{Singleband gray} and the band you want to display.
@@ -371,7 +371,7 @@ on  the  name  of  the  opened  image in  the  \emph{Layer}  pane  et  select
 You surely have to do \emph{Contrast enhancement}. Check the doc for that.
 
 \begin{table}[htbp]
-\caption{\label{tab:orgcd14d07}
+\caption{\label{tab:org1f0853f}
 Bands and channels default association in QGIS (if there is not a set of specified spectral bands in the metadata).}
 \centering
 \begin{tabular}{rl}
@@ -394,7 +394,7 @@ you observe ?
 \end{enumerate}
 \end{work}
 \subsubsection{Vizualization of colour image}
-\label{sec:org77008da}
+\label{sec:org008d765}
 Now you  can visualize  a colour images,  by selecting  three spectral
 bands among those available  from the data. Again, \emph{Contrast
 enhancement} should be done.
@@ -418,7 +418,7 @@ for detail.
 \end{enumerate}
 \end{work}
 \subsection{Get data information}
-\label{sec:org835e052}
+\label{sec:orgd3a2ca2}
 Before  opening a  remote sensing  data, it  is possible  to get  some
 information about its  properties. For instance, using  \texttt{gdalinfo} it is
 possible to extract several information.  It can be used as
@@ -453,7 +453,7 @@ On the \emph{Fabas} data set, get the following information.
 \end{enumerate}
 \end{work}
 \section{Spectral indices: \emph{Normalized Difference Vegetation Index}}
-\label{sec:orgdcc47f3}
+\label{sec:orge6fbfae}
 Among the available  radiometric indices, only the  NDVI is considered
 in this labwork. NDVI is widely used for vegetation monitoring because
 it can be related to chlorophyll content and photosynthesis.
@@ -488,9 +488,9 @@ image, the bands used and the expression of our processing:
 \end{enumerate}
 \end{work}
 \section{Segmentation of remote sensing images}
-\label{sec:orgc6b177e}
+\label{sec:org0f185be}
 \subsection{Radiometric analysis}
-\label{sec:orgb188c6f}
+\label{sec:orga2fef5c}
 \begin{work}
 For the NDVI of the image \textit{[2013-10-12 Sat]}, do
 \begin{enumerate}
@@ -502,12 +502,12 @@ image,
 \end{enumerate}
 \end{work}
 \subsection{Segmentation of 1D histogram}
-\label{sec:org801ed2e}
+\label{sec:orgda326a6}
 In  this part,  the  extraction  of image's  pixels  sharing the  same
 \emph{radiometric behavior} is considered.  The  analysis of the histogram is
 used to estimate this \emph{behavior}.   When only one material is segmented,
 the output is a  binary image (image with value \texttt{0}  or \texttt{1}), where pixels
-having  value \texttt{1}  are from  the same  material.  Figure  \ref{fig:orgff4c2ef}
+having  value \texttt{1}  are from  the same  material.  Figure  \ref{fig:orgfaadec1}
 gives  an  example  of  such   outputs.   When  several  material  are
 considered, the output is an images with integer values (\texttt{1}, \texttt{2}, \texttt{3} \ldots{}),
 depending on the number of materials.
@@ -515,7 +515,7 @@ depending on the number of materials.
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.65\linewidth]{./figures/quicklook_seg_eau.png}
-\caption{\label{fig:orgff4c2ef}
+\caption{\label{fig:orgfaadec1}
 Binary image for Water.}
 \end{figure}
 
@@ -530,7 +530,7 @@ define interval  of pixel values for  which a specific action  is done
 \texttt{BandMath} application.
 \end{work}
 \subsection{Graphical Modeler}
-\label{sec:org6a89046}
+\label{sec:orga30f9ae}
 For the segmentation of the NVDI, two processings are required
 \begin{enumerate}
 \item First, the computation of the NDVI from the original image,
@@ -546,12 +546,12 @@ Define your model  to perform the segmentation of  intro three classes
 of the NDVI.
 \end{work}
 \section{Change detection: \emph{Detection of floods}}
-\label{sec:org216a4c3}
+\label{sec:org2bcba9f}
 Change detection  in remote sensing consists  in detecting differences
 between two  images, or  a set of  images.  It can  be used  to detect
 changes in vegetation properties or in land cover.  It is also used in
 disaster management, to detect impacted areas. In this labwork, we are
-dealing with floods.  In Figure  \ref{org9c2ee65} is shown two quickbird images,
+dealing with floods.  In Figure  \ref{orgedfafbf} is shown two quickbird images,
 before  and  after a  flooding.   The  objective  is to  identify  the
 impacted area to provide a map of these zones
 
@@ -561,7 +561,7 @@ impacted area to provide a map of these zones
   \includegraphics[width=0.45\linewidth]{figures/tsunami_before.jpg}&\includegraphics[width=0.45\linewidth]{figures/tsunami_after.jpg}\\
   (a)&(b)
 \end{tabular}
-\caption{\label{org9c2ee65}
+\caption{\label{orgedfafbf}
 False colours images of Lhonga Leupung area (a) before and (b) after flooding.}
 \end{figure}
 
@@ -572,21 +572,21 @@ False colours images of Lhonga Leupung area (a) before and (b) after flooding.}
 \item Define the processing chain to extract these areas.
 \item Implement the processing chain with the graphical modeler.
 \item \uline{Optional}: Implement  the same processing chain  with shell scripts,
-see \ref{sec:org8cbd91e}.
+see \ref{sec:org6080975}.
 \end{enumerate}
 \end{work}
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.75\textwidth]{./figures/google_bridge.jpg}
-\caption{\label{fig:org962db7e}
-Google view of the impacted area. The red square represents the area of Figure \ref{org9c2ee65}.}
+\caption{\label{fig:orgd33c02e}
+Google view of the impacted area. The red square represents the area of Figure \ref{orgedfafbf}.}
 \end{figure}
 
 \section{Classification of remote sensing images}
-\label{sec:orgea4ab60}
+\label{sec:org76b2918}
 \subsection{Introduction}
-\label{sec:orgabb9cb1}
+\label{sec:org588bab8}
 The aim  of this labwork  is to  perform the classification  of remote
 sensing images using supervised algorithms.  The principle is the same
 than segmentation.  But  now the gray level intervals  are not defined
@@ -609,18 +609,18 @@ level.
 \item Do photo-interpretation when possible.
 \end{itemize}
 In this  works, the  ground-truth is  provided as  a vector  file, see
-\ref{fig:org912be30}.   Five  classes  are  considered,  they  are  given  in  Table
-\ref{tab:orga512881}.
+\ref{fig:org0b70287}.   Five  classes  are  considered,  they  are  given  in  Table
+\ref{tab:orgab0592e}.
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.75\textwidth]{./figures/label_fabas.jpg}
-\caption{\label{fig:org912be30}
+\caption{\label{fig:org0b70287}
 Ground truth for the \emph{Fabas} image.}
 \end{figure}
 
 \begin{table}[htbp]
-\caption{\label{tab:orga512881}
+\caption{\label{tab:orgab0592e}
 Classes of interest. Numbers corresponding to the attribute in the GIS file is also given.}
 \centering
 \begin{tabular}{cccccc}
@@ -641,7 +641,7 @@ proposed in OTB and all the combination of input data, \emph{i.e.}:
 \emph{concatenated} dates.
 \end{itemize}
 \subsection{Getting started with OTB}
-\label{sec:org435e0ea}
+\label{sec:orgf4307bc}
 There are several steps to do a classification.
 \begin{enumerate}
 \item \emph{Learn   the    classifier}:   It    is   done    with
@@ -678,11 +678,11 @@ compute the following indices:
 \end{work}
 
 \subsection{Automatize the process with scripts (shell, python or the Graphical modeler)}
-\label{sec:org26bac9b}
+\label{sec:org0da6875}
 It  is possible  to run  directly  the \emph{OTB-Applications}  from the  the
 command line.  This way, it is  possible to run several  operations on
 one  data  set  or  on  several  data  sets  automatically.   A  brief
-introduction to command line tools is given in Appendix \ref{sec:org8cbd91e}.
+introduction to command line tools is given in Appendix \ref{sec:org6080975}.
 
 The  three previous  \emph{OTB-Applications} are  available from  the command
 line interface (CLI), same name with the prefix \texttt{otbcli\_} :
@@ -752,7 +752,7 @@ os.system(classify)
 os.system(validate)
 \end{minted}
 
-Additional usefull references are  given section \ref{sec:orga5c6a69}, take the
+Additional usefull references are  given section \ref{sec:org9d57117}, take the
 time to read them.
 
 Alternatively, it  is possible to  use the \emph{batch  processing interface}
@@ -782,7 +782,7 @@ errors with what you have inferred from the confusion matrix.
 \end{enumerate}
 \end{work}
 \subsection{Influence of the spatial distribution of the learning samples}
-\label{sec:org73ae6c4}
+\label{sec:org4b237db}
 In order to evaluate the influence of the validation samples, you will
 investigate  several   reference  layers  to  compute   the  confusion
 matrix. Since OTB only select a few samples from all the available one
@@ -800,7 +800,7 @@ Repeat \uline{20} times the following test:
 \item Learn  with  \emph{train\_fabas}  and compute  the  confusion  matrix  with
 \emph{valid\_fabas}. Save the confusion matrix for each repetition.
 \item Compute the average global accuracy and the mean class accuracy and
-their standard deviation. \emph{You can check the figure \ref{org3054ece} to do it automatically}.
+their standard deviation. \emph{You can check the figure \ref{org4aa08dd} to do it automatically}.
 \end{enumerate}
 
 
@@ -830,13 +830,13 @@ for name_train,name_valid in zip(NAMES_TRAIN,NAMES_VALID):
 res = [[sp.mean(oa_train),sp.std(oa_train)],[sp.mean(oa_valid),sp.std(oa_valid)]]
 sp.savetxt('acc.csv',res,delimiter=',',fmt='%1.3f')
 \end{minted}
-\caption{\label{org3054ece}
+\caption{\label{org4aa08dd}
 Sample code to process a set of \texttt{csv} files.}
 \end{figure}
 \section{Dynamic Habitat Index}
-\label{sec:org3b1522b}
+\label{sec:org5d4d6d7}
 \subsection{Introduction}
-\label{sec:orge469081}
+\label{sec:org91ccce3}
 In this labworks, we are going to compute several indices of habitat
 dynamic's in order to define several ecozones. It is bases on the
 following paper: 
@@ -854,7 +854,7 @@ Ecological  Indicators,  Volume  8,  Issue 5,  September  2008,  Pages
 These indicators underly vegetation dynamic, they are usually computed
 in the \emph{fraction of photosynthetically active radiation (fPAR)} absorbed
 by the vegetation.  However these data  are not available.  So in this
-lab, the NDVI will be used. The data is described in \ref{sec:orgcb2ebba}.
+lab, the NDVI will be used. The data is described in \ref{sec:orgf29b71c}.
 
 
 \begin{work}
@@ -869,7 +869,7 @@ function: \(f(x)=ax+b\). You have to find \(a\) and \(b\) !
 \end{work}
 
 \subsection{Construction of the SITS}
-\label{sec:orgacc9f75}
+\label{sec:org2e2cd6e}
 Before analyzing the  SITS, you need to built it.   
 \begin{work}
 \begin{enumerate}
@@ -881,7 +881,7 @@ Before analyzing the  SITS, you need to built it.
 \end{work}
 
 \subsection{Computation of the dynamic indices}
-\label{sec:orge79228e}
+\label{sec:orgea31547}
 The second part of the labwork  concern the computation of the dynamic
 indices.   Let  us  note  the  vector   of  fPAR  values  of  pixel  i
 \(\mathbf{x}_i=[\mathbf{x}_i(t_1),\ldots,\mathbf{x}_i(t_d)]\).     Three
@@ -906,7 +906,7 @@ $$GCV = \frac{\sigma_{\mathbf{x}_i}}{\mu_{\mathbf{x}_i}}$$
 \end{enumerate}
 \end{work}
 \subsection{Characterization of ecozones}
-\label{sec:org984c39f}
+\label{sec:org655873f}
 
 Perform a  segmentation of the SITS  using the three indices  as input
 values. A  primarily study suggests  the number  of ecozones is  \texttt{4} for
@@ -923,11 +923,11 @@ terms of habitat.
 \end{enumerate}
 \end{work}
 \section{Python for Remote Sensing data analysis}
-\label{sec:orgb7c4108}
+\label{sec:orgd838a25}
 \subsection{Template filters}
-\label{sec:org6ef2b10}
+\label{sec:org2c46434}
 \subsubsection{Introduction}
-\label{sec:org513d059}
+\label{sec:org0be84dd}
 
 In this labwork,  images will be provided under the  \texttt{Scipy} format. How
 to open  remote sensing images with  \texttt{GDAL} will be addressed  later. To
@@ -939,7 +939,7 @@ image = sp.load('dataname.npy')
 \end{minted}
 
 In the following, you will have to write python functions (mainly
-image filters). In figure \ref{org5cc8439} is provided a skeleton of such function, using
+image filters). In figure \ref{orgd8fd636} is provided a skeleton of such function, using
 simple docstring convention. You are highly encouraged to put comment
 in your code !
 
@@ -969,7 +969,7 @@ def TheFilter(imin,p1=p1,p2=p2, ...):
 \end{minted}
 
 \caption{Skeleton of the filter}
-\label{org5cc8439}
+\label{orgd8fd636}
 \end{figure}
 
 \begin{work}
@@ -990,7 +990,7 @@ lines of codes to scan all the pixel of the images.
 \end{work}
 
 \subsubsection{Template filters function}
-\label{sec:org2683eb6}
+\label{sec:orgd5b8044}
 Using the previously defined skeleton, implement the following filter:
 \texttt{max}, \texttt{min},  \texttt{median}, \texttt{mean}.   You can  use methods  of scipy  array class
 describe below:
@@ -1017,7 +1017,7 @@ noise.
 \end{enumerate}
 \end{work}
 \subsubsection{To go further}
-\label{sec:orgc50f094}
+\label{sec:orgb6ab60f}
 \begin{itemize}
 \item Extend your function for multidimensional images.
 \item Provide function with a rectangular template (with odd size).
@@ -1033,7 +1033,7 @@ action.
 \end{itemize}
 \end{itemize}
 \subsection{Historical map processing}
-\label{sec:org398963f}
+\label{sec:orgddfd94b}
 This section is dedicated to the implementation of the filtering part of the following paper 
 \begin{quote}
 P-A  Herrault,  D  Sheeren,  M   Fauvel,  and  M  Paegelow.  Automatic
@@ -1043,7 +1043,7 @@ Science at the Heart of  Europe, pages 95--112. Springer International
 Publishing, 2013.
 \end{quote}
 
-It concerns the filtering of  historical maps, see \ref{sec:org5381341} to see
+It concerns the filtering of  historical maps, see \ref{sec:orgc04658a} to see
 the data to be processed. The filtering consists in the application of
 the consecutive filters, on every bands of the color image:
 \begin{enumerate}
@@ -1052,7 +1052,7 @@ the consecutive filters, on every bands of the color image:
 \item Local median filter,
 \end{enumerate}
 as  illustrated   in  the  (simplified)  processing   chain  shown  in
-\ref{fig:org801f3b9}. You should write a script that takes as arguments:
+\ref{fig:org26a7bd0}. You should write a script that takes as arguments:
 \begin{itemize}
 \item The name of the image,
 \item the name of the output image,
@@ -1081,7 +1081,7 @@ an, off course, do the right processing.
     \path[line] (6)--(5); 
     \path[line] (5)--(7); 
   \end{tikzpicture}
-\caption{\label{orged1d74c}
+\caption{\label{org956b872}
 Processing chain.}
 \end{figure}
 
@@ -1095,7 +1095,7 @@ Processing chain.}
 \end{enumerate}
 \item Add the necessary machinery to make a python application
 \begin{enumerate}
-\item Add command line arguments parser (see \ref{sec:org8859e27})
+\item Add command line arguments parser (see \ref{sec:org6dbe5e2})
 \item Make you function executable
 
 \begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg]{sh}
@@ -1106,7 +1106,7 @@ Processing chain.}
 \end{enumerate}
 \end{work}
 \subsection{QGIS Script}
-\label{sec:org55783a4}
+\label{sec:org9b9d2db}
 QGIS offers facilities  to call python scripts directly  from QGIS. We
 are going to see how it is  possible to use our previous script, which
 slight  modifications,  directly in  QGIS.  Doing  this has  two  main
@@ -1117,7 +1117,7 @@ the images,
 \item Use QGIS pre-defined function to handle arguments of our functions.
 \end{enumerate}
 \subsubsection{Install \emph{Script Runner}}
-\label{sec:org4851c11}
+\label{sec:org54c62d0}
 \emph{Script Runner} is a QGIS plugin  that allows to integrate python script
 very easily:  you don't  need to  worry about  linking your  script to
 QGIS, it is  done automatically. To install it, just  do \emph{Extensions ->
@@ -1125,7 +1125,7 @@ Manage and Install Plugins} and select the plugin.
 
 Once the plugin is installed in QGIS, you can import your scripts.
 \subsubsection{Creating script for QGIS and \emph{Script Runner}}
-\label{sec:org16fc1a6}
+\label{sec:orge7a993b}
 Your  script needs  slight modification  in  order to  be imported  in
 \emph{Script Runner}.   
 
@@ -1178,9 +1178,9 @@ additional functions before the \texttt{run\_script} function.
 Make the your script and use it from QGIS.
 \end{work}
 \section{Appendix}
-\label{sec:orgfc39a61}
+\label{sec:org703fb7f}
 \subsection{Short introduction to shell}
-\label{sec:org8cbd91e}
+\label{sec:org6080975}
 This section provides  an introduction to \emph{shell}  programming and \emph{shell
 scripts}.   A script  is a  set of  commands, which  allows to  write a
 processing chain  for a given image,  or to apply one  processing to a
@@ -1217,7 +1217,7 @@ To run it, just do
 \end{minted}
 
 \subsubsection{Basic commands}
-\label{sec:org010b111}
+\label{sec:org9c08548}
 \begin{itemize}
 \item \textbf{cd}: Change directory. To enter a directory, do \texttt{cd Name\_Of\_Directory}.
 \item \textbf{ls}: List all the file in the current directory.
@@ -1235,7 +1235,7 @@ fabas_10_12_2013.tif  fabas_12_10_2013.tif
 \end{minted}
 
 \subsubsection{Variables}
-\label{sec:org9ac89bf}
+\label{sec:org63fb7b6}
 In shell, a variable is a string (not a number). It can be defined as:
 
 \begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg]{sh}
@@ -1288,7 +1288,7 @@ J ai (eu) 33 ans !
 \end{minted}
 
 \subsubsection{Loop}
-\label{sec:org20acf2d}
+\label{sec:org858ac2c}
 As in any programming language, loop are very useful to apply a series
 of processing  to several  elements of a  sequence. The  example below
 applies a processing on all \emph{tif} files of the current directory:
@@ -1300,7 +1300,7 @@ do
 done
 \end{minted}
 \subsubsection{Sequence}
-\label{sec:orgee9f9a4}
+\label{sec:org919415b}
 It is possible to define sequences of string like this:
 
 \begin{minted}[fontsize=\footnotesize,obeytabs=true,tabsize=4,bgcolor=bg]{sh}
@@ -1334,13 +1334,13 @@ done
 5
 \end{minted}
 \subsection{Short introduction to Python}
-\label{sec:orga5c6a69}
+\label{sec:org9d57117}
 A     good    starting     point     is     the    following     link:
 \url{http://kitchingroup.cheme.cmu.edu/pycse/pycse.html}.   Here,   I   just
 review few things that are usefull  for the labwork. But python is far
 more than this short introduction.
 \subsubsection{String}
-\label{sec:orgba74a2d}
+\label{sec:org729c0f5}
 Handling  strings with  python is  very easy.  It is  possible to  add
 strings together, as with number! Pay attention to spaces\ldots{}
 
@@ -1365,7 +1365,7 @@ Bonjour j'ai eu 33 ans
 \end{verbatim}
 
 \subsubsection{Loop}
-\label{sec:org6fca112}
+\label{sec:org3421ac4}
 It is very  easy to iterate over  a list with python. The  list can be
 made of numbers, strings etc \ldots{}  Since a list is \href{https://docs.python.org/2/glossary.html}{iterable}, defining a
 \texttt{for} loop is just:
@@ -1396,7 +1396,7 @@ rf
 \end{verbatim}
 
 \subsubsection{Glob}
-\label{sec:orge8cd3fb}
+\label{sec:org0169156}
 The \href{https://docs.python.org/2/library/glob.html}{glob} module finds all the  path-names matching a given pattern. It
 uses standard Unix (shell) path  expansion rules. However, results are
 returned in arbitrary order and therefore sometimes ordering operation
@@ -1484,7 +1484,7 @@ figures/quicklook_seg_eau.png
 \end{verbatim}
 
 \subsubsection{Argparse}
-\label{sec:org8859e27}
+\label{sec:org6dbe5e2}
 Argparse (\url{https://docs.python.org/3.6/library/argparse.html}) is module
 to parse  options and  arguments from  the command-line  interface. It
 defines what  are the  mandatory argument,  generates help  and usages
