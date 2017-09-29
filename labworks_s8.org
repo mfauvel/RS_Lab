@@ -146,6 +146,7 @@ applications. For instance, it is possible to call /OTB-Applications/ or
 /GDAL/ from Python.
 ** Sequences                           
 
+*** Remote Sensing - First approach
 #+ATTR_LATEX: :booktabs t
 #+CAPTION: Sequences
 | Sequences                    | Type    |   Volume | Topics                                                  |
@@ -158,7 +159,22 @@ applications. For instance, it is possible to call /OTB-Applications/ or
 | [2017-09-29 Fri 13:30-16:30] | CTD     | 03:00:00 | Dynamic Habitat Index                                   |
 | [2017-10-02 Mon 08:00-10:00] | EXAM    | 02:00:00 | EXAM Groupe 1 & 2                                       |
 |------------------------------+---------+----------+---------------------------------------------------------|
-| Total                        |         | 21:00:00 |                                                         |
+| Total                        |         | 21:00:00 |     |       
+
+*** Remote Sensing - Advanced
+#+ATTR_LATEX: :booktabs t
+#+CAPTION: Sequences
+| Sequences                    | Type    |   Volume | Topics                                                  |
+|------------------------------+---------+----------+---------------------------------------------------------|
+| [2017-10-02 Mon 10:00-12:00] | CTD     | 02:00:00 | Python libraries for Remote Sensing		      |
+| [2017-10-09 Mon 13:30-17:30] | CTD     | 04:00:00 | Manipulating images and tables		              |
+| [2017-10-11 Wed 13:30-15:30] | CTD     | 02:00:00 | Use python for computing NDVI                           |
+| [2017-10-16 Wed 13:30-15:30] | CTD     | 04:00:00 | Open, do someting and save a raster                     |
+| [2017-10-18 Wed 13:30-15:30] | CTD	 | 02:00:00 | Recreate the Historical Map Algorithm 	              |
+| [2017-10-23 Mon 13:30-17:30] | CTD     | 04:00:00 | Linking Qgis to Python - Your first processing plugin   |
+| [2017-11-09 Thu 08:00-10:00] | EXAM	 | 02:00:00 | EXAM Group 1 & 2 Salle info de  langue		      |
+|------------------------------+---------+----------+---------------------------------------------------------|
+| Total                        |         | 20:00:00 |     |
 #+TBLFM: @>$3=vsum(@I$3..@II$3)*1;T
 
 ** During the labworks
