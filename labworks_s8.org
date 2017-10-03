@@ -91,7 +91,7 @@ progressively.
 #+ATTR_LATEX: :booktabs t :align lp{0.85\linewidth}
 #+CAPTION: Create and implement an algorithm in Qgis
 #+NAME: c:5
-| /Remember/   | Which tools to use.
+| /Remember/   | How to implement your algorithm in =Qgis=.
 | /Understand/ | The different inputs and outputs of  =Qgis processing= GUI, and how to use their corresponding documentation.                                          |
 | /Apply/      | Create an algorithm in python working on its own (outside of =Qgis=).                                                                                              |
 | /Analyze/    | Define the different constraints of your plugin (libraries, integer or float images, same projection...)                                                                                 |
@@ -1256,52 +1256,217 @@ Your  script needs  slight modification  in  order to  be imported  in
 
 
 #+BEGIN_work
-Make the your script and use it from QGIS.
+Make your script and use it from QGIS.
 #+END_work
 
 ** A plugin to make accessible an algorithm in the Qgis Processing toolbox
 
-Thanks to the Processing ToolBox, it is now available to use your algorithm with
-others already implemented in Qgis. A Graphical User Interface (GUI) is
-automatically created, so there are some constraints to respect in order to be
-compatible with Qgis.
+Thanks to the Processing ToolBox developped by Victor Olaya, it is now available
+to use your algorithm with others already implemented in Qgis. A Graphical User
+Interface (GUI) is automatically created, so there are some constraints to
+respect in order to be compatible with Qgis.
 
-1. Plugin Builder in Qgis
-Plugin Builder is a plugin in Qgis which allows you to having some help to
+*** Plugin Builder in Qgis
+[[http://g-sherman.github.io/Qgis-Plugin-Builder/][Plugin Builder]] is a plugin in Qgis which allows you to get some help to
 create your first plugin. By giving him some information (name of your
 processing plugin, author name, bug tracker url...). Some of them are mandatory
 because the aim of Plugin Builder is to share your creation with every user of
 Qgis.
 Once you fulfill all these informations, you will find your plugin in the same
-folder as other already installed plugins :
+folder as others already installed plugins :
 
 #+BEGIN_SRC shell
-cd ~/.qgis2/python/plugins/YourPluginClassName
 # ~/ refer to your user /home/USER folder
+cd ~/.qgis2/python/plugins/YourPluginClassName
 #+END_SRC
 
-2. Implement your code
-As there are not so much documentation available for using GUI of Processing
-ToolBox, the easiest way to find 
-[[https://github.com/qgis/QGIS/blob/master/python/plugins/processing/core/parameters.py][Inputs
-(parameters)]]
-[[https://github.com/qgis/QGIS/blob/master/python/plugins/processing/core/outputs.py][Outputs]]
+*** Implement your code
+
 #+BEGIN_SRC shell
-ls #list of files and folder in YourPluginClassName
+ls #list of files and folders in YourPluginClassName
 help         metadata.txt               pluginModule.py   README.txt
 i18n         pb_tool.cfg                plugin_upload.py  scripts
 __init__.py  pluginModule_algorithm.py  pylintrc          test
 Makefile     pluginModule_provider.py   README.html
 #+END_SRC
-d
-3.
+
+As there are not so much documentation available for using GUI of Processing
+ToolBox, the easiest way to find the functions and classes to call is by watching the code :
+[[https://github.com/qgis/QGIS/blob/master/python/plugins/processing/core/parameters.py][Inputs
+(parameters)]], [[https://github.com/qgis/QGIS/blob/master/python/plugins/processing/core/outputs.py][Outputs]].
+
+**** Setting inputs
+
+By default, the /pluginModule_algorithm.py/ is the one that contains lines used to create the standard GUI and to run the script. This file imports different classes :
+#+BEGIN_SRC python
+from PyQt4.QtCore import QSettings
+from qgis.core import QgsVectorFileWriter
+
+from processing.core.GeoAlgorithm import GeoAlgorithm
+from processing.core.parameters import ParameterVector
+from processing.core.outputs import OutputVector
+from processing.tools import dataobjects, vector
+#+END_SRC
+
+For our work (Making the Historical Map Filter process in Qgis Algorithm), we need two different inputs :
+- Raster image
+- Integer values (closing filter size, median filter size and median filter iteration)
+
+When looking in
+[[https://github.com/qgis/QGIS/blob/master/python/plugins/processing/core/parameters.py][Inputs
+(parameters)]] in /processing/ code, we see different inputs corresponding to each of our need :
+
+#+BEGIN_SRC python
+class ParameterNumber(Parameter) # line 302
+# ...
+# then
+# ...
+class ParameterRaster(Parameter) # line 364
+#+END_SRC
+
+Now to import these two classes, simply call in your /pluginModule_algorithm.py/:
+#+BEGIN_SRC python
+from processing.core.parameters import ParameterRaster,ParameterNumber
+#+END_SRC python
+
+Parameters can have differents arguments (only accept shapefiles with polygon
+type not points, etc...). When looking in the parameter file ([[https://github.com/qgis/QGIS/blob/master/python/plugins/processing/core/parameters.py#L304][__init__ of ParameterNumber]])
+#+BEGIN_SRC python
+# __init__ of ParameterNumber class
+def __init__(self, name='', description='', minValue=None, maxValue=None,
+                 default=None, optional=False, metadata={})
+#+END_SRC
+
+Once you found arguments in the /__init__/ of your parameter class, add this asked variable in the /defineCharacteristics/ function of your /pluginModule_algorithm.py/ :
+
+#+BEGIN_SRC python
+def defineCharacteristics(self):
+# add input of Number type
+self.addParameter(
+  #...
+  ParameterNumber(
+    self.CLOSING_SIZE,
+    self.tr('Window size of closing filter'),
+    minValue=3,
+    default=5))
+#+END_SRC
+
+Just don't forget to define your variable /CLOSING_SIZE/ at the beginning of your pluginClassAlgorithm(GeoAlgorithm) :
+#+BEGIN_SRC python
+# add input of Number type
+class pluginClassAlgorithm(GeoAlgorithm):
+  #...
+  CLOSING_SIZE = 'Size of closing filter window'
+  # And so on (INPUT_RASTER...)
+#+END_SRC
+
+**** Setting outputs
+The Historical Map filtering process outputs one raster. When looking in
+[[https://github.com/qgis/QGIS/blob/master/python/plugins/processing/core/outputs.py][Outputs]]
+file in the processing code, we see every output compatible with the Processing GUI.
+
+#+BEGIN_SRC python
+class OutputRaster(Output)
+#+END_SRC
+
+To import this Output settings, simply import this class :
+#+BEGIN_SRC python
+from processing.core.outputs import OutputRaster
+#+END_SRC
+
+Then add this argument in the /defineCharacteristics/ function :
+#+BEGIN_SRC python
+def defineCharacteristics(self):
+  #...
+  self.addOutput(
+    OutputRaster(
+    self.OUTPUT_RASTER,
+    self.tr('Output raster (filtered image)')))
+#+END_SRC
+
+As for the inputs, don't forget to define the variable in your class root :
+#+BEGIN_SRC python
+# add input of Number type
+class pluginClassAlgorithm(GeoAlgorithm):
+  CLOSING_SIZE = 'CLOSING_SIZE'
+  OUTPUT_RASTER = 'OUTPUT_RASTER'
+  # And so on (INPUT_RASTER...)
+#+END_SRC
+
+**** Connect the processing code to your function
+
+Once inputs and outputs are correctly defined, you need to use them to run your
+class or function.
+To get the value the user choose for inputs and outputs parameters, the
+[[https://github.com/qgis/QGIS/blob/master/python/plugins/processing/core/GeoAlgorithm.py#L55][GeoAlgorithm class class]] has a function named /getParameterValue/.
+Simply use it to give it in your function arguments.
+
+#+BEGIN_SRC python
+def processAlgorithm(self, progress):
+    """Here is where the processing itself takes place."""
+
+    INPUT_RASTER = self.getParameterValue(self.INPUT_RASTER)
+    #...
+    OUTPUT_RASTER = self.getOutputValue(self.OUTPUT_RASTER)
+
+    #classify
+    historicalMapProcess(INPUT_RASTER,OUTPUT_RASTER,*args)
+#+END_SRC
+
+*** Debug and/or talk with the final user
+It's hard to debug a code inside of Qgis. That's why you have to make sure your
+code perfectly works outside of Qgis before implementing it inside this tool.
+
+**** Log a message
+
+In the qgis.core folder, you can import QgsMessageLog which allows you to write some lines in the log panel below the map in the main window of Qgis.
+
+#+BEGIN_SRC python
+from qgis.core import QgsMessageLog
+#+END_SRC
+
+Then, when you need to verify some arguments, or to write something useful for
+the user or for you, simply write :
+#+BEGIN_SRC python
+QgsMessageLog.logMessage("Input raster is "+str(INPUT_RASTER))
+#+END_SRC
+
+**** Alert the user
+The log is a good tool to store some informations (for debugging it is a great
+option), but to alert the user if there's a problem, it's not the best choice.
+Qgis let you the possibility to write a message over the map with a colorful background : the user can't ignore it !
+#+BEGIN_SRC python
+from qgis.utils import iface
+#+END_SRC
+The message must first retrieve the interface currently used (iface), the push
+his message over the map :
+#+BEGIN_SRC python
+iface.messageBar().pushMessage("Error", "I'm just a student, I do mistakes, lot of mistakes!")
+#+END_SRC
+You can set the duration of the message (it will automatically hide after) and the altert color (from light to critical)
+
+#+BEGIN_SRC python
+from qgis.gui import QgsMessageBar
+
+# TOUT VA BIEN ! Green color background
+iface.messageBar().pushMessage("Well done !", "My algorithm works perfectly !",level=QgsMessageBar.SUCCESS,duration=3)
+
+# OH OH... There's a bug, isn't it ? Light blue background.
+iface.messageBar().pushMessage("Ohoh...", "It's not just works as I expected...",level=QgsMessageBar.INFO,duration=5)
+
+# CATASTROPHE ! Red background, it's horryfing !
+iface.messageBar().pushMessage("Error", "There's a serious problem over here... Maybe I should rewrite all the code...",level=QgsMessageBar.CRITICAL,duration=10)
+
+#+END_SRC
 
 
 #+BEGIN_work
-Make your own Qgis plugin and try to use it with others in the graphical modeler.
+Make your own Qgis plugin and use it from the /Processing Toolbox/.
+Tips : You can customize your plugin by choosing a new icon.
 #+END_work
 
-***
+
+
 * Appendix                                                         :sigma:2A:
 ** Short introduction to shell
 :PROPERTIES:
