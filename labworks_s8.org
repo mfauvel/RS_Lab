@@ -145,7 +145,6 @@ It has a large  number of available packages that can  be used in many
 applications. For instance, it is possible to call /OTB-Applications/ or
 /GDAL/ from Python.
 ** Sequences                           
-
 *** Remote Sensing - Introduction                                :sigma:2A:
 #+ATTR_LATEX: :booktabs t
 #+CAPTION: Sequences
@@ -177,8 +176,6 @@ applications. For instance, it is possible to call /OTB-Applications/ or
 | Total                        |        | 20:00:00 |                                                       |
 #+TBLFM: @>$3=vsum(@I$3..@II$3)*1;T
    
-
-
 ** During the labworks
 For the /presential/ sequences, you won't have to do any report. But you
 will have to  write your personal material on remote  sensing. You are
