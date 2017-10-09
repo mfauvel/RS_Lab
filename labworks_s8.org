@@ -1694,7 +1694,7 @@ import time
 import os
 import matplotlib.pyplot as plt
 import matplotlib
-matplotlib.style.use('ggplot')
+#matplotlib.style.use('ggplot')
 
 url = 'https://framacalc.org/fauvel_res_classification'
 classifier =['RF','GMM','KNN']
@@ -1716,7 +1716,7 @@ for i in xrange(3):
     plt.figure()
     plt.bar(index,m[i*3:i*3+3],width=bar_width,alpha=opacity,color='b',yerr=s[i*3:i*3+3],error_kw=error_config)
     plt.xticks(index+bar_width/2,classifier)
-    plt.axis([-0.5, 3.5, 0.75, 1])
+    plt.axis([-0.5, 3.5, 75, 100])
     plt.grid('on')
 plt.show()
 #+END_SRC
