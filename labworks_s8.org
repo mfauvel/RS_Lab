@@ -157,7 +157,7 @@ applications. For instance, it is possible to call /OTB-Applications/ or
 ** Sequences
 
 *** Remote Sensing - Introduction                                :sigma:2A:
-#+ATTR_LATEX: :booktabs t
+#+ATTR_LATEX: :booktabs t :placement [htb]\footnotesize
 #+CAPTION: Sequences
 | Sequences                    | Type    |   Volume | Topics                                                  |
 |------------------------------+---------+----------+---------------------------------------------------------|
@@ -169,10 +169,10 @@ applications. For instance, it is possible to call /OTB-Applications/ or
 | [2017-09-29 Fri 13:30-16:30] | CTD     | 03:00:00 | Dynamic Habitat Index                                   |
 | [2017-10-02 Mon 08:00-10:00] | EXAM    | 02:00:00 | EXAM Groupe 1 & 2                                       |
 |------------------------------+---------+----------+---------------------------------------------------------|
-| Total                        |         | 21:00:00 |     |
+| Total                        |         | 21:00:00 |                                                         |
 
 *** Remote Sensing - Advanced                                       :sigma:
-#+ATTR_LATEX: :booktabs t
+#+ATTR_LATEX: :booktabs t :placement [htb]\footnotesize
 #+CAPTION: Sequences
 | Sequences                    | Type   |   Volume | Topics                                                |
 |------------------------------+--------+----------+-------------------------------------------------------|
@@ -1260,20 +1260,20 @@ Make your script and use it from QGIS.
 #+END_work
 
 ** A plugin to make accessible an algorithm in the Qgis Processing toolbox
+Thanks to the Processing ToolBox developped by Victor Olaya, it is now
+possible  to use  your  algorithm with  others  QGIS algorithms.   The
+plugin automatically  creates a Graphical User  Interface (GUI), hence
+there are  some guidelines to  follow in  order to be  compatible with
+QGIS.
 
-Thanks to the Processing ToolBox developped by Victor Olaya, it is now available
-to use your algorithm with others already implemented in Qgis. A Graphical User
-Interface (GUI) is automatically created, so there are some constraints to
-respect in order to be compatible with Qgis.
-
-*** Plugin Builder in Qgis
-[[http://g-sherman.github.io/Qgis-Plugin-Builder/][Plugin Builder]] is a plugin in Qgis which allows you to get some help to
-create your first plugin. By giving him some information (name of your
-processing plugin, author name, bug tracker url...). Some of them are mandatory
-because the aim of Plugin Builder is to share your creation with every user of
-Qgis.
-Once you fulfill all these informations, you will find your plugin in the same
-folder as others already installed plugins :
+*** Plugin Builder in QGIS
+[[http://g-sherman.github.io/Qgis-Plugin-Builder/][Plugin Builder]] is a plugin in  QGIS which allows you to automatize the
+creation  of plugins  by giving  him  some information  (name of  your
+processing plugin, author name, bug  tracker url...). Some of them are
+mandatory because the aim of Plugin  Builder is to share your creation
+with every user of Qgis.  Once you fulfill all these informations, you
+will find your  plugin in the same folder as  others already installed
+plugins :
 
 #+BEGIN_SRC shell
 # ~/ refer to your user /home/USER folder
@@ -1281,6 +1281,7 @@ cd ~/.qgis2/python/plugins/YourPluginClassName
 #+END_SRC
 
 *** Implement your code
+After the creation of your plugin, you should have your folder organize as follow:
 
 #+BEGIN_SRC shell
 ls #list of files and folders in YourPluginClassName
@@ -1292,8 +1293,7 @@ Makefile     pluginModule_provider.py   README.html
 
 As there are not so much documentation available for using GUI of Processing
 ToolBox, the easiest way to find the functions and classes to call is by watching the code :
-[[https://github.com/qgis/QGIS/blob/master/python/plugins/processing/core/parameters.py][Inputs
-(parameters)]], [[https://github.com/qgis/QGIS/blob/master/python/plugins/processing/core/outputs.py][Outputs]].
+[[https://github.com/qgis/QGIS/blob/master/python/plugins/processing/core/parameters.py][Inputs(parameters)]], [[https://github.com/qgis/QGIS/blob/master/python/plugins/processing/core/outputs.py][Outputs]].
 
 **** Setting inputs
 
@@ -1313,8 +1313,7 @@ For our work (Making the Historical Map Filter process in Qgis Algorithm), we ne
 - Integer values (closing filter size, median filter size and median filter iteration)
 
 When looking in
-[[https://github.com/qgis/QGIS/blob/master/python/plugins/processing/core/parameters.py][Inputs
-(parameters)]] in /processing/ code, we see different inputs corresponding to each of our need :
+[[https://github.com/qgis/QGIS/blob/master/python/plugins/processing/core/parameters.py][Inputs (parameters)]] in /processing/ code, we see different inputs corresponding to each of our need :
 
 #+BEGIN_SRC python
 class ParameterNumber(Parameter) # line 302
@@ -1324,10 +1323,10 @@ class ParameterNumber(Parameter) # line 302
 class ParameterRaster(Parameter) # line 364
 #+END_SRC
 
-Now to import these two classes, simply call in your /pluginModule_algorithm.py/:
+Now to import these two classes, simply call in your =pluginModule_algorithm.py=:
 #+BEGIN_SRC python
 from processing.core.parameters import ParameterRaster,ParameterNumber
-#+END_SRC python
+#+END_SRC
 
 Parameters can have differents arguments (only accept shapefiles with polygon
 type not points, etc...). When looking in the parameter file ([[https://github.com/qgis/QGIS/blob/master/python/plugins/processing/core/parameters.py#L304][__init__ of ParameterNumber]])
