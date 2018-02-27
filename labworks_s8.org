@@ -4,13 +4,13 @@
 #+AUTHOR: Mathieu Fauvel
 #+EMAIL: mathieu.fauvel@ensat.fr
 #+LANGUAGE: en
-#+SELECT_TAGS: sigma
+#+SELECT_TAGS: 2A
 #+EXCLUDE_TAGS: noexport
 #+TODO: TODO INPROGRESS DONE | CANCEL
 #+OPTIONS:   H:3 num:t toc:2 \n:nil ::t |:t ^:nil -:t f:t *:t <:t prop:nil todo:nil tags:nil
 
 #+LATEX_CLASS: koma-article
-#+LATEX_CLASS_OPTIONS: [a4paper,11pt,DIV=18]
+#+LATEX_CLASS_OPTIONS: [calendriera4paper,11pt,DIV=18]
 #+LATEX_HEADER:\usepackage[english]{babel}\usepackage{minted}\usemintedstyle{emacs}
 #+LATEX_HEADER_EXTRA:\usepackage{tikz}\usepackage{pgfplots}\usepgfplotslibrary{dateplot}\usetikzlibrary{shapes,arrows}\usepackage[]{tcolorbox}
 #+LATEX_HEADER_EXTRA: \newtcolorbox[auto counter,number within=section]{work}[1][]{colback=black!5!white,colframe=black!50!white,fonttitle=\sffamily\bfseries,title=Work~\thetcbcounter: #1}
@@ -155,39 +155,22 @@ It has a large  number of available packages that can  be used in many
 applications. For instance, it is possible to call /OTB-Applications/ or
 /GDAL/ from Python.
 ** Sequences
-
-*** Remote Sensing - Introduction                                :sigma:2A:
 #+ATTR_LATEX: :booktabs t :placement [htb]\footnotesize
 #+CAPTION: Sequences
-| Sequences                    | Type    |   Volume | Topics                                                  |
-|------------------------------+---------+----------+---------------------------------------------------------|
-| [2017-09-20 Wed 13:30-17:30] | CTD     | 04:00:00 | Visualization of remote sensing data + Spectral indices |
-| [2017-09-22 Fri 13:30-17:30] | CTD     | 04:00:00 | Segmentation of RS images + Floods detection            |
-| [2017-09-25 Mon 13:30-17:30] | CTD     | 04:00:00 | Classification of RS images                             |
-| [2017-09-27 Wed 13:30-15:30] | CTD     | 02:00:00 | Classification of RS images                             |
-| [2017-09-27 Wed 15:30-17:30] | Project | 02:00:00 | Spatial distribution of pixels                          |
-| [2017-09-29 Fri 13:30-16:30] | CTD     | 03:00:00 | Dynamic Habitat Index                                   |
-| [2017-10-02 Mon 08:00-10:00] | EXAM    | 02:00:00 | EXAM Groupe 1 & 2                                       |
-|------------------------------+---------+----------+---------------------------------------------------------|
-| Total                        |         | 21:00:00 |                                                         |
-
-*** Remote Sensing - Advanced                                       :sigma:
-#+ATTR_LATEX: :booktabs t :placement [htb]\footnotesize
-#+CAPTION: Sequences
-| Sequences                    | Type   |   Volume | Topics                                                |
-|------------------------------+--------+----------+-------------------------------------------------------|
-| [2017-10-02 Mon 10:00-12:00] | CTD    | 02:00:00 | Introduction to Scipy: array manipulation             |
-| [2017-10-09 Mon 13:30-17:30] | CTD    | 04:00:00 | Template filters  1/2                                 |
-| [2017-10-11 Wed 13:30-15:30] | CTD    | 02:00:00 | Template filters 2/2 + GDAL manipulation 1/2          |
-| [2017-10-16 Mon 13:30-17:30] | CTD    | 04:00:00 | GDAL manipulation 2/2 + Historical Maps 1/2           |
-| [2017-10-18 Wed 13:30-15:30] | Projet | 02:00:00 | Historical Maps 2/2                                   |
-| [2017-10-23 Mon 13:30-17:30] | CTD    | 04:00:00 | Linking Qgis to Python - Your first processing plugin |
-| [2017-11-09 Thu 08:00-10:00] | EXAM   | 02:00:00 | EXAM Groupe 1 & 2                                     |
-|------------------------------+--------+----------+-------------------------------------------------------|
-| Total                        |        | 20:00:00 |                                                       |
-#+TBLFM: @>$3=vsum(@I$3..@II$3)*1;T
-
-
+| Sequences                    | Type   |   Volume | Topics                                     |
+|------------------------------+--------+----------+--------------------------------------------|
+| [2018-02-27 Tue 10:10-12:10] | CTD    | 02:00:00 | Visualization of remote sensing data       |
+| [2018-02-27 Tue 13:30-17:30] | CTD    | 04:00:00 | Spectral indices + Segmentation            |
+| [2018-02-28 Wed 13:30-17:30] | CTD    | 04:00:00 | Detection of floods +  Classification 1/2  |
+| [2018-03-02 Fri 08:00-10:00] | Projet | 00:00:00 | *Non présentiel* -> Training/validation sets |
+| [2018-03-02 Fri 10:00-12:00] | CTD    | 02:00:00 | Classification  2/2 + SITS 1/2             |
+| [2018-03-02 Fri 13:30-17:30] | CTD    | 04:00:00 | SITS 2/2                                   |
+| [2018-03-06 Tue 13:30-17:30] | CTD    | 04:00:00 | Dynamic Habitat Index                      |
+| [2018-03-08 Thu 08:00-10:00] | Exam   | 02:00:00 | Exam Group 1                               |
+| [2018-03-08 Thu 10:10-12:10] | Exam   | 02:00:00 | Exam Group 2                               |
+|------------------------------+--------+----------+--------------------------------------------|
+| Total                        |        | 30:00:00 |                                            |
+#+TBLFM: @>$3=vsum(@I$3..@II$3)*1.25;T
 
 ** During the labworks
 For the /presential/ sequences, you won't have to do any report. But you
@@ -550,7 +533,6 @@ impacted area to provide a map of these zones
 :DURATION: 04:00
 :SEQUENCE: 3-4
 :END:
-
 ** Introduction
 The aim  of this labwork  is to  perform the classification  of remote
 sensing images using supervised algorithms.  The principle is the same
@@ -1464,8 +1446,6 @@ Make your own Qgis plugin and use it from the /Processing Toolbox/.
 Tips : You can customize your plugin by choosing a new icon.
 #+END_work
 
-
-
 * Appendix                                                         :sigma:2A:
 ** Short introduction to shell
 :PROPERTIES:
@@ -1649,11 +1629,11 @@ print name + surname
 To use numbers in strings, it is necessary to convert them, using the function =str=
 
 #+BEGIN_SRC python
-print "Bonjour j\'ai eu " + str(33) + " ans"
+print "Bonjour j\'ai eu " + str(36) + " ans"
 #+END_SRC
 
 #+RESULTS:
-: Bonjour j'ai eu 33 ans
+: Bonjour j'ai eu 36 ans
 
 *** Loop
 It is very  easy to iterate over  a list with python. The  list can be
@@ -1940,6 +1920,7 @@ plt.show()
 #+END_SRC
 
 #+RESULTS:
+: None
 
 #+BEGIN_SRC sh
 for name in fabas*.tif
